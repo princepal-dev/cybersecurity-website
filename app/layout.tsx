@@ -1,15 +1,21 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Inter } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
+import { ThemeProvider } from "@/components/theme-provider"
+import { SmoothScroll } from "@/components/smooth-scroll"
 import "./globals.css"
 
-const _geist = Geist({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
+const inter = Inter({ 
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+  preload: true,
+})
 
 export const metadata: Metadata = {
-  title: "CyberGuard - Enterprise Cybersecurity Solutions",
-  description: "Protect your organization from advanced cyber threats with enterprise-grade security solutions",
+  title: "YLCA - Young Leaders in Cybersecurity & AI",
+  description: "Empowering Teens to Secure the Digital World. A global youth-led initiative training the next generation of cybersecurity and AI leaders.",
   generator: "v0.app",
   icons: {
     icon: [
@@ -36,9 +42,17 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={`font-sans antialiased`}>
-        {children}
+    <html lang="en" suppressHydrationWarning className="scroll-smooth">
+      <body className={`${inter.variable} font-sans antialiased`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange={false}
+        >
+          <SmoothScroll />
+          {children}
+        </ThemeProvider>
         <Analytics />
       </body>
     </html>

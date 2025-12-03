@@ -1,86 +1,104 @@
+import Link from "next/link"
+import { Shield } from "lucide-react"
+
 export function Footer() {
   return (
-    <footer className="bg-card border-t border-border py-16 px-4 sm:px-6 lg:px-8">
+    <footer className="bg-gradient-to-b from-card/60 dark:from-card/40 to-background border-t border-border/60 dark:border-border/40 py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-4 gap-8 mb-12">
-          <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center text-white font-bold">
-                🛡️
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 mb-12 sm:mb-16">
+          <div className="sm:col-span-2 lg:col-span-1">
+            <div className="flex items-center gap-3 mb-4 sm:mb-6">
+              <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center shadow-lg shadow-primary/30 dark:shadow-primary/40">
+                <Shield className="w-6 h-6 text-white" />
               </div>
-              <span className="text-lg font-bold text-foreground">CyberGuard</span>
+              <span className="text-xl font-bold text-foreground tracking-tight">YLCA</span>
             </div>
-            <p className="text-muted-foreground text-sm">Enterprise cybersecurity solutions</p>
+            <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">Empowering Teens to Secure the Digital World</p>
           </div>
 
           <div>
-            <h4 className="text-foreground font-semibold mb-4">Product</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
+            <h4 className="text-foreground font-semibold mb-4 sm:mb-6 text-base tracking-tight">Programs</h4>
+            <ul className="space-y-2.5 sm:space-y-3 text-sm text-muted-foreground">
               <li>
-                <a href="#" className="hover:text-foreground transition">
-                  Features
-                </a>
+                <Link href="/programs" className="hover:text-primary transition-colors duration-200 inline-block hover:translate-x-1 transform">
+                  Youth Workshops
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition">
-                  Pricing
-                </a>
+                <Link href="/programs" className="hover:text-primary transition-colors duration-200 inline-block hover:translate-x-1 transform">
+                  Ambassador Program
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition">
-                  Security
-                </a>
+                <Link href="/programs" className="hover:text-primary transition-colors duration-200 inline-block hover:translate-x-1 transform">
+                  Certification Levels
+                </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-foreground font-semibold mb-4">Company</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
+            <h4 className="text-foreground font-semibold mb-4 sm:mb-6 text-base tracking-tight">About</h4>
+            <ul className="space-y-2.5 sm:space-y-3 text-sm text-muted-foreground">
               <li>
-                <a href="#" className="hover:text-foreground transition">
-                  About
-                </a>
+                <Link href="/about" className="hover:text-primary transition-colors duration-200 inline-block hover:translate-x-1 transform">
+                  Vision & Mission
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition">
-                  Blog
-                </a>
+                <Link href="/about" className="hover:text-primary transition-colors duration-200 inline-block hover:translate-x-1 transform">
+                  Founder
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition">
-                  Careers
-                </a>
+                <Link href="/impact" className="hover:text-primary transition-colors duration-200 inline-block hover:translate-x-1 transform">
+                  Impact
+                </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-foreground font-semibold mb-4">Legal</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
+            <h4 className="text-foreground font-semibold mb-4 sm:mb-6 text-base tracking-tight">Get Involved</h4>
+            <ul className="space-y-2.5 sm:space-y-3 text-sm text-muted-foreground">
               <li>
-                <a href="#" className="hover:text-foreground transition">
-                  Privacy
-                </a>
+                <Link href="/get-involved" className="hover:text-primary transition-colors duration-200 inline-block hover:translate-x-1 transform">
+                  Student Sign-Up
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition">
-                  Terms
-                </a>
+                <Link href="/get-involved" className="hover:text-primary transition-colors duration-200 inline-block hover:translate-x-1 transform">
+                  School Workshops
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition">
-                  Contact
-                </a>
+                <Link href="/get-involved" className="hover:text-primary transition-colors duration-200 inline-block hover:translate-x-1 transform">
+                  Contact Us
+                </Link>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; 2025 CyberGuard. All rights reserved.</p>
+        <div className="border-t border-border/60 dark:border-border/40 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs sm:text-sm text-muted-foreground">
+          <p className="text-center sm:text-left">&copy; 2025 Young Leaders in Cybersecurity & AI (YLCA). All rights reserved.</p>
+          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-3 sm:gap-4 w-full sm:w-auto">
+            <a 
+              href="https://www.elevancesystems.com/" 
+              target="_blank"
+              rel="noopener noreferrer" 
+              className="hover:text-primary transition-colors duration-200 font-medium whitespace-nowrap"
+            >
+              Elevance Systems
+            </a>
+            <span className="text-border/60 dark:text-border/40 hidden sm:inline">•</span>
+            <a href="#" className="hover:text-primary transition-colors duration-200 whitespace-nowrap">
+              Privacy Policy
+            </a>
+          </div>
         </div>
       </div>
     </footer>
   )
 }
+
