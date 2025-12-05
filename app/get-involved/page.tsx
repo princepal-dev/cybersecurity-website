@@ -526,31 +526,15 @@ export default function GetInvolved() {
         <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 bg-card/30">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-foreground">Contact Information</h2>
-            <div className="grid sm:grid-cols-2 gap-6 sm:gap-8">
-              <Card>
+            <div className="flex justify-center">
+              <Card className="max-w-md w-full">
                 <CardHeader>
                   <CardTitle className="text-sm sm:text-base">Email</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className="break-all">info@ylca.org</CardDescription>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-sm sm:text-base">Follow Us</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-3 sm:gap-4">
-                    <a href="#" className="text-primary hover:text-secondary transition text-sm sm:text-base">
-                      LinkedIn
-                    </a>
-                    <a href="#" className="text-primary hover:text-secondary transition text-sm sm:text-base">
-                      Twitter
-                    </a>
-                    <a href="#" className="text-primary hover:text-secondary transition text-sm sm:text-base">
-                      Instagram
-                    </a>
-                  </div>
+                  <CardDescription className="break-all">
+                    <a href="mailto:Arth.Bhardwaj@elevancesystems.com" className="text-primary hover:text-secondary transition-colors underline underline-offset-2">Arth.Bhardwaj@elevancesystems.com</a>
+                  </CardDescription>
                 </CardContent>
               </Card>
             </div>

@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Shield } from "lucide-react"
+import Image from "next/image"
 
 export function Footer() {
   return (
@@ -7,11 +7,16 @@ export function Footer() {
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 mb-12 sm:mb-16">
           <div className="sm:col-span-2 lg:col-span-1">
-            <div className="flex items-center gap-3 mb-4 sm:mb-6">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center shadow-lg shadow-primary/30 dark:shadow-primary/40">
-                <Shield className="w-6 h-6 text-white" />
+            <div className="flex items-center justify-start mb-4 sm:mb-6">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 relative flex items-center justify-center">
+                <Image 
+                  src="/logo.png" 
+                  alt="Young Leaders in Cybersecurity & AI Logo" 
+                  width={112} 
+                  height={112} 
+                  className="object-contain"
+                />
               </div>
-              <span className="text-xl font-bold text-foreground tracking-tight">YLCA</span>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">Empowering Teens to Secure the Digital World</p>
           </div>
@@ -81,7 +86,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-border/60 dark:border-border/40 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs sm:text-sm text-muted-foreground">
-          <p className="text-center sm:text-left">&copy; 2025 Young Leaders in Cybersecurity & AI (YLCA). All rights reserved.</p>
+          <p className="text-center sm:text-left">&copy; 2025 Young Leaders in Cybersecurity & AI. All rights reserved.</p>
           <div className="flex flex-wrap items-center justify-center sm:justify-end gap-3 sm:gap-4 w-full sm:w-auto">
             <a 
               href="https://www.elevancesystems.com/" 

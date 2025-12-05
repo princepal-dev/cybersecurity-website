@@ -8,8 +8,8 @@ import { GraduationCap, Users, Globe, Laptop, Palette, UserCheck, Award, Star, F
 import Link from "next/link"
 
 export const metadata = {
-  title: "Programs | YLCA - Young Leaders in Cybersecurity & AI",
-  description: "Explore YLCA's programs: Youth Workshops, Ambassador Program, and Certification Levels.",
+  title: "Programs | Young Leaders in Cybersecurity & AI",
+  description: "Explore Young Leaders in Cybersecurity & AI's programs: Youth Workshops, Ambassador Program, and Certification Levels.",
 }
 
 export default function Programs() {
@@ -27,41 +27,11 @@ export default function Programs() {
             <div className="text-center mb-8 sm:mb-12">
               <Badge variant="default" className="mb-4 sm:mb-6 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">OUR PROGRAMS</Badge>
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
-                YLCA <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Programs</span>
+                Young Leaders in Cybersecurity & AI <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Programs</span>
               </h1>
               <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed px-4">
                 Three core programs empowering teens with cybersecurity and AI knowledge, leadership skills, and real-world experience.
               </p>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
-              <Card className="text-center border-border/60 dark:border-border/40 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                <CardContent className="pt-6">
-                  <div className="mb-4 flex justify-center">
-                    <GraduationCap className="w-8 h-8 text-primary" />
-                  </div>
-                  <div className="text-3xl font-bold bg-gradient-to-br from-primary to-primary/80 bg-clip-text text-transparent mb-2">20+</div>
-                  <CardDescription className="font-semibold">Workshops</CardDescription>
-                </CardContent>
-              </Card>
-              <Card className="text-center border-border/60 dark:border-border/40 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                <CardContent className="pt-6">
-                  <div className="mb-4 flex justify-center">
-                    <Users className="w-8 h-8 text-secondary" />
-                  </div>
-                  <div className="text-3xl font-bold bg-gradient-to-br from-secondary to-secondary/80 bg-clip-text text-transparent mb-2">50+</div>
-                  <CardDescription className="font-semibold">Ambassadors</CardDescription>
-                </CardContent>
-              </Card>
-              <Card className="text-center border-border/60 dark:border-border/40 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                <CardContent className="pt-6">
-                  <div className="mb-4 flex justify-center">
-                    <Globe className="w-8 h-8 text-primary" />
-                  </div>
-                  <div className="text-3xl font-bold bg-gradient-to-br from-primary to-primary/80 bg-clip-text text-transparent mb-2">10+</div>
-                  <CardDescription className="font-semibold">Countries</CardDescription>
-                </CardContent>
-              </Card>
             </div>
           </div>
         </section>
@@ -71,7 +41,7 @@ export default function Programs() {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-8 sm:mb-12 md:mb-16">
               <Badge variant="secondary" className="mb-4 sm:mb-6 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">CORE PROGRAMS</Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">YLCA Offers Three Core Programs</h2>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">Young Leaders in Cybersecurity & AI Offers Three Core Programs</h2>
             </div>
             
             <div className="space-y-8">
@@ -89,12 +59,12 @@ export default function Programs() {
                       <h3 className="text-xl sm:text-2xl font-bold text-foreground">Youth Cyber & AI Workshops</h3>
                     </div>
                     <p className="text-sm sm:text-base text-muted-foreground mb-4 leading-relaxed">
-                      Interactive 60–90 minute sessions in schools globally, featuring hands-on demos and practical cybersecurity skills.
+                      60–90 minute sessions delivered in schools globally.
                     </p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                       <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/50 dark:bg-background/30 border border-border/40 dark:border-border/30">
                         <span className="text-primary text-sm">✓</span>
-                        <span className="text-sm text-muted-foreground">60–90 min sessions</span>
+                        <span className="text-sm text-muted-foreground">60–90 minute sessions</span>
                       </div>
                       <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/50 dark:bg-background/30 border border-border/40 dark:border-border/30">
                         <span className="text-primary text-sm">✓</span>
@@ -102,11 +72,15 @@ export default function Programs() {
                       </div>
                       <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/50 dark:bg-background/30 border border-border/40 dark:border-border/30">
                         <span className="text-primary text-sm">✓</span>
-                        <span className="text-sm text-muted-foreground">Real phishing examples</span>
+                        <span className="text-sm text-muted-foreground">Real phishing emails, scams, passwords testing</span>
                       </div>
                       <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/50 dark:bg-background/30 border border-border/40 dark:border-border/30">
                         <span className="text-primary text-sm">✓</span>
                         <span className="text-sm text-muted-foreground">AI ethics & safety</span>
+                      </div>
+                      <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/50 dark:bg-background/30 border border-border/40 dark:border-border/30 sm:col-span-2">
+                        <span className="text-primary text-sm">✓</span>
+                        <span className="text-sm text-muted-foreground">Delivered in schools globally</span>
                       </div>
                     </div>
                   </div>
@@ -127,29 +101,29 @@ export default function Programs() {
                       <h3 className="text-xl sm:text-2xl font-bold text-foreground">Ambassador Leadership Program</h3>
                     </div>
                     <p className="text-sm sm:text-base text-muted-foreground mb-4 leading-relaxed">
-                      A 3-month leadership track where teens learn, practice, and lead cybersecurity and AI initiatives in their schools.
+                      A 3-month leadership track where teens:
                     </p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                       <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/50 dark:bg-background/30 border border-border/40 dark:border-border/30">
                         <span className="text-secondary text-sm">✓</span>
-                        <span className="text-sm text-muted-foreground">Cybersecurity basics</span>
+                        <span className="text-sm text-muted-foreground">Learn cybersecurity basics</span>
                       </div>
                       <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/50 dark:bg-background/30 border border-border/40 dark:border-border/30">
                         <span className="text-secondary text-sm">✓</span>
-                        <span className="text-sm text-muted-foreground">AI & responsible usage</span>
+                        <span className="text-sm text-muted-foreground">Learn intro AI & responsible usage</span>
                       </div>
                       <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/50 dark:bg-background/30 border border-border/40 dark:border-border/30">
                         <span className="text-secondary text-sm">✓</span>
-                        <span className="text-sm text-muted-foreground">Practice teaching</span>
+                        <span className="text-sm text-muted-foreground">Practice teaching younger students</span>
                       </div>
                       <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/50 dark:bg-background/30 border border-border/40 dark:border-border/30">
                         <span className="text-secondary text-sm">✓</span>
-                        <span className="text-sm text-muted-foreground">Lead 1–2 workshops</span>
+                        <span className="text-sm text-muted-foreground">Lead 1–2 workshops at their school</span>
                       </div>
                     </div>
                     <div className="mt-3 px-3 py-2 rounded-lg border border-primary/30 dark:border-primary/40 bg-primary/5 dark:bg-primary/10">
                       <p className="text-xs text-muted-foreground">
-                        <span className="font-semibold text-foreground">Bonus:</span> Start a Cyber/AI club (optional)
+                        <span className="font-semibold text-foreground">Optional but encouraged:</span> Start a Cyber/AI club
                       </p>
                     </div>
                   </div>
@@ -169,30 +143,24 @@ export default function Programs() {
                       <Badge variant="default" className="text-xs">Program 3</Badge>
                       <h3 className="text-xl sm:text-2xl font-bold text-foreground">Global Community & Events</h3>
                     </div>
-                    <p className="text-sm sm:text-base text-muted-foreground mb-4 leading-relaxed">
-                      Join a vibrant global network through monthly meetups, project showcases, and mentorship sessions with industry professionals.
-                    </p>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
                       <div className="text-center px-4 py-3 rounded-lg border border-border/40 dark:border-border/30 bg-background/50 dark:bg-background/30 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
                         <div className="mb-2 flex justify-center">
                           <Laptop className="w-5 h-5 text-primary" />
                         </div>
-                        <p className="font-semibold text-sm text-foreground mb-1">Monthly Meetups</p>
-                        <p className="text-xs text-muted-foreground">Connect globally</p>
+                        <p className="font-semibold text-sm text-foreground mb-1">Monthly virtual meetups</p>
                       </div>
                       <div className="text-center px-4 py-3 rounded-lg border border-border/40 dark:border-border/30 bg-background/50 dark:bg-background/30 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
                         <div className="mb-2 flex justify-center">
                           <Palette className="w-5 h-5 text-secondary" />
                         </div>
-                        <p className="font-semibold text-sm text-foreground mb-1">Project Showcases</p>
-                        <p className="text-xs text-muted-foreground">Share innovations</p>
+                        <p className="font-semibold text-sm text-foreground mb-1">Project showcases</p>
                       </div>
                       <div className="text-center px-4 py-3 rounded-lg border border-border/40 dark:border-border/30 bg-background/50 dark:bg-background/30 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
                         <div className="mb-2 flex justify-center">
                           <UserCheck className="w-5 h-5 text-primary" />
                         </div>
-                        <p className="font-semibold text-sm text-foreground mb-1">Mentorship</p>
-                        <p className="text-xs text-muted-foreground">Learn from experts</p>
+                        <p className="font-semibold text-sm text-foreground mb-1">Mentorship sessions with professionals</p>
                       </div>
                     </div>
                   </div>
@@ -342,21 +310,6 @@ export default function Programs() {
                 </CardContent>
               </Card>
             </div>
-
-            {/* Special Recognition */}
-            <Card className="mt-8 border-2 border-primary/50 dark:border-primary/60 bg-gradient-to-br from-primary/10 to-secondary/10 dark:from-primary/20 dark:to-secondary/20">
-              <CardContent className="pt-6">
-                <div className="text-center">
-                  <div className="mb-4 flex justify-center">
-                    <Star className="w-10 h-10 text-primary" />
-                  </div>
-                  <CardTitle className="text-2xl mb-3">Special Recognition</CardTitle>
-                  <CardDescription className="text-lg">
-                    Awarded to students with exceptional outreach or innovation.
-                  </CardDescription>
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </section>
 

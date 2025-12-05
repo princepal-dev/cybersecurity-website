@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { Clock, AlertTriangle, Bot, Globe, Users, Rocket, Shield, TrendingUp, Award, Sparkles, ArrowRight, CheckCircle2, Star } from "lucide-react"
+import { Clock, AlertTriangle, Bot, Globe, Users, Rocket, Shield, TrendingUp, Award, Sparkles, ArrowRight, CheckCircle2, Star, Briefcase } from "lucide-react"
 import Link from "next/link"
 
 export default function Home() {
@@ -14,7 +14,7 @@ export default function Home() {
       <Navigation />
       <Hero />
       
-      {/* What is YLCA Section */}
+      {/* What is Young Leaders in Cybersecurity & AI Section */}
       <section className="py-16 sm:py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-muted/20 via-background to-background relative overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0 -z-10">
@@ -29,11 +29,91 @@ export default function Home() {
             </Badge>
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-4 sm:mb-6 text-foreground tracking-tight px-4">
-            What is <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">YLCA</span>?
+            What is <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Young Leaders in Cybersecurity & AI</span>?
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground text-center mb-6 sm:mb-8 leading-relaxed max-w-3xl mx-auto px-4">
-            A global youth-led initiative training the next generation in cybersecurity and AI through hands-on workshops, leadership programs, and real-world projects—all completely free.
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground text-center mb-8 sm:mb-10 leading-relaxed max-w-3xl mx-auto px-4">
+            <span className="font-semibold text-foreground">Young Leaders in Cybersecurity & AI (YLCA)</span> is a global program founded by high-school innovator{" "}
+            <span className="font-semibold text-foreground">Arth Bhardwaj</span> to train and empower teens in{" "}
+            <span className="font-semibold text-foreground">cybersecurity and artificial intelligence</span>. We provide{" "}
+            <span className="font-semibold text-foreground">hands-on training</span>,{" "}
+            <span className="font-semibold text-foreground">workshops</span>,{" "}
+            <span className="font-semibold text-foreground">leadership opportunities</span>, and{" "}
+            <span className="font-semibold text-foreground">real-world projects</span> that help young people make their schools and communities safer online.
           </p>
+
+          {/* Additional Content */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-10">
+            <Card className="border border-border/50 dark:border-border/30 bg-card/50 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+              <CardHeader>
+                <CardTitle className="text-lg sm:text-xl font-bold flex items-center gap-2">
+                  <Shield className="w-5 h-5 text-primary" />
+                  Our Mission
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-sm sm:text-base leading-relaxed">
+                  To empower the next generation with the knowledge and skills needed to navigate the digital world safely, ethically, and confidently. We believe every teen deserves access to quality cybersecurity and AI education, regardless of their background or location.
+                </CardDescription>
+              </CardContent>
+            </Card>
+
+            <Card className="border border-border/50 dark:border-border/30 bg-card/50 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+              <CardHeader>
+                <CardTitle className="text-lg sm:text-xl font-bold flex items-center gap-2">
+                  <Globe className="w-5 h-5 text-secondary" />
+                  Global Reach
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-sm sm:text-base leading-relaxed">
+                  Operating across multiple countries including the United States, India, Guatemala, and beyond. Our programs are designed to be accessible globally, with workshops delivered in schools and communities worldwide, all completely free of charge.
+                </CardDescription>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="bg-card/30 border border-border/50 dark:border-border/30 rounded-xl sm:rounded-2xl p-6 sm:p-8 mb-8 sm:mb-10">
+            <h3 className="text-xl sm:text-2xl font-bold text-center mb-4 sm:mb-6 text-foreground">What Makes YLCA Unique</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-primary/20 dark:bg-primary/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <CheckCircle2 className="w-4 h-4 text-primary" />
+                </div>
+                <div>
+                  <p className="font-semibold text-sm sm:text-base text-foreground mb-1">100% Free</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground">All programs, workshops, and resources are completely free for students and schools.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-primary/20 dark:bg-primary/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <CheckCircle2 className="w-4 h-4 text-primary" />
+                </div>
+                <div>
+                  <p className="font-semibold text-sm sm:text-base text-foreground mb-1">Youth-Led</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground">Created and run by teens, for teens, ensuring relevance and relatability.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-primary/20 dark:bg-primary/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <CheckCircle2 className="w-4 h-4 text-primary" />
+                </div>
+                <div>
+                  <p className="font-semibold text-sm sm:text-base text-foreground mb-1">Industry Mentorship</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground">Direct access to professionals from Elevance Systems, Microsoft, and other leading companies.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-primary/20 dark:bg-primary/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <CheckCircle2 className="w-4 h-4 text-primary" />
+                </div>
+                <div>
+                  <p className="font-semibold text-sm sm:text-base text-foreground mb-1">Real-World Impact</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground">Students don't just learn—they lead workshops, start clubs, and create change in their communities.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="flex justify-center gap-4 flex-wrap">
             <Link href="/about">
               <Button variant="outline" className="border-2 border-primary/50 dark:border-primary/60 hover:bg-primary/10 dark:hover:bg-primary/20 px-5 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base rounded-full font-semibold group">
@@ -45,7 +125,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why Cybersecurity & AI for Teens */}
+      {/* Why Cybersecurity */}
       <section className="py-16 sm:py-20 md:py-28 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         {/* Animated background */}
         <div className="absolute inset-0 -z-10">
@@ -55,51 +135,118 @@ export default function Home() {
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-8">
             <Badge variant="secondary" className="mb-4 sm:mb-6 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold shadow-lg">
-              <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4 mr-2 inline" />
+              <Shield className="w-3 h-3 sm:w-4 sm:h-4 mr-2 inline" />
               WHY IT MATTERS
             </Badge>
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-4 sm:mb-6 text-foreground tracking-tight px-4">
-            Why <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Cybersecurity & AI</span> for Teens?
+            Why <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Cybersecurity & AI</span>?
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 mt-12 sm:mt-16">
-            <Card className="group relative overflow-hidden border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-md transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/30 dark:hover:shadow-primary/40 hover:-translate-y-3 hover:border-primary/60 dark:hover:border-primary/70">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-              <div className="absolute top-0 right-0 w-40 h-40 bg-primary/8 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-              <CardHeader className="relative pb-4 text-center px-4 sm:px-6">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-primary/25 via-primary/15 to-primary/5 dark:from-primary/35 dark:via-primary/25 dark:to-primary/15 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 mx-auto group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 ease-out shadow-xl shadow-primary/25 dark:shadow-primary/35 ring-2 ring-primary/10 dark:ring-primary/20">
-                  <Clock className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
-                </div>
-                <CardTitle className="text-xl sm:text-2xl font-bold tracking-tight mb-2">Time Online</CardTitle>
-              </CardHeader>
-              <CardContent className="relative pt-0 text-center px-4 sm:px-6 pb-6">
-                <CardDescription className="text-sm sm:text-base leading-relaxed font-medium">Teens spend 7+ hours online daily.</CardDescription>
-              </CardContent>
-            </Card>
-            <Card className="group relative overflow-hidden border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-md transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-secondary/30 dark:hover:shadow-secondary/40 hover:-translate-y-3 hover:border-secondary/60 dark:hover:border-secondary/70">
+            <Card className="group relative overflow-hidden border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-md transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-secondary/30 dark:hover:shadow-secondary/40 hover:-translate-y-3 hover:border-secondary/60 dark:hover:border-secondary/70 h-full flex flex-col">
               <div className="absolute inset-0 bg-gradient-to-br from-secondary/8 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
               <div className="absolute top-0 right-0 w-40 h-40 bg-secondary/8 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-              <CardHeader className="relative pb-4 text-center px-4 sm:px-6">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-secondary/25 via-secondary/15 to-secondary/5 dark:from-secondary/35 dark:via-secondary/25 dark:to-secondary/15 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 mx-auto group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 ease-out shadow-xl shadow-secondary/25 dark:shadow-secondary/35 ring-2 ring-secondary/10 dark:ring-secondary/20">
+              <CardHeader className="relative pb-3 text-center px-4 sm:px-6 pt-6">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-secondary/25 via-secondary/15 to-secondary/5 dark:from-secondary/35 dark:via-secondary/25 dark:to-secondary/15 rounded-2xl flex items-center justify-center mb-4 sm:mb-5 mx-auto group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 ease-out shadow-xl shadow-secondary/25 dark:shadow-secondary/35 ring-2 ring-secondary/10 dark:ring-secondary/20">
                   <AlertTriangle className="w-8 h-8 sm:w-10 sm:h-10 text-secondary" />
                 </div>
-                <CardTitle className="text-xl sm:text-2xl font-bold tracking-tight mb-2">Digital Risks</CardTitle>
+                <CardTitle className="text-xl sm:text-2xl font-bold tracking-tight mb-3">Digital Risks</CardTitle>
               </CardHeader>
-              <CardContent className="relative pt-0 text-center px-4 sm:px-6 pb-6">
-                <CardDescription className="text-sm sm:text-base leading-relaxed font-medium">Rising threats: scams, phishing, identity theft, cyberbullying.</CardDescription>
+              <CardContent className="relative pt-0 px-4 sm:px-6 pb-6 flex-1 flex flex-col text-center">
+                <CardDescription className="text-sm sm:text-base leading-relaxed font-semibold mb-3 text-foreground">Rising threats: scams, phishing, identity theft, cyberbullying.</CardDescription>
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed flex-1">Cyber attacks are increasing every year, with millions of people falling victim to online scams. Understanding cybersecurity helps protect personal information and digital identity from malicious actors.</p>
               </CardContent>
             </Card>
-            <Card className="group relative overflow-hidden border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-md transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/30 dark:hover:shadow-primary/40 hover:-translate-y-3 hover:border-primary/60 dark:hover:border-primary/70">
+            <Card className="group relative overflow-hidden border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-md transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/30 dark:hover:shadow-primary/40 hover:-translate-y-3 hover:border-primary/60 dark:hover:border-primary/70 h-full flex flex-col">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
               <div className="absolute top-0 right-0 w-40 h-40 bg-primary/8 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-              <CardHeader className="relative pb-4 text-center px-4 sm:px-6">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-primary/25 via-secondary/20 to-primary/10 dark:from-primary/35 dark:via-secondary/30 dark:to-primary/20 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 mx-auto group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 ease-out shadow-xl shadow-primary/25 dark:shadow-primary/35 ring-2 ring-primary/10 dark:ring-primary/20">
+              <CardHeader className="relative pb-3 text-center px-4 sm:px-6 pt-6">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-primary/25 via-secondary/20 to-primary/10 dark:from-primary/35 dark:via-secondary/30 dark:to-primary/20 rounded-2xl flex items-center justify-center mb-4 sm:mb-5 mx-auto group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 ease-out shadow-xl shadow-primary/25 dark:shadow-primary/35 ring-2 ring-primary/10 dark:ring-primary/20">
                   <Bot className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
                 </div>
-                <CardTitle className="text-xl sm:text-2xl font-bold tracking-tight mb-2">AI Future</CardTitle>
+                <CardTitle className="text-xl sm:text-2xl font-bold tracking-tight mb-3">AI Future</CardTitle>
               </CardHeader>
-              <CardContent className="relative pt-0 text-center px-4 sm:px-6 pb-6">
-                <CardDescription className="text-sm sm:text-base leading-relaxed font-medium">AI is reshaping safety, creativity, and careers.</CardDescription>
+              <CardContent className="relative pt-0 px-4 sm:px-6 pb-6 flex-1 flex flex-col text-center">
+                <CardDescription className="text-sm sm:text-base leading-relaxed font-semibold mb-3 text-foreground">AI is reshaping safety, creativity, and careers.</CardDescription>
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed flex-1">Artificial intelligence is transforming every industry, from healthcare to education. Learning AI ethics and responsible use prepares teens for a future where AI is integrated into daily life and work.</p>
+              </CardContent>
+            </Card>
+            <Card className="group relative overflow-hidden border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-md transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/30 dark:hover:shadow-primary/40 hover:-translate-y-3 hover:border-primary/60 dark:hover:border-primary/70 h-full flex flex-col">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              <div className="absolute top-0 right-0 w-40 h-40 bg-primary/8 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              <CardHeader className="relative pb-3 text-center px-4 sm:px-6 pt-6">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-primary/25 via-primary/15 to-primary/5 dark:from-primary/35 dark:via-primary/25 dark:to-primary/15 rounded-2xl flex items-center justify-center mb-4 sm:mb-5 mx-auto group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 ease-out shadow-xl shadow-primary/25 dark:shadow-primary/35 ring-2 ring-primary/10 dark:ring-primary/20">
+                  <Shield className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
+                </div>
+                <CardTitle className="text-xl sm:text-2xl font-bold tracking-tight mb-3">Career Opportunities</CardTitle>
+              </CardHeader>
+              <CardContent className="relative pt-0 px-4 sm:px-6 pb-6 flex-1 flex flex-col text-center">
+                <CardDescription className="text-sm sm:text-base leading-relaxed font-semibold mb-3 text-foreground">High-demand fields with growing opportunities and impact.</CardDescription>
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed flex-1">Cybersecurity and AI professionals are in high demand, with millions of unfilled positions worldwide. These fields offer competitive salaries, job security, and the chance to make a meaningful difference in protecting digital infrastructure.</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Why for Teens */}
+      <section className="py-16 sm:py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background via-muted/20 to-background relative overflow-hidden">
+        {/* Animated background */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-0 left-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-primary/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-secondary/5 rounded-full blur-3xl"></div>
+        </div>
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="text-center mb-8">
+            <Badge variant="default" className="mb-4 sm:mb-6 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold shadow-lg">
+              <Users className="w-3 h-3 sm:w-4 sm:h-4 mr-2 inline" />
+              WHY FOR TEENS
+            </Badge>
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-4 sm:mb-6 text-foreground tracking-tight px-4">
+            Why for <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Teens</span>?
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 mt-12 sm:mt-16">
+            <Card className="group relative overflow-hidden border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-md transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/30 dark:hover:shadow-primary/40 hover:-translate-y-3 hover:border-primary/60 dark:hover:border-primary/70 h-full flex flex-col">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              <div className="absolute top-0 right-0 w-40 h-40 bg-primary/8 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              <CardHeader className="relative pb-3 text-center px-4 sm:px-6 pt-6">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-primary/25 via-primary/15 to-primary/5 dark:from-primary/35 dark:via-primary/25 dark:to-primary/15 rounded-2xl flex items-center justify-center mb-4 sm:mb-5 mx-auto group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 ease-out shadow-xl shadow-primary/25 dark:shadow-primary/35 ring-2 ring-primary/10 dark:ring-primary/20">
+                  <Clock className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
+                </div>
+                <CardTitle className="text-xl sm:text-2xl font-bold tracking-tight mb-3">Time Online</CardTitle>
+              </CardHeader>
+              <CardContent className="relative pt-0 px-4 sm:px-6 pb-6 flex-1 flex flex-col text-center">
+                <CardDescription className="text-sm sm:text-base leading-relaxed font-semibold mb-3 text-foreground">Teens spend 7+ hours online daily.</CardDescription>
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed flex-1">With most of their day spent on digital devices, teens are prime targets for cyber threats. Learning cybersecurity skills helps them navigate online spaces safely and protect themselves from digital dangers.</p>
+              </CardContent>
+            </Card>
+            <Card className="group relative overflow-hidden border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-md transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-secondary/30 dark:hover:shadow-secondary/40 hover:-translate-y-3 hover:border-secondary/60 dark:hover:border-secondary/70 h-full flex flex-col">
+              <div className="absolute inset-0 bg-gradient-to-br from-secondary/8 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              <div className="absolute top-0 right-0 w-40 h-40 bg-secondary/8 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              <CardHeader className="relative pb-3 text-center px-4 sm:px-6 pt-6">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-secondary/25 via-secondary/15 to-secondary/5 dark:from-secondary/35 dark:via-secondary/25 dark:to-secondary/20 rounded-2xl flex items-center justify-center mb-4 sm:mb-5 mx-auto group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 ease-out shadow-xl shadow-secondary/25 dark:shadow-secondary/35 ring-2 ring-secondary/10 dark:ring-secondary/20">
+                  <Rocket className="w-8 h-8 sm:w-10 sm:h-10 text-secondary" />
+                </div>
+                <CardTitle className="text-xl sm:text-2xl font-bold tracking-tight mb-3">Early Learning</CardTitle>
+              </CardHeader>
+              <CardContent className="relative pt-0 px-4 sm:px-6 pb-6 flex-1 flex flex-col text-center">
+                <CardDescription className="text-sm sm:text-base leading-relaxed font-semibold mb-3 text-foreground">Building skills early sets teens up for future success.</CardDescription>
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed flex-1">The teenage years are the perfect time to develop technical skills and critical thinking. Early exposure to cybersecurity and AI concepts gives teens a competitive advantage in college applications and future career paths.</p>
+              </CardContent>
+            </Card>
+            <Card className="group relative overflow-hidden border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-md transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/30 dark:hover:shadow-primary/40 hover:-translate-y-3 hover:border-primary/60 dark:hover:border-primary/70 h-full flex flex-col">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              <div className="absolute top-0 right-0 w-40 h-40 bg-primary/8 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              <CardHeader className="relative pb-3 text-center px-4 sm:px-6 pt-6">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-primary/25 via-secondary/20 to-primary/10 dark:from-primary/35 dark:via-secondary/30 dark:to-primary/20 rounded-2xl flex items-center justify-center mb-4 sm:mb-5 mx-auto group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 ease-out shadow-xl shadow-primary/25 dark:shadow-primary/35 ring-2 ring-primary/10 dark:ring-primary/20">
+                  <Award className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
+                </div>
+                <CardTitle className="text-xl sm:text-2xl font-bold tracking-tight mb-3">Leadership Skills</CardTitle>
+              </CardHeader>
+              <CardContent className="relative pt-0 px-4 sm:px-6 pb-6 flex-1 flex flex-col text-center">
+                <CardDescription className="text-sm sm:text-base leading-relaxed font-semibold mb-3 text-foreground">Develop confidence and leadership through real-world impact.</CardDescription>
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed flex-1">Through YLCA's programs, teens lead workshops, mentor peers, and create positive change in their communities. These experiences build leadership skills, boost confidence, and provide valuable experience for college and career applications.</p>
               </CardContent>
             </Card>
           </div>
@@ -137,7 +284,7 @@ export default function Home() {
                 <CardTitle className="text-xl sm:text-2xl font-bold tracking-tight mb-2">Global Workshops</CardTitle>
               </CardHeader>
               <CardContent className="relative pt-0 text-center px-4 sm:px-6 pb-6">
-                <CardDescription className="text-sm sm:text-base leading-relaxed font-medium">Interactive 60–90 minute sessions in schools worldwide.</CardDescription>
+                <CardDescription className="text-sm sm:text-base leading-relaxed font-medium">Interactive sessions delivered in schools across the U.S., India, Guatemala, and more.</CardDescription>
               </CardContent>
             </Card>
             <Card className="group relative overflow-hidden border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-md transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-secondary/30 dark:hover:shadow-secondary/40 hover:-translate-y-3 hover:border-secondary/60 dark:hover:border-secondary/70">
@@ -150,7 +297,7 @@ export default function Home() {
                 <CardTitle className="text-xl sm:text-2xl font-bold tracking-tight mb-2">Ambassador Program</CardTitle>
               </CardHeader>
               <CardContent className="relative pt-0 text-center px-4 sm:px-6 pb-6">
-                <CardDescription className="text-sm sm:text-base leading-relaxed font-medium">3-month leadership track to launch clubs and lead workshops.</CardDescription>
+                <CardDescription className="text-sm sm:text-base leading-relaxed font-medium">We train teens to launch cybersecurity and AI clubs in their schools.</CardDescription>
               </CardContent>
             </Card>
             <Card className="group relative overflow-hidden border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-md transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/30 dark:hover:shadow-primary/40 hover:-translate-y-3 hover:border-primary/60 dark:hover:border-primary/70">
@@ -158,12 +305,12 @@ export default function Home() {
               <div className="absolute top-0 right-0 w-40 h-40 bg-primary/8 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
               <CardHeader className="relative pb-4 text-center px-4 sm:px-6">
                 <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-primary/25 via-secondary/20 to-primary/10 dark:from-primary/35 dark:via-secondary/30 dark:to-primary/20 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 mx-auto group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 ease-out shadow-xl shadow-primary/25 dark:shadow-primary/35 ring-2 ring-primary/10 dark:ring-primary/20">
-                  <Rocket className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
+                  <Briefcase className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
                 </div>
-                <CardTitle className="text-xl sm:text-2xl font-bold tracking-tight mb-2">Global Community</CardTitle>
+                <CardTitle className="text-xl sm:text-2xl font-bold tracking-tight mb-2">Real-World Projects</CardTitle>
               </CardHeader>
               <CardContent className="relative pt-0 text-center px-4 sm:px-6 pb-6">
-                <CardDescription className="text-sm sm:text-base leading-relaxed font-medium">Monthly meetups, project showcases, and mentorship sessions.</CardDescription>
+                <CardDescription className="text-sm sm:text-base leading-relaxed font-medium">Awareness campaigns, community outreach, research, and student-led events.</CardDescription>
               </CardContent>
             </Card>
           </div>

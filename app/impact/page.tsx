@@ -1,15 +1,63 @@
+'use client'
+
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import { Users, GraduationCap, Globe, Star } from "lucide-react"
 import Link from "next/link"
 
-export const metadata = {
-  title: "Impact | YLCA - Young Leaders in Cybersecurity & AI",
-  description: "See YLCA's global reach, success stories, and partnerships.",
+const storiesImages = [
+  "/stories/Add-IMG-20251202-WA0012.jpg",
+  "/stories/Add-IMG-20251202-WA0016.jpg",
+  "/stories/Add-IMG-20251202-WA0018.jpg",
+  "/stories/Add-IMG-20251202-WA0020.jpg",
+  "/stories/Add-L2.png",
+  "/stories/Add-L3.png",
+  "/stories/Add-L6.png",
+  "/stories/Add-l8.png",
+  "/stories/Add-Ludhina1.png",
+  "/stories/Add-Workshop screenshot.jpg",
+  "/stories/AddL4.png",
+  "/stories/Copy of Add-IMG-20251202-WA0012.jpg",
+  "/stories/Copy of Add-Nov26-LudhianaSchool1.png",
+  "/stories/Screenshot 2025-12-01 215830.png",
+]
+
+function StoriesCarousel() {
+  return (
+    <div className="mb-8 sm:mb-12 md:mb-16">
+      <Carousel
+        opts={{
+          align: "start",
+          loop: true,
+        }}
+        className="w-full"
+      >
+        <CarouselContent className="-ml-2 md:-ml-4">
+          {storiesImages.map((image, index) => (
+            <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+              <div className="group relative rounded-2xl overflow-hidden border border-border/50 bg-card shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img
+                    src={image}
+                    alt={`Story ${index + 1}`}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="hidden sm:flex -left-12" />
+        <CarouselNext className="hidden sm:flex -right-12" />
+      </Carousel>
+    </div>
+  )
 }
 
 export default function Impact() {
@@ -91,26 +139,6 @@ export default function Impact() {
           </div>
         </section>
 
-        {/* Global Reach */}
-        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-bold text-center mb-6 sm:mb-8 md:mb-12 text-foreground px-4">Global Reach</h2>
-            
-            <div className="p-4 sm:p-6 md:p-8 rounded-xl border-2 border-border/50 dark:border-border/30 bg-card/80 backdrop-blur-sm shadow-lg">
-              <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-foreground mb-3 sm:mb-4 md:mb-6 text-center">Countries We've Reached</h3>
-              <div className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 text-xs sm:text-sm md:text-base text-muted-foreground">
-                <span className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-background/50 border border-border/50">United States</span>
-                <span className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-background/50 border border-border/50">India</span>
-                <span className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-background/50 border border-border/50">Guatemala</span>
-                <span className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-background/50 border border-border/50">Canada</span>
-                <span className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-background/50 border border-border/50">United Kingdom</span>
-                <span className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-background/50 border border-border/50">Australia</span>
-                <span className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-background/50 border border-border/50">And more...</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Stories & Photos */}
         <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background">
           <div className="max-w-6xl mx-auto">
@@ -119,48 +147,8 @@ export default function Impact() {
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">Stories & Photos</h2>
             </div>
             
-            {/* Photo Gallery */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12 md:mb-16">
-              <div className="group relative rounded-2xl overflow-hidden border border-border/50 bg-card shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src="/young-tech-leaders-cybersecurity-ai-innovation.jpg"
-                    alt="Young leaders in cybersecurity"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <p className="text-white font-semibold">Young Leaders Workshop</p>
-                </div>
-              </div>
-              <div className="group relative rounded-2xl overflow-hidden border border-border/50 bg-card shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src="/diverse-team-cybersecurity-leaders-working-togethe.jpg"
-                    alt="Diverse team working together"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <p className="text-white font-semibold">Team Collaboration</p>
-                </div>
-              </div>
-              <div className="group relative rounded-2xl overflow-hidden border border-border/50 bg-card shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src="/team-of-cybersecurity-experts-in-modern-office.jpg"
-                    alt="Team of cybersecurity experts"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <p className="text-white font-semibold">Expert Mentorship</p>
-                </div>
-              </div>
-            </div>
+            {/* Photo Gallery Carousel */}
+            <StoriesCarousel />
 
             {/* Success Stories */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
@@ -233,71 +221,6 @@ export default function Impact() {
                       <p className="text-xs text-muted-foreground">Guatemala</p>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-
-        {/* Partnerships */}
-        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-bold text-center mb-6 sm:mb-8 md:mb-12 text-foreground px-4">Partnerships</h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-              <Card className="group relative overflow-hidden border-2 border-border/50 dark:border-border/30 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary/40 dark:hover:border-primary/50">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <CardHeader className="relative">
-                  <CardTitle className="text-xl font-bold">Elevance Systems</CardTitle>
-                </CardHeader>
-                <CardContent className="relative">
-                  <CardDescription className="mb-4 text-sm">
-                    Primary corporate sponsor supporting YLCA through CSR, providing mentorship, resources, and opportunities.
-                  </CardDescription>
-                  <a
-                    href="https://www.elevancesystems.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:text-secondary transition font-medium text-sm"
-                  >
-                    Learn more →
-                  </a>
-                </CardContent>
-              </Card>
-
-              <Card className="group relative overflow-hidden border-2 border-border/50 dark:border-border/30 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-secondary/40 dark:hover:border-secondary/50">
-                <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <CardHeader className="relative">
-                  <CardTitle className="text-xl font-bold">Nova Foundation</CardTitle>
-                </CardHeader>
-                <CardContent className="relative">
-                  <CardDescription className="text-sm">
-                    YLCA operates under Nova Foundation, supporting youth-led social impact projects and educational programs.
-                  </CardDescription>
-                </CardContent>
-              </Card>
-
-              <Card className="group relative overflow-hidden border-2 border-border/50 dark:border-border/30 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary/40 dark:hover:border-primary/50">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <CardHeader className="relative">
-                  <CardTitle className="text-xl font-bold">UIUC</CardTitle>
-                </CardHeader>
-                <CardContent className="relative">
-                  <CardDescription className="text-sm">
-                    Research partnerships advancing cybersecurity and AI education for youth.
-                  </CardDescription>
-                </CardContent>
-              </Card>
-
-              <Card className="group relative overflow-hidden border-2 border-border/50 dark:border-border/30 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-secondary/40 dark:hover:border-secondary/50">
-                <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <CardHeader className="relative">
-                  <CardTitle className="text-xl font-bold">Microsoft</CardTitle>
-                </CardHeader>
-                <CardContent className="relative">
-                  <CardDescription className="text-sm">
-                    Industry mentors providing guidance and support to develop leadership skills and technical expertise.
-                  </CardDescription>
                 </CardContent>
               </Card>
             </div>

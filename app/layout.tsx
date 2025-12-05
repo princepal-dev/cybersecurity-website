@@ -14,8 +14,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "YLCA - Young Leaders in Cybersecurity & AI",
-  description: "Empowering Teens to Secure the Digital World. A global youth-led initiative training the next generation of cybersecurity and AI leaders.",
+  title: "Young Leaders in Cybersecurity & AI",
+  description: "Empowering Teens to Secure the Digital World. A global youth-led initiative empowering the next generation of cybersecurity and AI leaders through hands-on workshops and mentorship from industry experts.",
   generator: "v0.app",
   icons: {
     icon: [

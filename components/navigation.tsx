@@ -2,10 +2,11 @@
 
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import Image from "next/image"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
-import { Menu, X, Shield } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 export function Navigation() {
@@ -43,11 +44,17 @@ export function Navigation() {
     <nav className="fixed top-0 w-full bg-background/95 dark:bg-background/95 backdrop-blur-xl border-b border-border/60 z-50 shadow-sm shadow-black/5 dark:shadow-black/20 transition-all duration-300 ease-out">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
-          <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-primary via-primary to-secondary rounded-lg flex items-center justify-center shadow-lg shadow-primary/30 dark:shadow-primary/40 group-hover:scale-105 transition-all duration-300 ease-out will-change-transform">
-              <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+          <Link href="/" className="flex items-center group">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 relative flex items-center justify-center group-hover:scale-105 transition-all duration-300 ease-out will-change-transform">
+              <Image 
+                src="/logo.png" 
+                alt="Young Leaders in Cybersecurity & AI Logo" 
+                width={96} 
+                height={96} 
+                className="object-contain"
+                priority
+              />
             </div>
-            <span className="text-xl sm:text-2xl font-bold text-foreground tracking-tight transition-colors duration-200 group-hover:text-primary">YLCA</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -88,13 +95,18 @@ export function Navigation() {
               <SheetContent side="right" className="w-[300px] sm:w-[400px] p-0">
                 <div className="flex flex-col h-full">
                   <div className="p-6 border-b border-border/50">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 bg-gradient-to-br from-primary via-primary to-secondary rounded-lg flex items-center justify-center shadow-lg shadow-primary/25">
-                        <Shield className="w-6 h-6 text-white" />
+                    <div className="flex items-center justify-center mb-4">
+                      <div className="w-20 h-20 sm:w-24 sm:h-24 relative flex items-center justify-center">
+                        <Image 
+                          src="/logo.png" 
+                          alt="Young Leaders in Cybersecurity & AI Logo" 
+                          width={96} 
+                          height={96} 
+                          className="object-contain"
+                        />
                       </div>
-                      <span className="text-2xl font-bold text-foreground tracking-tight">YLCA</span>
                     </div>
-                    <p className="text-sm text-muted-foreground">Empowering Teens to Secure the Digital World</p>
+                    <p className="text-sm text-muted-foreground text-center">Empowering Teens to Secure the Digital World</p>
                   </div>
                   
                   <nav className="flex-1 p-4 space-y-2 overflow-y-auto">

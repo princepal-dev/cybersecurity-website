@@ -26,7 +26,11 @@ export function Hero() {
         </h1>
 
         <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground mb-8 sm:mb-10 text-balance max-w-3xl mx-auto leading-relaxed font-normal px-4">
-          A global youth-led initiative training the next generation of cybersecurity and AI leaders to build a safer, more responsible digital future.
+          A global youth-led initiative{" "}
+          <span className="font-semibold text-foreground">empowering</span> the next generation of{" "}
+          <span className="font-semibold text-foreground">cybersecurity and AI leaders</span> through{" "}
+          <span className="font-semibold text-foreground">hands-on workshops</span> and{" "}
+          <span className="font-semibold text-foreground">mentorship from industry experts</span> to build a safer, more responsible digital future.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-12 sm:mb-16 px-4">
@@ -58,7 +62,7 @@ export function Hero() {
         <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-border/60 dark:border-border/40 bg-gradient-to-br from-card to-card/50 p-0.5 sm:p-1 shadow-2xl dark:shadow-black/40 transition-all duration-500 ease-out hover:shadow-3xl dark:hover:shadow-black/60 group">
           <div className="aspect-video bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent rounded-xl sm:rounded-2xl overflow-hidden">
             <img
-              src="/young-tech-leaders-cybersecurity-ai-innovation.jpg"
+              src="/img-1.jpg"
               alt="Young Leaders in Cybersecurity and AI"
               className="w-full h-full object-cover rounded-xl sm:rounded-2xl transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
               loading="eager"
