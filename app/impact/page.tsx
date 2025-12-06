@@ -25,6 +25,11 @@ const storiesImages = [
   "/stories/Copy of Add-IMG-20251202-WA0012.jpg",
   "/stories/Copy of Add-Nov26-LudhianaSchool1.png",
   "/stories/Screenshot 2025-12-01 215830.png",
+  "/stories/WhatsApp Image 2025-12-06 at 12.52.31.jpeg",
+  "/stories/WhatsApp Image 2025-12-06 at 12.54.29.jpeg",
+  "/stories/WhatsApp Image 2025-12-06 at 12.56.18.jpeg",
+  "/stories/WhatsApp Image 2025-12-06 at 12.56.19.jpeg",
+  "/stories/WhatsApp Image 2025-12-06 at 12.56.19 (1).jpeg",
 ]
 
 function StoriesCarousel() {
@@ -41,11 +46,11 @@ function StoriesCarousel() {
           {storiesImages.map((image, index) => (
             <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
               <div className="group relative rounded-2xl overflow-hidden border border-border/50 bg-card shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                <div className="aspect-[4/3] overflow-hidden">
+                <div className="aspect-[4/3] overflow-hidden bg-muted/20">
                   <img
                     src={image}
                     alt={`Story ${index + 1}`}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>

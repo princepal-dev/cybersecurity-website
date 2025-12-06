@@ -1,15 +1,58 @@
+'use client'
+
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Eye, GraduationCap, Rocket, Shield } from "lucide-react"
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
+import { Eye, GraduationCap, Rocket, Shield, Linkedin } from "lucide-react"
 import Link from "next/link"
 
-export const metadata = {
-  title: "About Young Leaders in Cybersecurity & AI",
-  description: "Learn about Young Leaders in Cybersecurity & AI's vision, mission, founder Arth Bhardwaj, and our partners.",
-}
+const advisors = [
+  {
+    name: "Vaijayanti Korde",
+    title: "Head of Cybersecurity, Crypto Agility & Cloud Security, Visa",
+    linkedin: "https://www.linkedin.com/in/vaijayantikorde",
+    image: "https://images.squarespace-cdn.com/content/v1/66d5495ee0be0777a7bc5b72/bf730e9c-7e02-47a5-85a7-46ad0ec619fc/Vaijyanti+Generative+AI+.jpg?format=750w"
+  },
+  {
+    name: "Michael Ingram",
+    title: "Director - Network Security & Architecture, Elevance Systems, Inc.",
+    linkedin: null,
+    image: "https://images.squarespace-cdn.com/content/v1/66d5495ee0be0777a7bc5b72/ec686b54-9455-4c4e-9f62-573ed0cb103e/MI.jpg?format=750w"
+  },
+  {
+    name: "Prativa Bawri",
+    title: "Staff Software Engineer, VMWare Carbon Black",
+    linkedin: "https://www.linkedin.com/in/prativa-bawri-b9797351",
+    image: "https://images.squarespace-cdn.com/content/v1/66d5495ee0be0777a7bc5b72/c5d5c13a-e577-4f48-b0a5-cc4767d635d8/Prativa_Expand.jpg?format=750w"
+  },
+  {
+    name: "Michael Zeberlein",
+    title: "Principal Security Researcher, Microsoft",
+    linkedin: "https://www.linkedin.com/in/ception/",
+    image: "https://images.squarespace-cdn.com/content/v1/66d5495ee0be0777a7bc5b72/a1c9483f-cc12-4f3e-9158-596ac5a48ed4/ZeberleinProfile.jpg?format=750w"
+  },
+  {
+    name: "Ralph Johnson",
+    title: "Vice President, IT Managed Services, Elevance Systems",
+    linkedin: null,
+    image: "https://images.squarespace-cdn.com/content/v1/66d5495ee0be0777a7bc5b72/4f135a4f-5104-4924-a582-ddd8b7a80d50/AI_Ralph+Johnson+2.jpg?format=750w"
+  },
+  {
+    name: "Lalit Jain, PhD",
+    title: "Co-Founder, CTO, & AI Innovator, Microsoft",
+    linkedin: "https://www.linkedin.com/in/lalit-jain-phd-54248b20",
+    image: "https://images.squarespace-cdn.com/content/v1/66d5495ee0be0777a7bc5b72/032e3765-aace-4e74-9359-c271dfb03100/lalit.jpeg?format=750w"
+  },
+  {
+    name: "Anjali Mangal",
+    title: "Senior Director Azure Security @ Microsoft | Leading AI and Research in Cybersecurity",
+    linkedin: "https://www.linkedin.com/in/anjali-mangal-0b67667/",
+    image: "https://images.squarespace-cdn.com/content/v1/66d5495ee0be0777a7bc5b72/9e6168f4-27c9-46d8-b1d6-d7149688d982/Anjali-profile.jpeg?format=2500w"
+  }
+]
 
 export default function About() {
   return (
@@ -150,7 +193,7 @@ export default function About() {
                 <div className="absolute -top-6 -right-6 w-24 h-24 sm:w-32 sm:h-32 bg-primary/10 rounded-full blur-2xl"></div>
                 <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-border/60 dark:border-border/40 shadow-2xl dark:shadow-black/40 group">
                   <img
-                    src="/young-tech-leaders-cybersecurity-ai-innovation.jpg"
+                    src="/arth-img.webp"
                     alt="Arth Bhardwaj"
                     className="w-full h-[350px] sm:h-[450px] md:h-[500px] object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
@@ -181,6 +224,63 @@ export default function About() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Advisors and Mentors */}
+        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 sm:w-96 sm:h-96 bg-secondary/5 rounded-full blur-3xl"></div>
+          <div className="max-w-6xl mx-auto relative z-10">
+            <div className="text-center mb-8 sm:mb-12">
+              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">ADVISORS & MENTORS</Badge>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 px-4">Advisors and Mentors</h2>
+            </div>
+            
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {advisors.map((advisor, index) => (
+                  <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                    <Card className="group relative overflow-hidden border-2 border-border/60 dark:border-border/40 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary/40 dark:hover:border-primary/50 h-full">
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <CardHeader className="relative">
+                        <div className="aspect-square w-full mb-4 rounded-xl overflow-hidden border border-border/40">
+                          <img
+                            src={advisor.image}
+                            alt={advisor.name}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                          />
+                        </div>
+                        <CardTitle className="text-xl font-bold">{advisor.name}</CardTitle>
+                      </CardHeader>
+                      <CardContent className="relative">
+                        <CardDescription className="mb-4 text-sm leading-relaxed">
+                          {advisor.title}
+                        </CardDescription>
+                        {advisor.linkedin && (
+                          <a
+                            href={advisor.linkedin}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 text-primary hover:text-secondary transition-colors text-sm font-medium"
+                          >
+                            <Linkedin className="w-4 h-4" />
+                            LinkedIn
+                          </a>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden sm:flex -left-12" />
+              <CarouselNext className="hidden sm:flex -right-12" />
+            </Carousel>
           </div>
         </section>
 
