@@ -11,20 +11,42 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { GraduationCap, School, Handshake, Briefcase, Mail } from "lucide-react"
+import { GraduationCap, School, Handshake, Briefcase, Mail, Linkedin } from "lucide-react"
 import { useState } from "react"
 
 export default function GetInvolved() {
   const [submitted, setSubmitted] = useState<string | null>(null)
 
-  const handleSubmit = (e: React.FormEvent, formType: string) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, formType: string) => {
     e.preventDefault()
-    // Handle form submission here
-    console.log(`Form submitted: ${formType}`)
-    setSubmitted(formType)
-    setTimeout(() => {
-      setSubmitted(null)
-    }, 3000)
+    
+    const form = e.currentTarget
+    const formData = new FormData(form)
+    const data = Object.fromEntries(formData.entries())
+    
+    try {
+      // You can replace this with your actual API endpoint or form submission service
+      // For now, we'll log the data and show success message
+      console.log(`Form submitted: ${formType}`, data)
+      
+      // Example: Submit to an API endpoint
+      // const response = await fetch('/api/submit-form', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ formType, ...data })
+      // })
+      // if (!response.ok) throw new Error('Submission failed')
+      
+      setSubmitted(formType)
+      form.reset()
+      
+      setTimeout(() => {
+        setSubmitted(null)
+      }, 3000)
+    } catch (error) {
+      console.error('Form submission error:', error)
+      alert('There was an error submitting your form. Please try again.')
+    }
   }
 
   return (
@@ -526,14 +548,32 @@ export default function GetInvolved() {
         <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 bg-card/30">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-foreground">Contact Information</h2>
-            <div className="flex justify-center">
-              <Card className="max-w-md w-full">
+            <div className="grid sm:grid-cols-2 gap-6 sm:gap-8 max-w-2xl mx-auto">
+              <Card>
                 <CardHeader>
-                  <CardTitle className="text-sm sm:text-base">Email</CardTitle>
+                  <CardTitle className="text-sm sm:text-base flex items-center gap-2">
+                    <Mail className="w-4 h-4" />
+                    Email
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <CardDescription className="break-all">
                     <a href="mailto:Arth.Bhardwaj@elevancesystems.com" className="text-primary hover:text-secondary transition-colors underline underline-offset-2">Arth.Bhardwaj@elevancesystems.com</a>
+                  </CardDescription>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-sm sm:text-base flex items-center gap-2">
+                    <Linkedin className="w-4 h-4" />
+                    LinkedIn
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription>
+                    <a href="https://www.linkedin.com/in/arth-bhardwaj-01440b376/" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-secondary transition-colors underline underline-offset-2">
+                      Arth Bhardwaj
+                    </a>
                   </CardDescription>
                 </CardContent>
               </Card>

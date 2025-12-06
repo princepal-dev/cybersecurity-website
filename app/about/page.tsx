@@ -85,8 +85,8 @@ export default function About() {
               <div className="relative mt-8 md:mt-0">
                 <div className="rounded-2xl sm:rounded-3xl overflow-hidden border border-border/60 dark:border-border/40 shadow-2xl dark:shadow-black/40 group">
                   <img
-                    src="/diverse-team-cybersecurity-leaders-working-togethe.jpg"
-                    alt="Young Leaders in Cybersecurity & AI Team"
+                    src="/young-tech-leaders-cybersecurity-ai-innovation.jpg"
+                    alt="Young Leaders in Cybersecurity & AI"
                     className="w-full h-[300px] sm:h-[400px] object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
                   <div className="absolute inset-0 ring-1 ring-primary/20 dark:ring-primary/30 rounded-2xl sm:rounded-3xl pointer-events-none"></div>
@@ -197,7 +197,6 @@ export default function About() {
                     alt="Arth Bhardwaj"
                     className="w-full h-[350px] sm:h-[450px] md:h-[500px] object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent"></div>
                   <div className="absolute inset-0 ring-1 ring-primary/20 dark:ring-primary/30 rounded-2xl sm:rounded-3xl pointer-events-none"></div>
                 </div>
               </div>

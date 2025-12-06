@@ -97,9 +97,9 @@ export function Footer() {
               Elevance Systems
             </a>
             <span className="text-border/60 dark:text-border/40 hidden sm:inline">•</span>
-            <a href="#" className="hover:text-primary transition-colors duration-200 whitespace-nowrap">
+            <Link href="/privacy-policy" className="hover:text-primary transition-colors duration-200 whitespace-nowrap">
               Privacy Policy
-            </a>
+            </Link>
           </div>
         </div>
       </div>
