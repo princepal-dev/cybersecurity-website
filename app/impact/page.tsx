@@ -11,19 +11,19 @@ import { Users, GraduationCap, Globe, Star } from "lucide-react"
 import Link from "next/link"
 
 const storiesImages = [
+  "/stories/Copy of Add-Nov26-LudhianaSchool1.png",
+  "/stories/Add-L6.png",
+  "/stories/Add-l8.png",
   "/stories/Add-IMG-20251202-WA0012.jpg",
   "/stories/Add-IMG-20251202-WA0016.jpg",
   "/stories/Add-IMG-20251202-WA0018.jpg",
   "/stories/Add-IMG-20251202-WA0020.jpg",
   "/stories/Add-L2.png",
   "/stories/Add-L3.png",
-  "/stories/Add-L6.png",
-  "/stories/Add-l8.png",
   "/stories/Add-Ludhina1.png",
   "/stories/Add-Workshop screenshot.jpg",
   "/stories/AddL4.png",
   "/stories/Copy of Add-IMG-20251202-WA0012.jpg",
-  "/stories/Copy of Add-Nov26-LudhianaSchool1.png",
   "/stories/Screenshot 2025-12-01 215830.png",
   "/stories/WhatsApp Image 2025-12-06 at 12.52.31.jpeg",
   "/stories/WhatsApp Image 2025-12-06 at 12.54.29.jpeg",
