@@ -17,6 +17,12 @@ const advisors = [
     image: "https://images.squarespace-cdn.com/content/v1/66d5495ee0be0777a7bc5b72/bf730e9c-7e02-47a5-85a7-46ad0ec619fc/Vaijyanti+Generative+AI+.jpg?format=750w"
   },
   {
+    name: "Anjali Mangal",
+    title: "Senior Director Azure Security @ Microsoft | Leading AI and Research in Cybersecurity",
+    linkedin: "https://www.linkedin.com/in/anjali-mangal-0b67667/",
+    image: "https://images.squarespace-cdn.com/content/v1/66d5495ee0be0777a7bc5b72/9e6168f4-27c9-46d8-b1d6-d7149688d982/Anjali-profile.jpeg?format=2500w"
+  },
+  {
     name: "Michael Ingram",
     title: "Director - Network Security & Architecture, Elevance Systems, Inc.",
     linkedin: null,
@@ -45,12 +51,6 @@ const advisors = [
     title: "Co-Founder, CTO, & AI Innovator, Microsoft",
     linkedin: "https://www.linkedin.com/in/lalit-jain-phd-54248b20",
     image: "https://images.squarespace-cdn.com/content/v1/66d5495ee0be0777a7bc5b72/032e3765-aace-4e74-9359-c271dfb03100/lalit.jpeg?format=750w"
-  },
-  {
-    name: "Anjali Mangal",
-    title: "Senior Director Azure Security @ Microsoft | Leading AI and Research in Cybersecurity",
-    linkedin: "https://www.linkedin.com/in/anjali-mangal-0b67667/",
-    image: "https://images.squarespace-cdn.com/content/v1/66d5495ee0be0777a7bc5b72/9e6168f4-27c9-46d8-b1d6-d7149688d982/Anjali-profile.jpeg?format=2500w"
   }
 ]
 

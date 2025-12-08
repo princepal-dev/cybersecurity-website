@@ -16,29 +16,71 @@ import { useState } from "react"
 
 export default function GetInvolved() {
   const [submitted, setSubmitted] = useState<string | null>(null)
+  
+  // State to track Select values for each form
+  const [studentForm, setStudentForm] = useState({ grade: '', interest: '' })
+  const [schoolForm, setSchoolForm] = useState({ role: '' })
+  const [volunteerForm, setVolunteerForm] = useState({ role: '', expertise: '' })
+  const [partnershipForm, setPartnershipForm] = useState({ partnershipType: '' })
+  const [contactForm, setContactForm] = useState({ subject: '' })
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, formType: string) => {
     e.preventDefault()
     
     const form = e.currentTarget
     const formData = new FormData(form)
-    const data = Object.fromEntries(formData.entries())
+    
+    // Manually add Select values to FormData (Radix UI Select doesn't auto-submit)
+    if (formType === 'student') {
+      if (studentForm.grade) formData.set('grade', studentForm.grade)
+      if (studentForm.interest) formData.set('interest', studentForm.interest)
+    } else if (formType === 'school') {
+      if (schoolForm.role) formData.set('role', schoolForm.role)
+    } else if (formType === 'volunteer') {
+      if (volunteerForm.role) formData.set('role', volunteerForm.role)
+      if (volunteerForm.expertise) formData.set('expertise', volunteerForm.expertise)
+    } else if (formType === 'partnership') {
+      if (partnershipForm.partnershipType) formData.set('partnershipType', partnershipForm.partnershipType)
+    } else if (formType === 'contact') {
+      if (contactForm.subject) formData.set('subject', contactForm.subject)
+    }
+    
+    // Add form type to the form data so it's included in the email
+    formData.append('_formType', formType)
+    
+    // FormSubmit configuration
+    formData.append('_captcha', 'false') // Disable captcha (optional)
+    formData.append('_template', 'box') // Email template style
+    formData.append('_subject', `YLCA ${formType.charAt(0).toUpperCase() + formType.slice(1)} Form Submission`)
     
     try {
-      // You can replace this with your actual API endpoint or form submission service
-      // For now, we'll log the data and show success message
-      console.log(`Form submitted: ${formType}`, data)
+      const response = await fetch('https://formsubmit.co/Arth.Bhardwaj@elevancesystems.com', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
       
-      // Example: Submit to an API endpoint
-      // const response = await fetch('/api/submit-form', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ formType, ...data })
-      // })
-      // if (!response.ok) throw new Error('Submission failed')
+      if (!response.ok) {
+        throw new Error('Submission failed')
+      }
       
       setSubmitted(formType)
       form.reset()
+      
+      // Reset form state
+      if (formType === 'student') {
+        setStudentForm({ grade: '', interest: '' })
+      } else if (formType === 'school') {
+        setSchoolForm({ role: '' })
+      } else if (formType === 'volunteer') {
+        setVolunteerForm({ role: '', expertise: '' })
+      } else if (formType === 'partnership') {
+        setPartnershipForm({ partnershipType: '' })
+      } else if (formType === 'contact') {
+        setContactForm({ subject: '' })
+      }
       
       setTimeout(() => {
         setSubmitted(null)
@@ -197,7 +239,12 @@ export default function GetInvolved() {
 
                         <div className="space-y-2">
                           <Label htmlFor="student-grade">Grade Level *</Label>
-                          <Select name="grade" required>
+                          <Select 
+                            name="grade" 
+                            required
+                            value={studentForm.grade}
+                            onValueChange={(value) => setStudentForm({ ...studentForm, grade: value })}
+                          >
                             <SelectTrigger id="student-grade">
                               <SelectValue placeholder="Select grade" />
                             </SelectTrigger>
@@ -237,7 +284,12 @@ export default function GetInvolved() {
 
                       <div className="space-y-2">
                         <Label htmlFor="student-interest">What interests you most? *</Label>
-                        <Select name="interest" required>
+                        <Select 
+                          name="interest" 
+                          required
+                          value={studentForm.interest}
+                          onValueChange={(value) => setStudentForm({ ...studentForm, interest: value })}
+                        >
                           <SelectTrigger id="student-interest">
                             <SelectValue placeholder="Select interest" />
                           </SelectTrigger>
@@ -303,7 +355,12 @@ export default function GetInvolved() {
 
                       <div className="space-y-2">
                         <Label htmlFor="contact-role">Your Role *</Label>
-                        <Select name="role" required>
+                        <Select 
+                          name="role" 
+                          required
+                          value={schoolForm.role}
+                          onValueChange={(value) => setSchoolForm({ ...schoolForm, role: value })}
+                        >
                           <SelectTrigger id="contact-role">
                             <SelectValue placeholder="Select role" />
                           </SelectTrigger>
@@ -372,7 +429,12 @@ export default function GetInvolved() {
 
                       <div className="space-y-2">
                         <Label htmlFor="volunteer-role">I want to: *</Label>
-                        <Select name="role" required>
+                        <Select 
+                          name="role" 
+                          required
+                          value={volunteerForm.role}
+                          onValueChange={(value) => setVolunteerForm({ ...volunteerForm, role: value })}
+                        >
                           <SelectTrigger id="volunteer-role">
                             <SelectValue placeholder="Select option" />
                           </SelectTrigger>
@@ -391,7 +453,12 @@ export default function GetInvolved() {
 
                       <div className="space-y-2">
                         <Label htmlFor="volunteer-expertise">Area of Expertise *</Label>
-                        <Select name="expertise" required>
+                        <Select 
+                          name="expertise" 
+                          required
+                          value={volunteerForm.expertise}
+                          onValueChange={(value) => setVolunteerForm({ ...volunteerForm, expertise: value })}
+                        >
                           <SelectTrigger id="volunteer-expertise">
                             <SelectValue placeholder="Select expertise" />
                           </SelectTrigger>
@@ -456,7 +523,12 @@ export default function GetInvolved() {
 
                       <div className="space-y-2">
                         <Label htmlFor="partner-type">Partnership Type *</Label>
-                        <Select name="partnershipType" required>
+                        <Select 
+                          name="partnershipType" 
+                          required
+                          value={partnershipForm.partnershipType}
+                          onValueChange={(value) => setPartnershipForm({ ...partnershipForm, partnershipType: value })}
+                        >
                           <SelectTrigger id="partner-type">
                             <SelectValue placeholder="Select type" />
                           </SelectTrigger>
@@ -515,7 +587,12 @@ export default function GetInvolved() {
 
                       <div className="space-y-2">
                         <Label htmlFor="contact-subject">Subject *</Label>
-                        <Select name="subject" required>
+                        <Select 
+                          name="subject" 
+                          required
+                          value={contactForm.subject}
+                          onValueChange={(value) => setContactForm({ ...contactForm, subject: value })}
+                        >
                           <SelectTrigger id="contact-subject">
                             <SelectValue placeholder="Select a subject" />
                           </SelectTrigger>
