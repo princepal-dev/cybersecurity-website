@@ -51,6 +51,12 @@ const advisors = [
     title: "Co-Founder, CTO, & AI Innovator, Microsoft",
     linkedin: "https://www.linkedin.com/in/lalit-jain-phd-54248b20",
     image: "https://images.squarespace-cdn.com/content/v1/66d5495ee0be0777a7bc5b72/032e3765-aace-4e74-9359-c271dfb03100/lalit.jpeg?format=750w"
+  },
+  {
+    name: "Sia Godika",
+    title: "Computer Science & Finance undergrad student at MIT. Founder to international organizations, interested in applications of Technology and ML in the real world.",
+    linkedin: "https://www.linkedin.com/in/sia-godika-986238285/?trk=blended-typeahead",
+    image: "/sia.jpeg"
   }
 ]
 
