@@ -66,7 +66,7 @@ export default function Home() {
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-sm sm:text-base leading-relaxed">
-                  Operating across multiple countries including the United States, India, Guatemala, and beyond. Our programs are designed to be accessible globally, with workshops delivered in schools and communities worldwide, all completely free of charge.
+                  Our programs are designed to be accessible globally, with workshops delivered in schools and communities worldwide, all completely free of charge.
                 </CardDescription>
               </CardContent>
             </Card>
@@ -347,7 +347,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
               <div className="absolute top-0 right-0 w-40 h-40 bg-primary/8 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
               <CardContent className="relative pt-6 sm:pt-8 pb-6 sm:pb-8 px-4">
-                <div className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-br from-primary via-primary to-primary/80 bg-clip-text text-transparent mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-500 ease-out">1000+</div>
+                <div className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-br from-primary via-primary to-primary/80 bg-clip-text text-transparent mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-500 ease-out">2000+</div>
                 <CardDescription className="font-semibold text-xs sm:text-sm uppercase tracking-wider">Students Reached</CardDescription>
               </CardContent>
             </Card>
