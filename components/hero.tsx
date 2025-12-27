@@ -62,8 +62,8 @@ export function Hero() {
         <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-border/60 dark:border-border/40 bg-gradient-to-br from-card to-card/50 p-0.5 sm:p-1 shadow-2xl dark:shadow-black/40 transition-all duration-500 ease-out hover:shadow-3xl dark:hover:shadow-black/60 group">
           <div className="aspect-video bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent rounded-xl sm:rounded-2xl overflow-hidden">
             <img
-              src="/img-1.jpeg"
-              alt="Young Leaders in Cybersecurity and AI"
+              src="/december/WhatsApp Image 2025-12-27 at 09.23.11.jpeg"
+              alt="YLCA December 2025 Cyber Safety Outreach"
               className="w-full h-full object-cover rounded-xl sm:rounded-2xl transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
               loading="eager"
               decoding="async"

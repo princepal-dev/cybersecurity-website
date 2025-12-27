@@ -7,8 +7,10 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
-import { Users, GraduationCap, Globe, Star } from "lucide-react"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import { Users, GraduationCap, Globe, Star, ChevronLeft, ChevronRight, X } from "lucide-react"
 import Link from "next/link"
+import { useState, useEffect } from "react"
 
 const storiesImages = [
   "/stories/Copy of Add-Nov26-LudhianaSchool1.png",
@@ -54,6 +56,59 @@ const storiesImages = [
   "/new1/WhatsApp Image 2025-12-15 at 10.03.37.jpeg",
 ]
 
+const decemberImages = [
+  "/december/WhatsApp Image 2025-12-27 at 09.22.57.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.22.59 (1).jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.22.59.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.00.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.01.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.02 (1).jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.02.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.03 (1).jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.03.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.08.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.09 (1).jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.09.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.10.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.11 (1).jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.11.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.12 (1).jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.12.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.13 (1).jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.13.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.14 (1).jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.14.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.45.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.46 (1).jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.46.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.48 (1).jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.48.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.49 (1).jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.49.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.50.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.51.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.52.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.54 (1).jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.54.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.55 (1).jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.55.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.56 (1).jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.56.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.57.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.58 (1).jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.58.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.59 (1).jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.23.59.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.24.00.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.24.01 (1).jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.24.01.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.24.02.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.24.03.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.24.04.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.24.05.jpeg",
+  "/december/WhatsApp Image 2025-12-27 at 09.24.07.jpeg",
+]
+
 function StoriesCarousel() {
   return (
     <div className="mb-8 sm:mb-12 md:mb-16">
@@ -87,7 +142,157 @@ function StoriesCarousel() {
   )
 }
 
+function ImageModal({ images, initialIndex, isOpen, onClose }: { images: string[], initialIndex: number, isOpen: boolean, onClose: () => void }) {
+  const [currentIndex, setCurrentIndex] = useState(initialIndex)
+  const [touchStart, setTouchStart] = useState<number | null>(null)
+  const [touchEnd, setTouchEnd] = useState<number | null>(null)
+
+  const goToPrevious = () => {
+    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1))
+  }
+
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1))
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowLeft') goToPrevious()
+    if (e.key === 'ArrowRight') goToNext()
+    if (e.key === 'Escape') onClose()
+  }
+
+  // Minimum swipe distance (in px)
+  const minSwipeDistance = 50
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null)
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const onTouchMove = (e: React.TouchEvent) => setTouchEnd(e.targetTouches[0].clientX)
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > minSwipeDistance
+    const isRightSwipe = distance < -minSwipeDistance
+
+    if (isLeftSwipe) {
+      goToNext()
+    }
+    if (isRightSwipe) {
+      goToPrevious()
+    }
+  }
+
+  // Prevent body scroll when modal is open - must be called before any early returns
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+      document.body.style.paddingRight = '0px' // Prevent layout shift
+    } else {
+      document.body.style.overflow = 'unset'
+      document.body.style.paddingRight = 'unset'
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset'
+      document.body.style.paddingRight = 'unset'
+    }
+  }, [isOpen])
+
+  if (!isOpen) return null
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
+      onKeyDown={handleKeyDown}
+      tabIndex={-1}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+    >
+      <div className="relative w-full max-w-5xl max-h-full flex flex-col">
+        {/* Header with close button */}
+        <div className="flex justify-end mb-4 sm:mb-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-white hover:bg-white/20 h-10 w-10 sm:h-12 sm:w-12 rounded-full"
+            onClick={onClose}
+          >
+            <X className="h-5 w-5 sm:h-6 sm:w-6" />
+          </Button>
+        </div>
+
+        {/* Image container */}
+        <div className="relative flex-1 flex items-center justify-center min-h-0">
+          {/* Navigation buttons - positioned better for mobile */}
+          {images.length > 1 && (
+            <>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 text-white hover:bg-white/20 h-12 w-12 sm:h-14 sm:w-14 rounded-full touch-manipulation"
+                onClick={goToPrevious}
+              >
+                <ChevronLeft className="h-6 w-6 sm:h-8 sm:w-8" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 text-white hover:bg-white/20 h-12 w-12 sm:h-14 sm:w-14 rounded-full touch-manipulation"
+                onClick={goToNext}
+              >
+                <ChevronRight className="h-6 w-6 sm:h-8 sm:w-8" />
+              </Button>
+            </>
+          )}
+
+          {/* Image */}
+          <img
+            src={images[currentIndex]}
+            alt={`December 2025 Outreach ${currentIndex + 1}`}
+            className="max-w-full max-h-full w-auto h-auto object-contain rounded-lg shadow-2xl select-none"
+            style={{
+              maxHeight: 'calc(100vh - 120px)', // Account for header and counter
+              maxWidth: '100vw'
+            }}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+            draggable={false}
+          />
+        </div>
+
+        {/* Footer with image counter */}
+        {images.length > 1 && (
+          <div className="flex justify-center mt-4 sm:mt-2">
+            <div className="bg-black/50 text-white px-4 py-2 rounded-full text-sm sm:text-base font-medium">
+              {currentIndex + 1} / {images.length}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
 export default function Impact() {
+  const [modalOpen, setModalOpen] = useState(false)
+  const [modalImages, setModalImages] = useState<string[]>([])
+  const [modalIndex, setModalIndex] = useState(0)
+
+  const openModal = (images: string[], index: number) => {
+    setModalImages(images)
+    setModalIndex(index)
+    setModalOpen(true)
+  }
+
+  const closeModal = () => {
+    setModalOpen(false)
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -241,6 +446,142 @@ export default function Impact() {
           </div>
         </section>
 
+        {/* December 2025: In-Person Cyber Safety Outreach */}
+        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden">
+          {/* Decorative elements */}
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute top-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+          </div>
+
+          <div className="max-w-6xl mx-auto relative z-10">
+            <div className="text-center mb-8 sm:mb-12">
+              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">DECEMBER 2025</Badge>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
+                In-Person Cyber Safety <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Outreach</span>
+              </h2>
+              <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
+                Students leading cyber safety education across schools and communities
+              </p>
+            </div>
+
+            {/* Content Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 mb-12 sm:mb-16">
+              <div className="space-y-4 sm:space-y-6">
+                <Card className="border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-sm">
+                  <CardContent className="pt-6">
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                      In December 2025, YLCA students stepped beyond classrooms to deliver hands-on cybersecurity and AI awareness sessions across communities in India. Led by founder Arth Bhardwaj and Ambassador Vedika Jain, the initiative reached 500+ students across multiple Delhi government schools, focusing on everyday digital safety topics such as online scams, privacy protection, and responsible use of technology.
+                    </p>
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mt-4">
+                      Arth also conducted workshops for 50+ students at boys' tennis training camps, highlighting social media and gaming account security. In addition, sessions with young factory workers and senior citizens at a community clubhouse addressed financial fraud, mobile security, and common digital risks.
+                    </p>
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mt-4 font-medium">
+                      Through these in-person efforts, YLCA demonstrated how student leadership can translate technical knowledge into meaningful, real-world impact.
+                    </p>
+                  </CardContent>
+                </Card>
+
+                {/* Key Highlights */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Card className="border border-primary/20 dark:border-primary/30 bg-primary/5 dark:bg-primary/10">
+                    <CardContent className="pt-4 pb-4">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-primary mb-1">500+</div>
+                        <p className="text-sm text-muted-foreground">Students Reached</p>
+                        <p className="text-xs text-primary/80 mt-1">Delhi Government Schools</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="border border-secondary/20 dark:border-secondary/30 bg-secondary/5 dark:bg-secondary/10">
+                    <CardContent className="pt-4 pb-4">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-secondary mb-1">50+</div>
+                        <p className="text-sm text-muted-foreground">Tennis Camp Students</p>
+                        <p className="text-xs text-secondary/80 mt-1">Gaming & Social Media Security</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+
+              <div className="space-y-4 sm:space-y-6">
+                {/* Image Carousel */}
+                <Card className="border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-sm">
+                  <CardContent className="pt-6">
+                    <h3 className="text-lg sm:text-xl font-bold mb-4 text-center">Event Highlights</h3>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                      {[
+                        "/december/WhatsApp Image 2025-12-27 at 09.23.45.jpeg",
+                        "/december/WhatsApp Image 2025-12-27 at 09.24.01.jpeg",
+                        "/december/WhatsApp Image 2025-12-27 at 09.23.58.jpeg",
+                        "/december/WhatsApp Image 2025-12-27 at 09.24.05.jpeg",
+                        "/december/WhatsApp Image 2025-12-27 at 09.23.11.jpeg",
+                        "/december/WhatsApp Image 2025-12-27 at 09.23.48.jpeg"
+                      ].map((image, index) => (
+                        <div
+                          key={index}
+                          className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
+                          onClick={() => openModal(decemberImages, decemberImages.indexOf(image))}
+                          role="button"
+                          tabIndex={0}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault()
+                              openModal(decemberImages, decemberImages.indexOf(image))
+                            }
+                          }}
+                          aria-label={`View image ${index + 1} in gallery`}
+                        >
+                          <img
+                            src={image}
+                            alt="December 2025 Outreach"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            loading="lazy"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+
+            {/* Full Width Image Gallery */}
+            <Card className="border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-sm">
+              <CardContent className="pt-6">
+                <h3 className="text-lg sm:text-xl font-bold mb-6 text-center">More Event Photos</h3>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                  {decemberImages.slice(12, 24).map((image, index) => (
+                    <div
+                      key={index}
+                      className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
+                      onClick={() => openModal(decemberImages, index + 12)}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault()
+                          openModal(decemberImages, index + 12)
+                        }
+                      }}
+                      aria-label={`View image ${index + 13} of ${decemberImages.length} in gallery`}
+                    >
+                      <img
+                        src={image}
+                        alt="December 2025 Outreach"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
         {/* Call to Action */}
         <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 bg-gradient-to-br from-primary/10 via-card/30 to-secondary/10">
           <div className="max-w-4xl mx-auto text-center">
@@ -267,6 +608,15 @@ export default function Impact() {
           </div>
         </section>
       </main>
+
+      {/* Image Modal */}
+      <ImageModal
+        images={modalImages}
+        initialIndex={modalIndex}
+        isOpen={modalOpen}
+        onClose={closeModal}
+      />
+
       <Footer />
     </div>
   )
