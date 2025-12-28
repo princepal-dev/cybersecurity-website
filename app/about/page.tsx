@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
-import { Eye, GraduationCap, Rocket, Shield, Linkedin } from "lucide-react"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import { Eye, GraduationCap, Rocket, Shield, Linkedin, ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
-import { Tabs, TabsContent, TabsTrigger, TabsList } from "@/components/ui/tabs"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
@@ -66,7 +66,282 @@ const advisors = [
   }
 ]
 
-function LeadershipApplicationForms() {
+const ambassadors = [
+  {
+    name: "Vedika Jain",
+    title: "YLCA Ambassador - Government Schools (Delhi)",
+    image: "/vedika.jpeg",
+    description: "10th-grade STEM enthusiast and mathematics Olympiad awardee. Founded Youth Voice Journal and Kitaab4U to promote education and creativity.",
+    achievements: [
+      "Mathematics Olympiad awardee",
+      "Founded Youth Voice Journal",
+      "Launched Kitaab4U initiative",
+      "STEM leadership in Delhi"
+    ]
+  }
+]
+
+const leadershipRoles = [
+  {
+    title: "Operations/Program Lead",
+    subtitle: "Work with professional mentors",
+    icon: "operations",
+    responsibilities: [
+      "Coordinate ambassador activities and timelines",
+      "Maintain trackers and organize documents",
+      "Support workshop/event planning"
+    ],
+    color: "primary"
+  },
+  {
+    title: "Content Lead",
+    subtitle: "Website + Social Media",
+    note: "Work with existing developer (no coding required)",
+    icon: "content",
+    responsibilities: [
+      "Publish updates on ylca.tech",
+      "Create social media content",
+      "Collect and curate ambassador stories"
+    ],
+    color: "secondary"
+  }
+]
+
+function AmbassadorCardSection() {
+  const [currentAmbassadorIndex, setCurrentAmbassadorIndex] = useState(0)
+
+  const nextAmbassador = () => {
+    setCurrentAmbassadorIndex((prev) => (prev + 1) % ambassadors.length)
+  }
+
+  const prevAmbassador = () => {
+    setCurrentAmbassadorIndex((prev) => (prev - 1 + ambassadors.length) % ambassadors.length)
+  }
+
+  return (
+    <AmbassadorCard
+      currentIndex={currentAmbassadorIndex}
+      onNext={nextAmbassador}
+      onPrev={prevAmbassador}
+    />
+  )
+}
+
+function AmbassadorCard({ currentIndex, onNext, onPrev }: { currentIndex: number, onNext: () => void, onPrev: () => void }) {
+  const ambassador = ambassadors[currentIndex]
+  const [applyModalOpen, setApplyModalOpen] = useState(false)
+
+  return (
+    <Card className="group relative overflow-hidden border-2 border-border/60 dark:border-border/40 bg-gradient-to-br from-card via-card to-card/95 backdrop-blur-sm hover:border-secondary/50 dark:hover:border-secondary/60 transition-all duration-300 hover:shadow-2xl hover:shadow-secondary/25 dark:hover:shadow-secondary/30 hover:-translate-y-2 hover:scale-[1.01]">
+      <div className="absolute inset-0 bg-gradient-to-br from-secondary/10 via-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <div className="absolute top-0 right-0 w-40 h-40 bg-secondary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+      {/* Navigation Buttons */}
+      <div className="absolute top-4 left-4 z-10 flex gap-2">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8 bg-background/80 backdrop-blur-sm hover:bg-background/90 transition-all duration-200"
+          onClick={onPrev}
+          disabled={currentIndex === 0}
+        >
+          <ChevronLeft className="h-4 w-4" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8 bg-background/80 backdrop-blur-sm hover:bg-background/90 transition-all duration-200"
+          onClick={onNext}
+          disabled={currentIndex === ambassadors.length - 1}
+        >
+          <ChevronRight className="h-4 w-4" />
+        </Button>
+      </div>
+
+      <CardContent className="relative pt-6 px-4 sm:px-6">
+        <div className="flex flex-col md:flex-row gap-4 sm:gap-6">
+          {/* Image */}
+          <div className="flex-shrink-0 mx-auto md:mx-0">
+            <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden border border-border/60 dark:border-border/40 shadow-xl shadow-secondary/20 dark:shadow-secondary/30 group-hover:scale-110 transition-transform duration-300">
+              <img
+                src={ambassador.image}
+                alt={ambassador.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
+          {/* Content */}
+          <div className="flex-1 text-center md:text-left">
+            <div className="mb-4">
+              <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2">{ambassador.name}</h3>
+              <p className="text-secondary font-medium text-sm sm:text-base">{ambassador.title}</p>
+            </div>
+
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4">
+              {ambassador.description}
+            </p>
+
+            {/* Achievements */}
+            <div className="mb-6">
+              <h4 className="font-semibold text-foreground mb-2 text-sm">Key Achievements:</h4>
+              <ul className="text-xs sm:text-sm text-muted-foreground space-y-1">
+                {ambassador.achievements.map((achievement, idx) => (
+                  <li key={idx} className="flex items-center gap-2">
+                    <span className="text-secondary">•</span>
+                    {achievement}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Apply Now Button */}
+            <Dialog open={applyModalOpen} onOpenChange={setApplyModalOpen}>
+              <DialogTrigger asChild>
+                <Button className="bg-gradient-to-r from-secondary to-primary hover:from-secondary/90 hover:to-primary/90 text-white px-6 py-2 rounded-full font-semibold text-sm transition-all duration-300 hover:scale-105">
+                  Apply Now
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-md">
+                <div className="text-center">
+                  <h3 className="text-lg font-bold mb-2">Apply to Become a YLCA Ambassador</h3>
+                  <p className="text-muted-foreground mb-4 text-sm">
+                    Interested in becoming a YLCA Ambassador like Vedika? Fill out our application form.
+                  </p>
+                  <Link href="/get-involved" onClick={() => setApplyModalOpen(false)}>
+                    <Button className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-white px-6 py-2 rounded-full font-semibold">
+                      Start Application
+                    </Button>
+                  </Link>
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
+        </div>
+
+        {/* Card Counter */}
+        <div className="mt-4 pt-4 border-t border-border/40 text-center">
+          <span className="text-xs text-muted-foreground">
+            Ambassador {currentIndex + 1} of {ambassadors.length}
+          </span>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
+function LeadershipRoleCard({ role, onApply }: { role: typeof leadershipRoles[0], onApply: (roleTitle: string) => void }) {
+  const getIcon = (iconType: string) => {
+    if (iconType === "operations") {
+      return (
+        <svg className="w-6 h-6 sm:w-8 sm:h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+      )
+    } else {
+      return (
+        <svg className="w-6 h-6 sm:w-8 sm:h-8 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4V2a1 1 0 011-1h4a1 1 0 011 1v2m4 0H8l.5 16h7L16 4z" />
+        </svg>
+      )
+    }
+  }
+
+  return (
+    <Card className={`group relative overflow-hidden border-2 border-border/60 dark:border-border/40 bg-gradient-to-br from-card via-card to-card/95 backdrop-blur-sm hover:border-${role.color}/50 dark:hover:border-${role.color}/60 transition-all duration-300 hover:shadow-2xl hover:shadow-${role.color}/25 dark:hover:shadow-${role.color}/30 hover:-translate-y-2 hover:scale-[1.01]`}>
+      <div className={`absolute inset-0 bg-gradient-to-br from-${role.color}/10 via-${role.color}/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
+      <div className={`absolute top-0 right-0 w-40 h-40 bg-${role.color}/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
+
+      <CardHeader className="relative pb-4 text-center px-4 sm:px-6 pt-6">
+        <div className={`w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-${role.color}/25 via-${role.color}/15 to-${role.color}/5 dark:from-${role.color}/35 dark:via-${role.color}/25 dark:to-${role.color}/15 rounded-2xl flex items-center justify-center mb-4 sm:mb-5 mx-auto group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 ease-out shadow-xl shadow-${role.color}/25 dark:shadow-${role.color}/35 ring-2 ring-${role.color}/10 dark:ring-${role.color}/20`}>
+          {getIcon(role.icon)}
+        </div>
+        <CardTitle className="text-xl sm:text-2xl font-bold tracking-tight mb-2">{role.title}</CardTitle>
+        <CardDescription className={`text-sm sm:text-base font-medium text-${role.color}`}>{role.subtitle}</CardDescription>
+        {role.note && (
+          <p className="text-xs text-muted-foreground italic mt-2">{role.note}</p>
+        )}
+      </CardHeader>
+
+      <CardContent className="relative pt-0 px-4 sm:px-6 pb-6">
+        <div className="space-y-3 mb-6">
+          <h4 className="font-semibold text-foreground text-sm">Responsibilities:</h4>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            {role.responsibilities.map((responsibility, idx) => (
+              <li key={idx} className="flex items-start gap-2">
+                <span className={`text-${role.color} mt-0.5 text-xs flex-shrink-0`}>•</span>
+                <span className="leading-tight">{responsibility}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Deadline Information */}
+        <div className="bg-muted/30 dark:bg-muted/20 rounded-lg p-3 mb-4">
+          <div className="text-center">
+            <p className="text-xs font-semibold text-foreground mb-1">Deadline: January 3, 2026</p>
+            <p className="text-xs text-muted-foreground">Required: role, time zone, availability, motivation, experience</p>
+          </div>
+        </div>
+
+        <div className="text-center">
+          <Button
+            onClick={() => onApply(role.title)}
+            className={`bg-gradient-to-r ${role.color === 'primary' ? 'from-primary to-secondary' : 'from-secondary to-primary'} hover:opacity-90 text-white px-6 py-2 rounded-full font-semibold text-sm transition-all duration-300 hover:scale-105`}
+          >
+            Apply Now
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
+function LeadershipRolesSection() {
+  const [applyModalOpen, setApplyModalOpen] = useState(false)
+  const [selectedRole, setSelectedRole] = useState<string>("")
+
+  const handleApply = (roleTitle: string) => {
+    setSelectedRole(roleTitle)
+    setApplyModalOpen(true)
+  }
+
+  const getFormType = (roleTitle: string) => {
+    if (roleTitle === "Operations/Program Lead") return "operations"
+    if (roleTitle === "Content Lead") return "content"
+    return "operations" // default
+  }
+
+  return (
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6">
+        {leadershipRoles.map((role, index) => (
+          <LeadershipRoleCard
+            key={index}
+            role={role}
+            onApply={handleApply}
+          />
+        ))}
+      </div>
+
+      {/* Apply Modal with Form */}
+      <Dialog open={applyModalOpen} onOpenChange={setApplyModalOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <div className="text-center mb-6">
+            <h3 className="text-xl sm:text-2xl font-bold mb-2">Apply for {selectedRole}</h3>
+            <p className="text-muted-foreground text-sm">
+              Fill out the application form below to apply for the {selectedRole} position.
+            </p>
+          </div>
+
+          <LeadershipApplicationForms selectedForm={getFormType(selectedRole)} />
+        </DialogContent>
+      </Dialog>
+    </>
+  )
+}
+
+function LeadershipApplicationForms({ selectedForm }: { selectedForm?: string }) {
   const [submitted, setSubmitted] = useState<string | null>(null)
 
   // State to track Select values for each form
@@ -143,286 +418,278 @@ function LeadershipApplicationForms() {
         <p className="text-sm sm:text-base text-muted-foreground">Fill out the form for the role you're interested in</p>
       </div>
 
-      <Tabs defaultValue="operations" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 mb-4 sm:mb-6 bg-card/50 backdrop-blur-sm border border-border/50 p-1 rounded-lg h-auto text-xs sm:text-sm">
-          <TabsTrigger value="operations" className="text-xs sm:text-sm px-2 sm:px-4">Operations Lead</TabsTrigger>
-          <TabsTrigger value="content" className="text-xs sm:text-sm px-2 sm:px-4">Content Lead</TabsTrigger>
-        </TabsList>
-
-        {/* Operations Lead Form */}
-        <TabsContent value="operations">
-          <Card className="shadow-lg">
-            <CardHeader className="pb-3">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-primary/10 dark:bg-primary/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg className="w-3 h-3 sm:w-4 sm:h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                </div>
+      {/* Show the appropriate form based on selectedForm */}
+      {selectedForm === "operations" && (
+        <Card className="shadow-lg">
+          <CardHeader className="pb-3">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3">
+              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-primary/10 dark:bg-primary/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg className="w-3 h-3 sm:w-4 sm:h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
                 <div className="min-w-0 flex-1">
                   <CardTitle className="text-base sm:text-lg">Operations Lead Application</CardTitle>
-                  <CardDescription className="text-xs sm:text-sm">Work with Anjali Mangal</CardDescription>
+                  <CardDescription className="text-xs sm:text-sm">Work with professional mentors</CardDescription>
                 </div>
+            </div>
+          </CardHeader>
+          <CardContent className="pt-0 px-4 sm:px-6">
+            <form onSubmit={(e) => handleSubmit(e, "operations")} className="space-y-3">
+              <div className="space-y-2">
+                <Label htmlFor="ops-name">Full Name *</Label>
+                <Input
+                  type="text"
+                  id="ops-name"
+                  name="name"
+                  required
+                  placeholder="Your full name"
+                />
               </div>
-            </CardHeader>
-            <CardContent className="pt-0 px-4 sm:px-6">
-              <form onSubmit={(e) => handleSubmit(e, "operations")} className="space-y-3">
+
+              <div className="space-y-2">
+                <Label htmlFor="ops-email">Email Address *</Label>
+                <Input
+                  type="email"
+                  id="ops-email"
+                  name="email"
+                  required
+                  placeholder="your@email.com"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="ops-name">Full Name *</Label>
-                  <Input
-                    type="text"
-                    id="ops-name"
-                    name="name"
-                    required
-                    placeholder="Your full name"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="ops-email">Email Address *</Label>
-                  <Input
-                    type="email"
-                    id="ops-email"
-                    name="email"
-                    required
-                    placeholder="your@email.com"
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="ops-role">Role Interest *</Label>
-                    <Select
-                      name="role"
-                      required
-                      value={operationsForm.role}
-                      onValueChange={(value) => setOperationsForm({ ...operationsForm, role: value })}
-                    >
-                      <SelectTrigger id="ops-role">
-                        <SelectValue placeholder="Select role" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="operations">Operations/Program Lead</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="ops-timezone">Time Zone *</Label>
-                    <Select
-                      name="timeZone"
-                      required
-                      value={operationsForm.timeZone}
-                      onValueChange={(value) => setOperationsForm({ ...operationsForm, timeZone: value })}
-                    >
-                      <SelectTrigger id="ops-timezone">
-                        <SelectValue placeholder="Select time zone" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="pst">PST (Pacific Standard Time)</SelectItem>
-                        <SelectItem value="mst">MST (Mountain Standard Time)</SelectItem>
-                        <SelectItem value="cst">CST (Central Standard Time)</SelectItem>
-                        <SelectItem value="est">EST (Eastern Standard Time)</SelectItem>
-                        <SelectItem value="ist">IST (Indian Standard Time)</SelectItem>
-                        <SelectItem value="cet">CET (Central European Time)</SelectItem>
-                        <SelectItem value="gmt">GMT (Greenwich Mean Time)</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="ops-availability">Weekly/Monthly Availability *</Label>
+                  <Label htmlFor="ops-role">Role Interest *</Label>
                   <Select
-                    name="availability"
+                    name="role"
                     required
-                    value={operationsForm.availability}
-                    onValueChange={(value) => setOperationsForm({ ...operationsForm, availability: value })}
+                    value={operationsForm.role}
+                    onValueChange={(value) => setOperationsForm({ ...operationsForm, role: value })}
                   >
-                    <SelectTrigger id="ops-availability">
-                      <SelectValue placeholder="Select availability" />
+                    <SelectTrigger id="ops-role">
+                      <SelectValue placeholder="Select role" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="5-10">5-10 hours per week</SelectItem>
-                      <SelectItem value="10-15">10-15 hours per week</SelectItem>
-                      <SelectItem value="15-20">15-20 hours per week</SelectItem>
-                      <SelectItem value="flexible">Flexible - depends on tasks</SelectItem>
+                      <SelectItem value="operations">Operations/Program Lead</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="ops-why">Why do you want this role? *</Label>
-                  <Textarea
-                    id="ops-why"
-                    name="whyRole"
-                    rows={3}
-                    className="min-h-[80px] sm:min-h-[100px]"
-                    required
-                    placeholder="Tell us why you're interested in the Operations/Program Lead role..."
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="ops-experience">Relevant Experience</Label>
-                  <Textarea
-                    id="ops-experience"
-                    name="experience"
-                    rows={2}
-                    className="min-h-[60px] sm:min-h-[80px]"
-                    placeholder="Any relevant experience you have (and links, if available)..."
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-white px-4 py-2.5 rounded-lg text-sm"
-                >
-                  {submitted === "operations" ? "Submitted! ✓" : "Submit Application"}
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* Content Lead Form */}
-        <TabsContent value="content">
-          <Card className="shadow-lg">
-            <CardHeader className="pb-3">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-secondary/10 dark:bg-secondary/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg className="w-3 h-3 sm:w-4 sm:h-4 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4V2a1 1 0 011-1h4a1 1 0 011 1v2m4 0H8l.5 16h7L16 4z" />
-                  </svg>
-                </div>
-                <div className="min-w-0 flex-1">
-                  <CardTitle className="text-base sm:text-lg">Content Lead Application</CardTitle>
-                  <CardDescription className="text-xs sm:text-sm">Website + Social Media</CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className="pt-0 px-4 sm:px-6">
-              <form onSubmit={(e) => handleSubmit(e, "content")} className="space-y-3">
-                <div className="space-y-2">
-                  <Label htmlFor="content-name">Full Name *</Label>
-                  <Input
-                    type="text"
-                    id="content-name"
-                    name="name"
-                    required
-                    placeholder="Your full name"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="content-email">Email Address *</Label>
-                  <Input
-                    type="email"
-                    id="content-email"
-                    name="email"
-                    required
-                    placeholder="your@email.com"
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="content-role">Role Interest *</Label>
-                    <Select
-                      name="role"
-                      required
-                      value={contentForm.role}
-                      onValueChange={(value) => setContentForm({ ...contentForm, role: value })}
-                    >
-                      <SelectTrigger id="content-role">
-                        <SelectValue placeholder="Select role" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="content">Content Lead</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="content-timezone">Time Zone *</Label>
-                    <Select
-                      name="timeZone"
-                      required
-                      value={contentForm.timeZone}
-                      onValueChange={(value) => setContentForm({ ...contentForm, timeZone: value })}
-                    >
-                      <SelectTrigger id="content-timezone">
-                        <SelectValue placeholder="Select time zone" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="pst">PST (Pacific Standard Time)</SelectItem>
-                        <SelectItem value="mst">MST (Mountain Standard Time)</SelectItem>
-                        <SelectItem value="cst">CST (Central Standard Time)</SelectItem>
-                        <SelectItem value="est">EST (Eastern Standard Time)</SelectItem>
-                        <SelectItem value="ist">IST (Indian Standard Time)</SelectItem>
-                        <SelectItem value="cet">CET (Central European Time)</SelectItem>
-                        <SelectItem value="gmt">GMT (Greenwich Mean Time)</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="content-availability">Weekly/Monthly Availability *</Label>
+                  <Label htmlFor="ops-timezone">Time Zone *</Label>
                   <Select
-                    name="availability"
+                    name="timeZone"
                     required
-                    value={contentForm.availability}
-                    onValueChange={(value) => setContentForm({ ...contentForm, availability: value })}
+                    value={operationsForm.timeZone}
+                    onValueChange={(value) => setOperationsForm({ ...operationsForm, timeZone: value })}
                   >
-                    <SelectTrigger id="content-availability">
-                      <SelectValue placeholder="Select availability" />
+                    <SelectTrigger id="ops-timezone">
+                      <SelectValue placeholder="Select time zone" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="5-10">5-10 hours per week</SelectItem>
-                      <SelectItem value="10-15">10-15 hours per week</SelectItem>
-                      <SelectItem value="15-20">15-20 hours per week</SelectItem>
-                      <SelectItem value="flexible">Flexible - depends on tasks</SelectItem>
+                      <SelectItem value="pst">PST (Pacific Standard Time)</SelectItem>
+                      <SelectItem value="mst">MST (Mountain Standard Time)</SelectItem>
+                      <SelectItem value="cst">CST (Central Standard Time)</SelectItem>
+                      <SelectItem value="est">EST (Eastern Standard Time)</SelectItem>
+                      <SelectItem value="ist">IST (Indian Standard Time)</SelectItem>
+                      <SelectItem value="cet">CET (Central European Time)</SelectItem>
+                      <SelectItem value="gmt">GMT (Greenwich Mean Time)</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="ops-availability">Weekly/Monthly Availability *</Label>
+                <Select
+                  name="availability"
+                  required
+                  value={operationsForm.availability}
+                  onValueChange={(value) => setOperationsForm({ ...operationsForm, availability: value })}
+                >
+                  <SelectTrigger id="ops-availability">
+                    <SelectValue placeholder="Select availability" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="5-10">5-10 hours per week</SelectItem>
+                    <SelectItem value="10-15">10-15 hours per week</SelectItem>
+                    <SelectItem value="15-20">15-20 hours per week</SelectItem>
+                    <SelectItem value="flexible">Flexible - depends on tasks</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="ops-why">Why do you want this role? *</Label>
+                <Textarea
+                  id="ops-why"
+                  name="whyRole"
+                  rows={3}
+                  className="min-h-[80px] sm:min-h-[100px]"
+                  required
+                  placeholder="Tell us why you're interested in the Operations/Program Lead role..."
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="ops-experience">Relevant Experience</Label>
+                <Textarea
+                  id="ops-experience"
+                  name="experience"
+                  rows={2}
+                  className="min-h-[60px] sm:min-h-[80px]"
+                  placeholder="Any relevant experience you have (and links, if available)..."
+                />
+              </div>
+
+              <Button
+                type="submit"
+                className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-white px-4 py-2.5 rounded-lg text-sm"
+              >
+                {submitted === "operations" ? "Submitted! ✓" : "Submit Application"}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      )}
+
+      {selectedForm === "content" && (
+        <Card className="shadow-lg">
+          <CardHeader className="pb-3">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3">
+              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-secondary/10 dark:bg-secondary/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg className="w-3 h-3 sm:w-4 sm:h-4 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4V2a1 1 0 011-1h4a1 1 0 011 1v2m4 0H8l.5 16h7L16 4z" />
+                </svg>
+              </div>
+              <div className="min-w-0 flex-1">
+                <CardTitle className="text-base sm:text-lg">Content Lead Application</CardTitle>
+                <CardDescription className="text-xs sm:text-sm">Website + Social Media</CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="pt-0 px-4 sm:px-6">
+            <form onSubmit={(e) => handleSubmit(e, "content")} className="space-y-3">
+              <div className="space-y-2">
+                <Label htmlFor="content-name">Full Name *</Label>
+                <Input
+                  type="text"
+                  id="content-name"
+                  name="name"
+                  required
+                  placeholder="Your full name"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="content-email">Email Address *</Label>
+                <Input
+                  type="email"
+                  id="content-email"
+                  name="email"
+                  required
+                  placeholder="your@email.com"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="content-role">Role Interest *</Label>
+                  <Select
+                    name="role"
+                    required
+                    value={contentForm.role}
+                    onValueChange={(value) => setContentForm({ ...contentForm, role: value })}
+                  >
+                    <SelectTrigger id="content-role">
+                      <SelectValue placeholder="Select role" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="content">Content Lead</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="content-why">Why do you want this role? *</Label>
-                  <Textarea
-                    id="content-why"
-                    name="whyRole"
-                    rows={3}
-                    className="min-h-[80px] sm:min-h-[100px]"
+                  <Label htmlFor="content-timezone">Time Zone *</Label>
+                  <Select
+                    name="timeZone"
                     required
-                    placeholder="Tell us why you're interested in the Content Lead role..."
-                  />
+                    value={contentForm.timeZone}
+                    onValueChange={(value) => setContentForm({ ...contentForm, timeZone: value })}
+                  >
+                    <SelectTrigger id="content-timezone">
+                      <SelectValue placeholder="Select time zone" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="pst">PST (Pacific Standard Time)</SelectItem>
+                      <SelectItem value="mst">MST (Mountain Standard Time)</SelectItem>
+                      <SelectItem value="cst">CST (Central Standard Time)</SelectItem>
+                      <SelectItem value="est">EST (Eastern Standard Time)</SelectItem>
+                      <SelectItem value="ist">IST (Indian Standard Time)</SelectItem>
+                      <SelectItem value="cet">CET (Central European Time)</SelectItem>
+                      <SelectItem value="gmt">GMT (Greenwich Mean Time)</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
+              </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="content-experience">Relevant Experience</Label>
-                  <Textarea
-                    id="content-experience"
-                    name="experience"
-                    rows={2}
-                    className="min-h-[60px] sm:min-h-[80px]"
-                    placeholder="Any relevant experience you have (and links, if available)..."
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-white px-4 py-2.5 rounded-lg text-sm"
+              <div className="space-y-2">
+                <Label htmlFor="content-availability">Weekly/Monthly Availability *</Label>
+                <Select
+                  name="availability"
+                  required
+                  value={contentForm.availability}
+                  onValueChange={(value) => setContentForm({ ...contentForm, availability: value })}
                 >
-                  {submitted === "content" ? "Submitted! ✓" : "Submit Application"}
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+                  <SelectTrigger id="content-availability">
+                    <SelectValue placeholder="Select availability" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="5-10">5-10 hours per week</SelectItem>
+                    <SelectItem value="10-15">10-15 hours per week</SelectItem>
+                    <SelectItem value="15-20">15-20 hours per week</SelectItem>
+                    <SelectItem value="flexible">Flexible - depends on tasks</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="content-why">Why do you want this role? *</Label>
+                <Textarea
+                  id="content-why"
+                  name="whyRole"
+                  rows={3}
+                  className="min-h-[80px] sm:min-h-[100px]"
+                  required
+                  placeholder="Tell us why you're interested in the Content Lead role..."
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="content-experience">Relevant Experience</Label>
+                <Textarea
+                  id="content-experience"
+                  name="experience"
+                  rows={2}
+                  className="min-h-[60px] sm:min-h-[80px]"
+                  placeholder="Any relevant experience you have (and links, if available)..."
+                />
+              </div>
+
+              <Button
+                type="submit"
+                className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-white px-4 py-2.5 rounded-lg text-sm"
+              >
+                {submitted === "content" ? "Submitted! ✓" : "Submit Application"}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      )}
     </div>
   )
 }
@@ -599,46 +866,20 @@ export default function About() {
           </div>
         </section>
 
-        {/* YLCA Ambassador - Government Schools (Delhi) */}
+        {/* YLCA Ambassadors */}
         <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/20">
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             <div className="text-center mb-8 sm:mb-12">
-              <Badge variant="secondary" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">YLCA AMBASSADOR</Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 px-4">YLCA Ambassador - Government Schools (Delhi)</h2>
+              <Badge variant="secondary" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">YLCA AMBASSADORS</Badge>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 px-4">
+                Meet Our <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Ambassadors</span>
+              </h2>
+              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
+                Inspiring youth leaders bringing cybersecurity and AI education to communities worldwide.
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 items-center">
-              <div className="relative order-2 md:order-1">
-                <div className="absolute -top-6 -right-6 w-24 h-24 sm:w-32 sm:h-32 bg-secondary/10 rounded-full blur-2xl"></div>
-                <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-border/60 dark:border-border/40 shadow-2xl dark:shadow-black/40 group">
-                  <img
-                    src="/vedika.jpeg"
-                    alt="Vedika Jain"
-                    className="w-full h-[350px] sm:h-[450px] md:h-[500px] object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 ring-1 ring-secondary/20 dark:ring-secondary/30 rounded-2xl sm:rounded-3xl pointer-events-none"></div>
-                </div>
-              </div>
-
-              <div className="space-y-4 sm:space-y-6 order-1 md:order-2">
-                <div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">Vedika Jain</h3>
-                  <p className="text-muted-foreground mb-2">YLCA Ambassador - Government Schools (Delhi)</p>
-                </div>
-
-                <div className="space-y-3 sm:space-y-4 text-muted-foreground leading-relaxed">
-                  <p className="text-sm sm:text-base">
-                    Vedika Jain is a 10th-grade student and a passionate STEM enthusiast with a strong interest in mathematics, science, and innovation. Driven by curiosity and a desire to create impact, she founded Youth Voice Journal, a platform that encourages young writers to express ideas, opinions, and creativity, and Kitaab4U, an initiative aimed at improving access to books and learning resources.
-                  </p>
-                  <p className="text-sm sm:text-base">
-                    She has been recognized as an awardee in multiple mathematics Olympiads, reflecting her analytical skills and problem-solving ability. Vedika actively seeks opportunities to learn, lead, and collaborate, aspiring to use STEM knowledge to contribute meaningfully to education, technology, and society.
-                  </p>
-                  <p className="text-sm sm:text-base">
-                    As a YLCA Ambassador for Government Schools in Delhi, Vedika is dedicated to bringing cybersecurity and AI education to students in government schools, helping bridge the digital divide and empower the next generation of tech leaders.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <AmbassadorCardSection />
           </div>
         </section>
 
@@ -655,94 +896,7 @@ export default function About() {
               </p>
             </div>
 
-            <div className="space-y-4 sm:space-y-6">
-              {/* Role Descriptions */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-                {/* Operations/Program Lead */}
-                <Card className="border border-border/50 dark:border-border/30 bg-card/90">
-                  <CardHeader className="pb-3">
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3">
-                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/10 dark:bg-primary/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <CardTitle className="text-base sm:text-lg font-bold">Operations/Program Lead</CardTitle>
-                        <CardDescription className="text-xs sm:text-sm text-primary">Work with Anjali Mangal</CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="pt-0">
-                    <ul className="space-y-1.5 text-sm text-muted-foreground">
-                      <li className="flex items-start gap-2">
-                        <span className="text-primary mt-0.5 text-xs">•</span>
-                        <span className="leading-tight">Coordinate ambassador activities and timelines</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-primary mt-0.5 text-xs">•</span>
-                        <span className="leading-tight">Maintain trackers and organize documents</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-primary mt-0.5 text-xs">•</span>
-                        <span className="leading-tight">Support workshop/event planning</span>
-                      </li>
-                    </ul>
-                  </CardContent>
-                </Card>
-
-                {/* Content Lead */}
-                <Card className="border border-border/50 dark:border-border/30 bg-card/90">
-                  <CardHeader className="pb-3">
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3">
-                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-secondary/10 dark:bg-secondary/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4V2a1 1 0 011-1h4a1 1 0 011 1v2m4 0H8l.5 16h7L16 4z" />
-                        </svg>
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <CardTitle className="text-base sm:text-lg font-bold">Content Lead</CardTitle>
-                        <CardDescription className="text-xs sm:text-sm text-secondary">Website + Social Media</CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="pt-0">
-                    <p className="text-xs text-muted-foreground italic mb-3">Work with existing developer (no coding required)</p>
-                    <ul className="space-y-1.5 text-sm text-muted-foreground">
-                      <li className="flex items-start gap-2">
-                        <span className="text-secondary mt-0.5 text-xs">•</span>
-                        <span className="leading-tight">Publish updates on ylca.tech</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-secondary mt-0.5 text-xs">•</span>
-                        <span className="leading-tight">Create social media content</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-secondary mt-0.5 text-xs">•</span>
-                        <span className="leading-tight">Collect and curate ambassador stories</span>
-                      </li>
-                    </ul>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* How to Apply */}
-              <Card className="border border-primary/20 dark:border-primary/30 bg-card/80">
-                <CardContent className="pt-3 pb-3 px-4 sm:px-6">
-                  <div className="text-center">
-                    <h3 className="text-base sm:text-lg font-bold text-foreground mb-1 sm:mb-2">How to Apply</h3>
-                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                      <span className="block sm:inline">Deadline: January 3, 2026</span>
-                      <span className="hidden sm:inline mx-2">•</span>
-                      <span className="block sm:inline">Required: role, time zone, availability, motivation, experience</span>
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Application Forms */}
-              <LeadershipApplicationForms />
-            </div>
+            <LeadershipRolesSection />
           </div>
         </section>
 
