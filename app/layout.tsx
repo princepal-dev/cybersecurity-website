@@ -4,6 +4,7 @@ import { Inter } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { ThemeProvider } from "@/components/theme-provider"
 import { SmoothScroll } from "@/components/smooth-scroll"
+import { Toaster } from "@/components/ui/toaster"
 import "./globals.css"
 
 const inter = Inter({ 
@@ -52,6 +53,7 @@ export default function RootLayout({
         >
           <SmoothScroll />
           {children}
+          <Toaster />
         </ThemeProvider>
         <Analytics />
       </body>

@@ -19,6 +19,7 @@ export function Navigation() {
     { href: "/", label: "Home" },
     { href: "/about", label: "About" },
     { href: "/programs", label: "Programs" },
+    { href: "/blogs", label: "Blogs" },
     { href: "/impact", label: "Impact" },
     { href: "/get-involved", label: "Get Involved" },
   ]
