@@ -194,28 +194,6 @@ function AmbassadorCard({ currentIndex, onNext, onPrev }: { currentIndex: number
                 ))}
               </ul>
             </div>
-
-            {/* Apply Now Button */}
-            <Dialog open={applyModalOpen} onOpenChange={setApplyModalOpen}>
-              <DialogTrigger asChild>
-                <Button className="bg-gradient-to-r from-secondary to-primary hover:from-secondary/90 hover:to-primary/90 text-white px-6 py-2 rounded-full font-semibold text-sm transition-all duration-300 hover:scale-105">
-                  Apply Now
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-md">
-                <div className="text-center">
-                  <h3 className="text-lg font-bold mb-2">Apply to Become a YLCA Ambassador</h3>
-                  <p className="text-muted-foreground mb-4 text-sm">
-                    Interested in becoming a YLCA Ambassador like Vedika? Fill out our application form.
-                  </p>
-                  <Link href="/get-involved" onClick={() => setApplyModalOpen(false)}>
-                    <Button className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-white px-6 py-2 rounded-full font-semibold">
-                      Start Application
-                    </Button>
-                  </Link>
-                </div>
-              </DialogContent>
-            </Dialog>
           </div>
         </div>
 
