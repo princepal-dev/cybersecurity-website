@@ -57,22 +57,76 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Hero Image */}
-      <div className="mt-8 sm:mt-12 max-w-6xl mx-auto animate-slide-up px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-border/60 dark:border-border/40 bg-gradient-to-br from-card to-card/50 p-0.5 sm:p-1 shadow-2xl dark:shadow-black/40 transition-all duration-500 ease-out hover:shadow-3xl dark:hover:shadow-black/60 group">
-          <div className="aspect-video bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent rounded-xl sm:rounded-2xl overflow-hidden">
-            <img
-              src="/december/WhatsApp Image 2025-12-27 at 09.23.11.jpeg"
-              alt="YLCA December 2025 Cyber Safety Outreach"
-              className="w-full h-full object-cover rounded-xl sm:rounded-2xl transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
-              loading="eager"
-              decoding="async"
-            />
+      {/* Hero Images Grid */}
+      <div className="mt-8 sm:mt-12 max-w-4xl mx-auto animate-slide-up px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 place-items-center">
+          {/* Image 1 - Existing */}
+          <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-border/60 dark:border-border/40 bg-gradient-to-br from-card to-card/50 p-0.5 sm:p-1 shadow-2xl dark:shadow-black/40 transition-all duration-500 ease-out hover:shadow-3xl dark:hover:shadow-black/60 group">
+            <div className="aspect-square bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent rounded-xl sm:rounded-2xl overflow-hidden">
+              <img
+                src="/december/WhatsApp Image 2025-12-27 at 09.23.11.jpeg"
+                alt="YLCA December 2025 Cyber Safety Outreach"
+                className="w-full h-full object-cover rounded-xl sm:rounded-2xl transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent pointer-events-none rounded-xl sm:rounded-2xl transition-opacity duration-500"></div>
+            {/* Subtle border glow */}
+            <div className="absolute inset-0 rounded-xl sm:rounded-2xl ring-1 ring-primary/20 dark:ring-primary/30 pointer-events-none"></div>
           </div>
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent pointer-events-none rounded-xl sm:rounded-2xl transition-opacity duration-500"></div>
-          {/* Subtle border glow */}
-          <div className="absolute inset-0 rounded-xl sm:rounded-2xl ring-1 ring-primary/20 dark:ring-primary/30 pointer-events-none"></div>
+
+          {/* Image 2 - New */}
+          <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-border/60 dark:border-border/40 bg-gradient-to-br from-card to-card/50 p-0.5 sm:p-1 shadow-2xl dark:shadow-black/40 transition-all duration-500 ease-out hover:shadow-3xl dark:hover:shadow-black/60 group">
+            <div className="aspect-square bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent rounded-xl sm:rounded-2xl overflow-hidden">
+              <img
+                src="/december/WhatsApp Image 2025-12-27 at 09.23.12.jpeg"
+                alt="YLCA December 2025 Cyber Safety Outreach"
+                className="w-full h-full object-cover rounded-xl sm:rounded-2xl transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent pointer-events-none rounded-xl sm:rounded-2xl transition-opacity duration-500"></div>
+            {/* Subtle border glow */}
+            <div className="absolute inset-0 rounded-xl sm:rounded-2xl ring-1 ring-primary/20 dark:ring-primary/30 pointer-events-none"></div>
+          </div>
+
+          {/* Image 3 - New */}
+          <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-border/60 dark:border-border/40 bg-gradient-to-br from-card to-card/50 p-0.5 sm:p-1 shadow-2xl dark:shadow-black/40 transition-all duration-500 ease-out hover:shadow-3xl dark:hover:shadow-black/60 group">
+            <div className="aspect-square bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent rounded-xl sm:rounded-2xl overflow-hidden">
+              <img
+                src="/december/WhatsApp Image 2025-12-27 at 09.23.13.jpeg"
+                alt="YLCA December 2025 Cyber Safety Outreach"
+                className="w-full h-full object-cover rounded-xl sm:rounded-2xl transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent pointer-events-none rounded-xl sm:rounded-2xl transition-opacity duration-500"></div>
+            {/* Subtle border glow */}
+            <div className="absolute inset-0 rounded-xl sm:rounded-2xl ring-1 ring-primary/20 dark:ring-primary/30 pointer-events-none"></div>
+          </div>
+
+          {/* Image 4 - New */}
+          <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-border/60 dark:border-border/40 bg-gradient-to-br from-card to-card/50 p-0.5 sm:p-1 shadow-2xl dark:shadow-black/40 transition-all duration-500 ease-out hover:shadow-3xl dark:hover:shadow-black/60 group">
+            <div className="aspect-square bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent rounded-xl sm:rounded-2xl overflow-hidden">
+              <img
+                src="/WhatsApp Image 2025-12-29 at 17.08.49.jpeg"
+                alt="YLCA December 2025 Cyber Safety Outreach"
+                className="w-full h-full object-cover rounded-xl sm:rounded-2xl transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent pointer-events-none rounded-xl sm:rounded-2xl transition-opacity duration-500"></div>
+            {/* Subtle border glow */}
+            <div className="absolute inset-0 rounded-xl sm:rounded-2xl ring-1 ring-primary/20 dark:ring-primary/30 pointer-events-none"></div>
+          </div>
         </div>
       </div>
     </section>
