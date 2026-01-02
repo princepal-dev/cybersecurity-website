@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 const advisors = [
   {
@@ -78,6 +78,18 @@ const ambassadors = [
       "Launched Kitaab4U initiative",
       "STEM leadership in Delhi"
     ]
+  },
+  {
+    name: "Avni Bhardwaj",
+    title: "YLCA Blog Manager & Editorial Coordinator",
+    image: "/avni.png",
+    description: "Leads YLCA's student communications through blogs and newsletters—supports ambassadors with outlines, ensures quality and tone, and shares stories.",
+    achievements: [
+      "YLCA Blog Manager",
+      "Editorial Coordinator",
+      "Content Quality Assurance",
+      "Student Communications Lead"
+    ]
   }
 ]
 
@@ -109,6 +121,7 @@ const leadershipRoles = [
 
 function AmbassadorCardSection() {
   const [currentAmbassadorIndex, setCurrentAmbassadorIndex] = useState(0)
+  const [isAutoScrolling, setIsAutoScrolling] = useState(true)
 
   const nextAmbassador = () => {
     setCurrentAmbassadorIndex((prev) => (prev + 1) % ambassadors.length)
@@ -118,12 +131,32 @@ function AmbassadorCardSection() {
     setCurrentAmbassadorIndex((prev) => (prev - 1 + ambassadors.length) % ambassadors.length)
   }
 
+  // Auto-scroll functionality
+  useEffect(() => {
+    if (!isAutoScrolling) return
+
+    const interval = setInterval(() => {
+      setCurrentAmbassadorIndex((prev) => (prev + 1) % ambassadors.length)
+    }, 4000) // Change ambassador every 4 seconds
+
+    return () => clearInterval(interval)
+  }, [isAutoScrolling])
+
+  const handleCardInteraction = () => {
+    // Pause auto-scroll when user interacts with the card
+    setIsAutoScrolling(false)
+    // Resume auto-scroll after 10 seconds of inactivity
+    setTimeout(() => setIsAutoScrolling(true), 10000)
+  }
+
   return (
-    <AmbassadorCard
-      currentIndex={currentAmbassadorIndex}
-      onNext={nextAmbassador}
-      onPrev={prevAmbassador}
-    />
+    <div onMouseEnter={handleCardInteraction} onClick={handleCardInteraction}>
+      <AmbassadorCard
+        currentIndex={currentAmbassadorIndex}
+        onNext={nextAmbassador}
+        onPrev={prevAmbassador}
+      />
+    </div>
   )
 }
 

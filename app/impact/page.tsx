@@ -109,6 +109,15 @@ const decemberImages = [
   "/december/WhatsApp Image 2025-12-27 at 09.24.07.jpeg",
 ]
 
+const dpsImages = [
+  "/dps/hero.png",
+  "/dps/image.png",
+  "/dps/WhatsApp Image 2025-12-31 at 13.29.48.jpeg",
+  "/dps/WhatsApp Image 2025-12-31 at 13.29.48 (1).jpeg",
+  "/dps/WhatsApp Image 2025-12-31 at 13.29.48 (2).jpeg",
+  "/dps/WhatsApp Image 2025-12-31 at 13.29.48 (3).jpeg"
+]
+
 function StoriesCarousel() {
   return (
     <div className="mb-8 sm:mb-12 md:mb-16">
@@ -571,6 +580,151 @@ export default function Impact() {
                       <img
                         src={image}
                         alt="December 2025 Outreach"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        {/* DPS Karnal Campus Visit */}
+        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden">
+          {/* Decorative elements */}
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute top-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+          </div>
+
+          <div className="max-w-6xl mx-auto relative z-10">
+            <div className="text-center mb-8 sm:mb-12">
+              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">DECEMBER 2025</Badge>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
+                DPS Karnal Hosts Arth Bhardwaj: <span className="bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">Cyber Safety & AI Leadership</span>
+              </h2>
+              <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
+                A full-day campus visit where YLCA's founder Arth Bhardwaj met Grades 9-12 and mentored newly nominated YLCA Ambassadors
+              </p>
+            </div>
+
+            {/* Content Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 mb-12 sm:mb-16">
+              <div className="space-y-4 sm:space-y-6">
+                <Card className="border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-sm">
+                  <CardContent className="pt-6">
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                      On December 29, 2025, YLCA Founder Arth Bhardwaj visited Delhi Public School (DPS) Karnal, India in person to deepen YLCA's growing partnership with the school. Arth addressed students from Grades 9-12 on why cybersecurity and responsible AI matter in everyday life—and how student-led passion projects build confidence, leadership, and real community impact.
+                    </p>
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mt-4">
+                      A key highlight of the day was a focused planning session with DPS Karnal's six nominated YLCA Ambassadors, who will join the YLCA Global Ambassador Program (Jan 2026 cohort). Together, they mapped out student-led initiatives such as cyber safety awareness drives, responsible AI learning circles, digital citizenship campaigns, and peer-to-peer workshops designed to build digital trust across the school community.
+                    </p>
+                  </CardContent>
+                </Card>
+
+                {/* Key Highlights */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Card className="border border-primary/20 dark:border-primary/30 bg-primary/5 dark:bg-primary/10">
+                    <CardContent className="pt-4 pb-4">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-primary mb-1">6</div>
+                        <p className="text-sm text-muted-foreground">New Ambassadors</p>
+                        <p className="text-xs text-primary/80 mt-1">Jan 2026 Cohort</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="border border-secondary/20 dark:border-secondary/30 bg-secondary/5 dark:bg-secondary/10">
+                    <CardContent className="pt-4 pb-4">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-secondary mb-1">Grades 9-12</div>
+                        <p className="text-sm text-muted-foreground">Students Engaged</p>
+                        <p className="text-xs text-secondary/80 mt-1">Campus-Wide Impact</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+
+              <div className="space-y-4 sm:space-y-6">
+                {/* Hero Image */}
+                <Card className="border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-sm">
+                  <CardContent className="pt-6">
+                    <div className="aspect-video overflow-hidden rounded-lg border border-border/30">
+                      <img
+                        src="/dps/hero.png"
+                        alt="Arth Bhardwaj at DPS Karnal Campus Visit"
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Image Grid */}
+                <Card className="border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-sm">
+                  <CardContent className="pt-6">
+                    <h3 className="text-lg sm:text-xl font-bold mb-4 text-center">Campus Visit Highlights</h3>
+                    <div className="grid grid-cols-2 gap-3">
+                      {[
+                        "/dps/image.png",
+                        "/dps/WhatsApp Image 2025-12-31 at 13.29.48.jpeg",
+                        "/dps/WhatsApp Image 2025-12-31 at 13.29.48 (1).jpeg",
+                        "/dps/WhatsApp Image 2025-12-31 at 13.29.48 (2).jpeg"
+                      ].map((image, index) => (
+                        <div
+                          key={index}
+                          className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
+                          onClick={() => openModal(dpsImages, index)}
+                          role="button"
+                          tabIndex={0}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault()
+                              openModal(dpsImages, index)
+                            }
+                          }}
+                          aria-label={`View DPS Karnal image ${index + 1} in gallery`}
+                        >
+                          <img
+                            src={image}
+                            alt="DPS Karnal Campus Visit"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            loading="lazy"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+
+            {/* Full Width Image Gallery */}
+            <Card className="border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-sm">
+              <CardContent className="pt-6">
+                <h3 className="text-lg sm:text-xl font-bold mb-6 text-center">More Campus Visit Photos</h3>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                  {dpsImages.map((image, index) => (
+                    <div
+                      key={index}
+                      className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
+                      onClick={() => openModal(dpsImages, index)}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault()
+                          openModal(dpsImages, index)
+                        }
+                      }}
+                      aria-label={`View image ${index + 1} of ${dpsImages.length} in gallery`}
+                    >
+                      <img
+                        src={image}
+                        alt="DPS Karnal Campus Visit"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         loading="lazy"
                       />
