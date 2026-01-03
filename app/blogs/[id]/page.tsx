@@ -145,111 +145,64 @@ export default function BlogDetailPage() {
     }
   }
 
-  // Enhanced content renderer with beautiful styling
+  // Clean, professional content renderer
   const renderContent = (content: string) => {
     if (!content) return null
 
+    // Simple HTML processing - just clean up and format
     let processedContent = content
 
-    // Check if content is HTML or plain text
-    const isHTML = /<\/?[a-z][\s\S]*>/i.test(content)
-
-    if (!isHTML) {
-      // Convert plain text to HTML with proper structure
+    // If it's plain text, convert to simple HTML
+    if (!/<[a-z][\s\S]*>/i.test(content)) {
       processedContent = content
-        // Convert line breaks to paragraphs
         .split('\n\n')
         .map(paragraph => {
           const trimmed = paragraph.trim()
           if (!trimmed) return ''
 
-          // Check if this looks like a heading
-          if (trimmed.length < 120 && (!trimmed.includes('.') || trimmed.split('.').length === 1) && !trimmed.includes('?') && !trimmed.includes('!')) {
-            // If it's short and doesn't end with punctuation, make it a heading
-            // Special handling for certain section headers
-            if (trimmed.includes('Why') || trimmed.includes('Introducing') || trimmed.includes('A message')) {
-              return `<h2 class="content-heading content-h2 special-section">${trimmed}</h2>`
-            }
-            return `<h2 class="content-heading content-h2">${trimmed}</h2>`
+          // Simple heading detection
+          if (trimmed.length < 100 && !trimmed.includes('.') && !trimmed.includes('?') && !trimmed.includes('!')) {
+            return `<h2 class="blog-heading">${trimmed}</h2>`
           }
 
-          // Check if it starts with bullet points or numbers
-          if (trimmed.startsWith('•') || trimmed.startsWith('-') || trimmed.startsWith('*') || /^\d+\./.test(trimmed)) {
-            // Extract all list items from the content
-            const allLines = content.split('\n')
-            const listItems = []
-            let inList = false
-
-            for (const line of allLines) {
-              const trimmedLine = line.trim()
-              if (trimmedLine.startsWith('•') || trimmedLine.startsWith('-') || trimmedLine.startsWith('*') || /^\d+\./.test(trimmedLine)) {
-                inList = true
-                listItems.push(trimmedLine.replace(/^[*•\-]\s*/, '').replace(/^\d+\.\s*/, ''))
-              } else if (inList && trimmedLine === '') {
-                // End of list
-                break
-              }
-            }
-
-            if (listItems.length > 0) {
-              const isNumbered = /^\d+\./.test(trimmed)
-              const listTag = isNumbered ? 'ol' : 'ul'
-              const listClass = isNumbered ? 'content-list numbered' : 'content-list'
-              const listHTML = listItems.map(item => `<li class="content-list-item">${item}</li>`).join('')
-              return `<${listTag} class="${listClass}">${listHTML}</${listTag}>`
-            }
+          // Simple list detection
+          if (trimmed.startsWith('•') || trimmed.startsWith('-') || trimmed.startsWith('*')) {
+            return `<ul class="blog-list"><li>${trimmed.replace(/^[*•\-]\s*/, '')}</li></ul>`
           }
 
-          // Check if it looks like a quote (short lines, conversational)
-          if (trimmed.length < 200 && (trimmed.startsWith('"') || trimmed.includes('I\'m') || trimmed.includes('we\'re'))) {
-            const isImportant = trimmed.includes('YLCA') || trimmed.includes('important') || trimmed.includes('key') || trimmed.includes('Why')
-            return `<blockquote class="content-quote${isImportant ? ' important' : ''}">${trimmed}</blockquote>`
+          if (/^\d+\./.test(trimmed)) {
+            return `<ol class="blog-list"><li>${trimmed.replace(/^\d+\.\s*/, '')}</li></ol>`
           }
 
-          // Check if it's an introduction/greeting
-          if (trimmed.startsWith('Hi') || trimmed.startsWith('Hello') || trimmed.startsWith('Hey') || trimmed.includes('I\'m') || trimmed.includes('I am')) {
-            return `<div class="content-intro"><p>${trimmed}</p></div>`
+          // Simple quote detection
+          if (trimmed.startsWith('"') || trimmed.length < 150) {
+            return `<blockquote class="blog-quote">${trimmed}</blockquote>`
           }
 
-          // Regular paragraph
-          return `<p>${trimmed}</p>`
+          return `<p class="blog-paragraph">${trimmed}</p>`
         })
         .filter(p => p)
         .join('')
     }
 
-    // Process the HTML to add custom styling classes
+    // Basic HTML cleanup for existing HTML content
     processedContent = processedContent
-      // Add drop caps to first paragraphs
-      .replace(/<p>([A-Za-z])/g, '<p class="first-letter"><span class="drop-cap">$1</span>')
-      // Enhance headings with better styling
-      .replace(/<h1>/g, '<h1 class="content-heading content-h1">')
-      .replace(/<h2>/g, '<h2 class="content-heading content-h2">')
-      .replace(/<h3>/g, '<h3 class="content-heading content-h3">')
-      .replace(/<h4>/g, '<h4 class="content-heading content-h4">')
-      // Add icons to lists
-      .replace(/<ul>/g, '<ul class="content-list">')
-      .replace(/<ol>/g, '<ol class="content-list numbered">')
-      .replace(/<li>/g, '<li class="content-list-item">')
-      // Enhance blockquotes
-      .replace(/<blockquote>/g, '<blockquote class="content-quote">')
-      // Add styling to code blocks
-      .replace(/<pre>/g, '<pre class="content-code-block">')
-      .replace(/<code>/g, '<code class="content-inline-code">')
-      // Enhance links
-      .replace(/<a /g, '<a class="content-link" ')
-      // Handle strong text
-      .replace(/<strong>/g, '<strong class="content-strong">')
-      .replace(/<b>/g, '<strong class="content-strong">')
-      // Handle emphasis
-      .replace(/<em>/g, '<em class="content-em">')
-      .replace(/<i>/g, '<em class="content-em">')
+      .replace(/<h[1-6]>/gi, (match) => `<h2 class="blog-heading">`)
+      .replace(/<\/h[1-6]>/gi, '</h2>')
+      .replace(/<p>/gi, '<p class="blog-paragraph">')
+      .replace(/<ul>/gi, '<ul class="blog-list">')
+      .replace(/<ol>/gi, '<ol class="blog-list">')
+      .replace(/<blockquote>/gi, '<blockquote class="blog-quote">')
+      .replace(/<strong>/gi, '<strong class="blog-strong">')
+      .replace(/<em>/gi, '<em class="blog-emphasis">')
 
     return (
-      <div
-        className="content-wrapper prose prose-lg max-w-none dark:prose-invert"
-        dangerouslySetInnerHTML={{ __html: processedContent }}
-      />
+      <div className="blog-content">
+        <div
+          className="prose prose-lg max-w-none"
+          dangerouslySetInnerHTML={{ __html: processedContent }}
+        />
+      </div>
     )
   }
 

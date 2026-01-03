@@ -194,7 +194,7 @@ export default function BlogsPage() {
           {isLoading && (
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 sm:gap-10">
               {[...Array(6)].map((_, i) => (
-                <Card key={i} className="overflow-hidden border border-border/60 dark:border-border/40 bg-gradient-to-br from-card/90 to-card/95 backdrop-blur-sm animate-pulse">
+                <Card key={i} className="overflow-hidden border border-border bg-card loading-skeleton">
                   <div className="aspect-[4/3] bg-gradient-to-br from-muted via-muted/80 to-muted rounded-t-lg"></div>
                   <CardHeader className="pb-4 px-6 pt-6">
                     <div className="h-6 bg-muted rounded mb-3 w-4/5"></div>
@@ -224,7 +224,7 @@ export default function BlogsPage() {
           {!isLoading && !error && blogs.length > 0 && (
             <div className="mb-12 sm:mb-16">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-10 mb-10 sm:mb-16">
-                <Card className="lg:col-span-2 group relative overflow-hidden border-2 border-primary/20 dark:border-primary/30 bg-gradient-to-br from-card via-card/98 to-card/95 backdrop-blur-sm hover:shadow-2xl hover:shadow-primary/20 dark:hover:shadow-primary/30 transition-all duration-700 hover:-translate-y-3 hover:scale-[1.02] cursor-pointer featured-blog-card blog-card-hover professional-shadow">
+                <Card className="lg:col-span-2 group relative overflow-hidden border border-primary/20 bg-card blog-card">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
 
                   {/* Featured Image */}
@@ -233,7 +233,7 @@ export default function BlogsPage() {
                       <img
                         src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/images/${blogs[0].featuredImage}`}
                         alt={blogs[0].title}
-                        className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                        className="w-full h-full object-cover blog-image"
                         onError={(e) => {
                           e.currentTarget.style.display = 'none'
                         }}
@@ -265,7 +265,7 @@ export default function BlogsPage() {
 
                     {/* Title Overlay */}
                     <div className="absolute bottom-0 left-0 right-0 p-8 sm:p-10">
-                      <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 line-clamp-2 leading-tight drop-shadow-2xl">
+                      <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 line-clamp-2 leading-tight blog-title">
                         {blogs[0].title}
                       </h3>
                       <p className="text-white/95 text-base sm:text-lg line-clamp-2 mb-6 drop-shadow-lg leading-relaxed">
@@ -314,7 +314,7 @@ export default function BlogsPage() {
                   <div className="space-y-4">
                     {blogs.slice(1, 4).map((blog, index) => (
                       <Link key={blog.blogId} href={`/blogs/${blog.blogId}`}>
-                        <Card className="group relative overflow-hidden border border-border/60 dark:border-border/40 bg-gradient-to-r from-card via-card/98 to-card/95 backdrop-blur-sm transition-all duration-500 hover:shadow-2xl hover:shadow-secondary/20 dark:hover:shadow-secondary/30 hover:-translate-y-2 hover:scale-[1.02] hover:border-secondary/60 dark:hover:border-secondary/70 cursor-pointer">
+                        <Card className="group relative overflow-hidden blog-card">
                           <div className="absolute inset-0 bg-gradient-to-r from-secondary/5 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
 
                           <CardContent className="p-5">
@@ -348,9 +348,9 @@ export default function BlogsPage() {
                                     {formatDate(blog.createdAt)}
                                   </span>
                                 </div>
-                                <h4 className="font-bold text-base sm:text-lg line-clamp-2 mb-3 group-hover:text-secondary transition-colors duration-300 leading-tight">
-                                  {blog.title}
-                                </h4>
+                            <h4 className="font-bold text-base sm:text-lg line-clamp-2 mb-3 blog-title leading-tight">
+                              {blog.title}
+                            </h4>
                                 <div className="flex items-center gap-3 text-sm text-muted-foreground">
                                   <div className="flex items-center gap-1.5">
                                     <User className="w-3.5 h-3.5" />
@@ -390,8 +390,7 @@ export default function BlogsPage() {
               {blogs.slice(1).map((blog, index) => (
                 <Card
                   key={blog.blogId}
-                  className="group relative overflow-hidden border border-border/60 dark:border-border/40 bg-gradient-to-br from-card via-card/98 to-card/95 backdrop-blur-sm transition-all duration-700 ease-out hover:shadow-2xl hover:shadow-primary/25 dark:hover:shadow-primary/35 hover:-translate-y-4 hover:scale-[1.03] hover:border-primary/60 dark:hover:border-primary/70 cursor-pointer blog-grid-card blog-card-hover professional-shadow"
-                  style={{ animationDelay: `${index * 0.1}s` }}
+                  className="group relative overflow-hidden blog-card"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
 
@@ -401,7 +400,7 @@ export default function BlogsPage() {
                       <img
                         src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/images/${blog.featuredImage}`}
                         alt={blog.title}
-                        className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-105"
+                        className="w-full h-full object-cover blog-image"
                         onError={(e) => {
                           e.currentTarget.style.display = 'none'
                         }}
@@ -434,7 +433,7 @@ export default function BlogsPage() {
                   </div>
 
                   <CardHeader className="relative pb-4 px-6 pt-6">
-                    <CardTitle className="text-xl sm:text-2xl font-bold tracking-tight line-clamp-2 leading-tight group-hover:text-primary transition-colors duration-300 mb-3">
+                    <CardTitle className="text-xl sm:text-2xl font-bold tracking-tight line-clamp-2 leading-tight blog-title mb-3">
                       {blog.title}
                     </CardTitle>
                     <CardDescription className="text-sm sm:text-base leading-relaxed line-clamp-3 text-muted-foreground group-hover:text-foreground/80 transition-colors duration-300">
@@ -462,11 +461,11 @@ export default function BlogsPage() {
                     </div>
 
                     <Link href={`/blogs/${blog.blogId}`}>
-                      <Button className="w-full bg-gradient-to-r from-primary/5 to-secondary/5 hover:from-primary/10 hover:to-secondary/10 text-primary hover:text-primary/90 border border-primary/20 hover:border-primary/40 group/btn transition-all duration-300 py-3">
-                        <span className="flex items-center justify-center gap-2 font-semibold">
+                      <Button variant="outline" className="w-full blog-button">
+                        <span className="flex items-center justify-center gap-2">
                           <FileText className="w-4 h-4" />
                           Read Article
-                          <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
+                          <ArrowRight className="w-4 h-4" />
                         </span>
                       </Button>
                     </Link>
