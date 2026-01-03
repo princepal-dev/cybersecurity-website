@@ -269,7 +269,7 @@ export default function BlogsPage() {
                         {blogs[0].title}
                       </h3>
                       <p className="text-white/95 text-base sm:text-lg line-clamp-2 mb-6 drop-shadow-lg leading-relaxed">
-                        {truncateDescription(blogs[0].description, 180)}
+                        {truncateDescription(blogs[0].description.replace(/<[^>]*>/g, ''), 180)}
                       </p>
                       <div className="flex flex-wrap items-center gap-4 text-white/90 text-sm drop-shadow-lg">
                         <div className="flex items-center gap-2 bg-black/30 px-3 py-1 rounded-full backdrop-blur-sm">
@@ -438,7 +438,7 @@ export default function BlogsPage() {
                       {blog.title}
                     </CardTitle>
                     <CardDescription className="text-sm sm:text-base leading-relaxed line-clamp-3 text-muted-foreground group-hover:text-foreground/80 transition-colors duration-300">
-                      {truncateDescription(blog.description, 140)}
+                      {truncateDescription(blog.description.replace(/<[^>]*>/g, ''), 140)}
                     </CardDescription>
                   </CardHeader>
 

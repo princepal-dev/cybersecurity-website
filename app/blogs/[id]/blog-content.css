@@ -53,6 +53,28 @@
   font-style: italic;
 }
 
+/* Special section headers */
+.content-h2.special-section {
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+}
+
+.content-h2.special-section::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--secondary)));
+  border-radius: 2px;
+}
+
 /* List styling */
 .content-list {
   margin: 1.5rem 0;
@@ -141,24 +163,82 @@
 
 /* Paragraph styling */
 .content-wrapper p {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
   font-size: 1.125rem;
-  line-height: 1.75;
+  line-height: 1.8;
+  text-align: justify;
+  hyphens: auto;
+  word-break: break-word;
 }
 
 .content-wrapper p:last-child {
   margin-bottom: 0;
 }
 
-/* Text formatting */
-.content-wrapper strong {
-  font-weight: 600;
-  color: hsl(var(--foreground));
+.content-wrapper p:first-child {
+  font-size: 1.25rem;
+  line-height: 1.7;
+  font-weight: 500;
 }
 
-.content-wrapper em {
+/* Special styling for introduction sections */
+.content-intro {
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.08), hsl(var(--secondary) / 0.08));
+  padding: 2rem;
+  border-radius: 1rem;
+  border-left: 5px solid hsl(var(--primary));
+  margin: 2.5rem 0;
+  position: relative;
+}
+
+.content-intro::before {
+  content: "👋";
+  position: absolute;
+  top: -10px;
+  left: 1rem;
+  background: white;
+  padding: 0.5rem;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  box-shadow: 0 2px 10px hsl(var(--foreground) / 0.1);
+}
+
+/* Enhanced quote styling for important messages */
+.content-quote.important {
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--secondary) / 0.1));
+  border-left-color: hsl(var(--primary));
+  border-left-width: 6px;
+  padding: 2rem;
+  margin: 2.5rem 0;
+  font-weight: 500;
+  position: relative;
+}
+
+.content-quote.important::before {
+  content: '"';
+  font-size: 3rem;
+  color: hsl(var(--primary) / 0.4);
+  position: absolute;
+  top: 0.5rem;
+  left: 1rem;
+}
+
+/* Text formatting */
+.content-wrapper strong,
+.content-strong {
+  font-weight: 700;
+  color: hsl(var(--foreground));
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.content-wrapper em,
+.content-em {
   font-style: italic;
   color: hsl(var(--foreground) / 0.9);
+  font-weight: 500;
 }
 
 /* Image styling */
@@ -235,22 +315,59 @@
 }
 
 /* Animation for content reveal */
-.content-wrapper * {
-  animation: fadeInUp 0.6s ease-out forwards;
+.content-wrapper > * {
+  animation: fadeInUp 0.8s ease-out forwards;
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(30px);
 }
 
-.content-wrapper *:nth-child(1) { animation-delay: 0.1s; }
-.content-wrapper *:nth-child(2) { animation-delay: 0.2s; }
-.content-wrapper *:nth-child(3) { animation-delay: 0.3s; }
-.content-wrapper *:nth-child(4) { animation-delay: 0.4s; }
-.content-wrapper *:nth-child(5) { animation-delay: 0.5s; }
-.content-wrapper *:nth-child(n+6) { animation-delay: 0.6s; }
+.content-wrapper > *:nth-child(1) { animation-delay: 0.1s; }
+.content-wrapper > *:nth-child(2) { animation-delay: 0.2s; }
+.content-wrapper > *:nth-child(3) { animation-delay: 0.3s; }
+.content-wrapper > *:nth-child(4) { animation-delay: 0.4s; }
+.content-wrapper > *:nth-child(5) { animation-delay: 0.5s; }
+.content-wrapper > *:nth-child(n+6) { animation-delay: 0.6s; }
 
 @keyframes fadeInUp {
   to {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Better spacing between sections */
+.content-wrapper > * + * {
+  margin-top: 1.5rem;
+}
+
+.content-wrapper h2 + p,
+.content-wrapper h3 + p,
+.content-wrapper h4 + p {
+  margin-top: 1rem;
+}
+
+.content-wrapper p + h2,
+.content-wrapper p + h3,
+.content-wrapper p + h4 {
+  margin-top: 2.5rem;
+}
+
+.content-wrapper ul + p,
+.content-wrapper ol + p {
+  margin-top: 2rem;
+}
+
+.content-wrapper p + ul,
+.content-wrapper p + ol {
+  margin-top: 1.5rem;
+}
+
+/* Special spacing for intro sections */
+.content-intro + * {
+  margin-top: 2.5rem;
+}
+
+/* Better spacing for quotes */
+.content-quote + * {
+  margin-top: 2rem;
 }

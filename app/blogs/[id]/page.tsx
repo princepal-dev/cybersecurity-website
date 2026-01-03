@@ -146,11 +146,80 @@ export default function BlogDetailPage() {
   }
 
   // Enhanced content renderer with beautiful styling
-  const renderContent = (htmlContent: string) => {
-    if (!htmlContent) return null
+  const renderContent = (content: string) => {
+    if (!content) return null
+
+    let processedContent = content
+
+    // Check if content is HTML or plain text
+    const isHTML = /<\/?[a-z][\s\S]*>/i.test(content)
+
+    if (!isHTML) {
+      // Convert plain text to HTML with proper structure
+      processedContent = content
+        // Convert line breaks to paragraphs
+        .split('\n\n')
+        .map(paragraph => {
+          const trimmed = paragraph.trim()
+          if (!trimmed) return ''
+
+          // Check if this looks like a heading
+          if (trimmed.length < 120 && (!trimmed.includes('.') || trimmed.split('.').length === 1) && !trimmed.includes('?') && !trimmed.includes('!')) {
+            // If it's short and doesn't end with punctuation, make it a heading
+            // Special handling for certain section headers
+            if (trimmed.includes('Why') || trimmed.includes('Introducing') || trimmed.includes('A message')) {
+              return `<h2 class="content-heading content-h2 special-section">${trimmed}</h2>`
+            }
+            return `<h2 class="content-heading content-h2">${trimmed}</h2>`
+          }
+
+          // Check if it starts with bullet points or numbers
+          if (trimmed.startsWith('•') || trimmed.startsWith('-') || trimmed.startsWith('*') || /^\d+\./.test(trimmed)) {
+            // Extract all list items from the content
+            const allLines = content.split('\n')
+            const listItems = []
+            let inList = false
+
+            for (const line of allLines) {
+              const trimmedLine = line.trim()
+              if (trimmedLine.startsWith('•') || trimmedLine.startsWith('-') || trimmedLine.startsWith('*') || /^\d+\./.test(trimmedLine)) {
+                inList = true
+                listItems.push(trimmedLine.replace(/^[*•\-]\s*/, '').replace(/^\d+\.\s*/, ''))
+              } else if (inList && trimmedLine === '') {
+                // End of list
+                break
+              }
+            }
+
+            if (listItems.length > 0) {
+              const isNumbered = /^\d+\./.test(trimmed)
+              const listTag = isNumbered ? 'ol' : 'ul'
+              const listClass = isNumbered ? 'content-list numbered' : 'content-list'
+              const listHTML = listItems.map(item => `<li class="content-list-item">${item}</li>`).join('')
+              return `<${listTag} class="${listClass}">${listHTML}</${listTag}>`
+            }
+          }
+
+          // Check if it looks like a quote (short lines, conversational)
+          if (trimmed.length < 200 && (trimmed.startsWith('"') || trimmed.includes('I\'m') || trimmed.includes('we\'re'))) {
+            const isImportant = trimmed.includes('YLCA') || trimmed.includes('important') || trimmed.includes('key') || trimmed.includes('Why')
+            return `<blockquote class="content-quote${isImportant ? ' important' : ''}">${trimmed}</blockquote>`
+          }
+
+          // Check if it's an introduction/greeting
+          if (trimmed.startsWith('Hi') || trimmed.startsWith('Hello') || trimmed.startsWith('Hey') || trimmed.includes('I\'m') || trimmed.includes('I am')) {
+            return `<div class="content-intro"><p>${trimmed}</p></div>`
+          }
+
+          // Regular paragraph
+          return `<p>${trimmed}</p>`
+        })
+        .filter(p => p)
+        .join('')
+    }
 
     // Process the HTML to add custom styling classes
-    let processedContent = htmlContent
+    processedContent = processedContent
       // Add drop caps to first paragraphs
       .replace(/<p>([A-Za-z])/g, '<p class="first-letter"><span class="drop-cap">$1</span>')
       // Enhance headings with better styling
@@ -169,6 +238,12 @@ export default function BlogDetailPage() {
       .replace(/<code>/g, '<code class="content-inline-code">')
       // Enhance links
       .replace(/<a /g, '<a class="content-link" ')
+      // Handle strong text
+      .replace(/<strong>/g, '<strong class="content-strong">')
+      .replace(/<b>/g, '<strong class="content-strong">')
+      // Handle emphasis
+      .replace(/<em>/g, '<em class="content-em">')
+      .replace(/<i>/g, '<em class="content-em">')
 
     return (
       <div
