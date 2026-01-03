@@ -199,7 +199,7 @@ function AmbassadorCard({ currentIndex, onNext, onPrev }: { currentIndex: number
               <img
                 src={ambassador.image}
                 alt={ambassador.name}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-top object-cover"
               />
             </div>
           </div>

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import "./blog-content.css"
 import { useParams, useRouter } from "next/navigation"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
@@ -9,7 +10,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Separator } from "@/components/ui/separator"
-import { BookOpen, Calendar, User, ArrowLeft, Clock, Share2, Eye, ArrowRight, Copy, Check } from "lucide-react"
+import { BookOpen, Calendar, User, ArrowLeft, Clock, Share2, Eye, ArrowRight, Copy, Check, Quote, Star, Lightbulb, Target, Zap, Shield } from "lucide-react"
 import Link from "next/link"
 import { useToast } from "@/hooks/use-toast"
 
@@ -142,6 +143,39 @@ export default function BlogDetailPage() {
         })
       }
     }
+  }
+
+  // Enhanced content renderer with beautiful styling
+  const renderContent = (htmlContent: string) => {
+    if (!htmlContent) return null
+
+    // Process the HTML to add custom styling classes
+    let processedContent = htmlContent
+      // Add drop caps to first paragraphs
+      .replace(/<p>([A-Za-z])/g, '<p class="first-letter"><span class="drop-cap">$1</span>')
+      // Enhance headings with better styling
+      .replace(/<h1>/g, '<h1 class="content-heading content-h1">')
+      .replace(/<h2>/g, '<h2 class="content-heading content-h2">')
+      .replace(/<h3>/g, '<h3 class="content-heading content-h3">')
+      .replace(/<h4>/g, '<h4 class="content-heading content-h4">')
+      // Add icons to lists
+      .replace(/<ul>/g, '<ul class="content-list">')
+      .replace(/<ol>/g, '<ol class="content-list numbered">')
+      .replace(/<li>/g, '<li class="content-list-item">')
+      // Enhance blockquotes
+      .replace(/<blockquote>/g, '<blockquote class="content-quote">')
+      // Add styling to code blocks
+      .replace(/<pre>/g, '<pre class="content-code-block">')
+      .replace(/<code>/g, '<code class="content-inline-code">')
+      // Enhance links
+      .replace(/<a /g, '<a class="content-link" ')
+
+    return (
+      <div
+        className="content-wrapper prose prose-lg max-w-none dark:prose-invert"
+        dangerouslySetInnerHTML={{ __html: processedContent }}
+      />
+    )
   }
 
   return (
@@ -278,12 +312,9 @@ export default function BlogDetailPage() {
             )}
 
             {/* Article Content */}
-            <Card className="border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-md">
+            <Card className="border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-md shadow-xl">
               <CardContent className="pt-8 sm:pt-12 pb-8 sm:pb-12 px-6 sm:px-8 lg:px-12">
-                <div
-                  className="prose prose-lg max-w-none dark:prose-invert prose-headings:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground prose-a:text-primary hover:prose-a:text-primary/80 prose-blockquote:border-primary/30 prose-blockquote:text-muted-foreground"
-                  dangerouslySetInnerHTML={{ __html: blog.description }}
-                />
+                {renderContent(blog.description)}
               </CardContent>
             </Card>
 

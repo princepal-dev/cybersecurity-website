@@ -118,7 +118,10 @@ const dpsImages = [
   "/dps/WhatsApp Image 2025-12-31 at 13.29.48 (3).jpeg"
 ]
 
-function StoriesCarousel() {
+function StoriesCarousel({ onOpenModal }: { onOpenModal: (images: string[], index: number) => void }) {
+  // Show only first 12 images for cleaner carousel
+  const featuredImages = storiesImages.slice(0, 12);
+
   return (
     <div className="mb-8 sm:mb-12 md:mb-16">
       <Carousel
@@ -129,24 +132,55 @@ function StoriesCarousel() {
         className="w-full"
       >
         <CarouselContent className="-ml-2 md:-ml-4">
-          {storiesImages.map((image, index) => (
-            <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
-              <div className="group relative rounded-2xl overflow-hidden border border-border/50 bg-card shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                <div className="aspect-[4/3] overflow-hidden bg-muted/20">
+          {featuredImages.map((image, index) => (
+            <CarouselItem key={index} className="pl-2 md:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/4">
+              <div
+                className="group relative rounded-xl overflow-hidden border border-border/50 bg-card shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer"
+                onClick={() => onOpenModal(featuredImages, index)}
+                role="button"
+                tabIndex={0}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault()
+                                onOpenModal(featuredImages, index)
+                              }
+                            }}
+                aria-label={`View story image ${index + 1}`}
+              >
+                <div className="aspect-square overflow-hidden bg-muted/20">
                   <img
                     src={image}
-                    alt={`Story ${index + 1}`}
-                    className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
+                    alt={`YLCA Impact Story ${index + 1}`}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
                   />
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <p className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                      View Full Gallery
+                    </p>
+                  </div>
+                </div>
               </div>
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="hidden sm:flex -left-12" />
-        <CarouselNext className="hidden sm:flex -right-12" />
+        <CarouselPrevious className="hidden sm:flex -left-12 bg-background/90 hover:bg-background border-border/60" />
+        <CarouselNext className="hidden sm:flex -right-12 bg-background/90 hover:bg-background border-border/60" />
       </Carousel>
+
+      {/* View All Photos Button */}
+      <div className="text-center mt-8">
+        <Button
+          variant="outline"
+          onClick={() => onOpenModal(storiesImages, 0)}
+          className="border-2 border-primary/50 dark:border-primary/60 hover:bg-primary/10 dark:hover:bg-primary/20 px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-full font-semibold group"
+        >
+          View All Photos
+          <Globe className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
+        </Button>
+      </div>
     </div>
   )
 }
@@ -242,16 +276,18 @@ function ImageModal({ images, initialIndex, isOpen, onClose }: { images: string[
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 text-white hover:bg-white/20 h-12 w-12 sm:h-14 sm:w-14 rounded-full touch-manipulation"
+                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/70 text-white border border-white/20 h-12 w-12 sm:h-14 sm:w-14 rounded-full shadow-lg backdrop-blur-sm transition-all duration-200 hover:scale-110 touch-manipulation"
                 onClick={goToPrevious}
+                aria-label="Previous image"
               >
                 <ChevronLeft className="h-6 w-6 sm:h-8 sm:w-8" />
               </Button>
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 text-white hover:bg-white/20 h-12 w-12 sm:h-14 sm:w-14 rounded-full touch-manipulation"
+                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/70 text-white border border-white/20 h-12 w-12 sm:h-14 sm:w-14 rounded-full shadow-lg backdrop-blur-sm transition-all duration-200 hover:scale-110 touch-manipulation"
                 onClick={goToNext}
+                aria-label="Next image"
               >
                 <ChevronRight className="h-6 w-6 sm:h-8 sm:w-8" />
               </Button>
@@ -367,19 +403,21 @@ export default function Impact() {
           </div>
         </section>
 
-        {/* Stories & Photos */}
+        {/* Success Stories & Testimonials */}
         <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-8 sm:mb-12 md:mb-16">
               <Badge variant="secondary" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">SUCCESS STORIES</Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">Stories & Photos</h2>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
+                Voices from Our <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Community</span>
+              </h2>
+              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
+                Real stories from ambassadors, teachers, and students who are making a difference through YLCA.
+              </p>
             </div>
-            
-            {/* Photo Gallery Carousel */}
-            <StoriesCarousel />
 
-            {/* Success Stories */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+            {/* Testimonials Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-16">
               <Card className="group relative overflow-hidden border-2 border-border/50 dark:border-border/30 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary/40 dark:hover:border-primary/50">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <CardHeader className="relative">
@@ -455,8 +493,26 @@ export default function Impact() {
           </div>
         </section>
 
-        {/* December 2025: In-Person Cyber Safety Outreach */}
-        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden">
+        {/* Photo Gallery Showcase */}
+        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/20">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-8 sm:mb-12 md:mb-16">
+              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">PHOTO GALLERY</Badge>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
+                Moments That <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Matter</span>
+              </h2>
+              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
+                Capturing the energy, learning, and impact of YLCA workshops and events around the world.
+              </p>
+            </div>
+
+            {/* Featured Photo Carousel */}
+            <StoriesCarousel onOpenModal={openModal} />
+          </div>
+        </section>
+
+        {/* Recent Highlights */}
+        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden">
           {/* Decorative elements */}
           <div className="absolute inset-0 -z-10">
             <div className="absolute top-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
@@ -465,133 +521,107 @@ export default function Impact() {
 
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="text-center mb-8 sm:mb-12">
-              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">DECEMBER 2025</Badge>
+              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">LATEST IMPACT</Badge>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
-                In-Person Cyber Safety <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Outreach</span>
+                Recent <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Highlights</span>
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
-                Students leading cyber safety education across schools and communities
+                Our most recent initiatives and achievements in cyber safety education
               </p>
             </div>
 
-            {/* Content Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 mb-12 sm:mb-16">
-              <div className="space-y-4 sm:space-y-6">
-                <Card className="border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-sm">
-                  <CardContent className="pt-6">
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                      In December 2025, YLCA students stepped beyond classrooms to deliver hands-on cybersecurity and AI awareness sessions across communities in India. Led by founder Arth Bhardwaj and Ambassador Vedika Jain, the initiative reached 500+ students across multiple Delhi government schools, focusing on everyday digital safety topics such as online scams, privacy protection, and responsible use of technology.
-                    </p>
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mt-4">
-                      Arth also conducted workshops for 50+ students at boys' tennis training camps, highlighting social media and gaming account security. In addition, sessions with young factory workers and senior citizens at a community clubhouse addressed financial fraud, mobile security, and common digital risks.
-                    </p>
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mt-4 font-medium">
-                      Through these in-person efforts, YLCA demonstrated how student leadership can translate technical knowledge into meaningful, real-world impact.
-                    </p>
-                  </CardContent>
-                </Card>
-
-                {/* Key Highlights */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <Card className="border border-primary/20 dark:border-primary/30 bg-primary/5 dark:bg-primary/10">
-                    <CardContent className="pt-4 pb-4">
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-primary mb-1">500+</div>
-                        <p className="text-sm text-muted-foreground">Students Reached</p>
-                        <p className="text-xs text-primary/80 mt-1">Delhi Government Schools</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="border border-secondary/20 dark:border-secondary/30 bg-secondary/5 dark:bg-secondary/10">
-                    <CardContent className="pt-4 pb-4">
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-secondary mb-1">50+</div>
-                        <p className="text-sm text-muted-foreground">Tennis Camp Students</p>
-                        <p className="text-xs text-secondary/80 mt-1">Gaming & Social Media Security</p>
-                      </div>
-                    </CardContent>
-                  </Card>
+            {/* Featured Initiative: December 2025 */}
+            <div className="mb-12 sm:mb-16">
+              <Card className="border-2 border-primary/30 dark:border-primary/40 bg-gradient-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+                <div className="bg-gradient-to-r from-primary/10 to-secondary/10 px-6 py-4 border-b border-border/50">
+                  <div className="flex items-center gap-3">
+                    <Badge variant="default" className="text-xs">DECEMBER 2025</Badge>
+                    <h3 className="text-lg sm:text-xl font-bold text-foreground">In-Person Cyber Safety Outreach</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-1">Students leading cyber safety education across schools and communities</p>
                 </div>
-              </div>
 
-              <div className="space-y-4 sm:space-y-6">
-                {/* Image Carousel */}
-                <Card className="border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-sm">
-                  <CardContent className="pt-6">
-                    <h3 className="text-lg sm:text-xl font-bold mb-4 text-center">Event Highlights</h3>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                      {[
-                        "/december/WhatsApp Image 2025-12-27 at 09.23.45.jpeg",
-                        "/december/WhatsApp Image 2025-12-27 at 09.24.01.jpeg",
-                        "/december/WhatsApp Image 2025-12-27 at 09.23.58.jpeg",
-                        "/december/WhatsApp Image 2025-12-27 at 09.24.05.jpeg",
-                        "/december/WhatsApp Image 2025-12-27 at 09.23.11.jpeg",
-                        "/december/WhatsApp Image 2025-12-27 at 09.23.48.jpeg"
-                      ].map((image, index) => (
-                        <div
-                          key={index}
-                          className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
-                          onClick={() => openModal(decemberImages, decemberImages.indexOf(image))}
-                          role="button"
-                          tabIndex={0}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                              e.preventDefault()
-                              openModal(decemberImages, decemberImages.indexOf(image))
-                            }
-                          }}
-                          aria-label={`View image ${index + 1} in gallery`}
-                        >
-                          <img
-                            src={image}
-                            alt="December 2025 Outreach"
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                            loading="lazy"
-                          />
+                <CardContent className="p-6 sm:p-8">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+                    <div className="space-y-4">
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                        In December 2025, YLCA students stepped beyond classrooms to deliver hands-on cybersecurity and AI awareness sessions across communities in India. Led by founder Arth Bhardwaj and Ambassador Vedika Jain, the initiative reached 500+ students across multiple Delhi government schools, focusing on everyday digital safety topics such as online scams, privacy protection, and responsible use of technology.
+                      </p>
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                        Arth also conducted workshops for 50+ students at boys' tennis training camps, highlighting social media and gaming account security. In addition, sessions with young factory workers and senior citizens at a community clubhouse addressed financial fraud, mobile security, and common digital risks.
+                      </p>
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed font-medium">
+                        Through these in-person efforts, YLCA demonstrated how student leadership can translate technical knowledge into meaningful, real-world impact.
+                      </p>
+
+                      {/* Key Highlights */}
+                      <div className="grid grid-cols-2 gap-3 pt-4">
+                        <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
+                          <div className="text-xl font-bold text-primary mb-1">500+</div>
+                          <p className="text-xs text-muted-foreground">Students Reached</p>
                         </div>
-                      ))}
+                        <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
+                          <div className="text-xl font-bold text-secondary mb-1">50+</div>
+                          <p className="text-xs text-muted-foreground">Tennis Camp Students</p>
+                        </div>
+                      </div>
                     </div>
-                  </CardContent>
-                </Card>
-              </div>
+
+                    <div className="space-y-4">
+                      <h4 className="text-lg font-bold text-foreground mb-3">Event Highlights</h4>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        {[
+                          "/december/WhatsApp Image 2025-12-27 at 09.23.45.jpeg",
+                          "/december/WhatsApp Image 2025-12-27 at 09.24.01.jpeg",
+                          "/december/WhatsApp Image 2025-12-27 at 09.23.58.jpeg",
+                          "/december/WhatsApp Image 2025-12-27 at 09.24.05.jpeg",
+                          "/december/WhatsApp Image 2025-12-27 at 09.23.11.jpeg",
+                          "/december/WhatsApp Image 2025-12-27 at 09.23.48.jpeg"
+                        ].map((image, index) => (
+                          <div
+                            key={index}
+                            className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
+                            onClick={() => openModal(decemberImages, decemberImages.indexOf(image))}
+                            role="button"
+                            tabIndex={0}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault()
+                                openModal(decemberImages, decemberImages.indexOf(image))
+                              }
+                            }}
+                            aria-label={`View December 2025 image ${index + 1} in gallery`}
+                          >
+                            <img
+                              src={image}
+                              alt="December 2025 Outreach"
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              loading="lazy"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
 
-            {/* Full Width Image Gallery */}
-            <Card className="border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-sm">
-              <CardContent className="pt-6">
-                <h3 className="text-lg sm:text-xl font-bold mb-6 text-center">More Event Photos</h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                  {decemberImages.slice(12, 24).map((image, index) => (
-                    <div
-                      key={index}
-                      className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
-                      onClick={() => openModal(decemberImages, index + 12)}
-                      role="button"
-                      tabIndex={0}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                          e.preventDefault()
-                          openModal(decemberImages, index + 12)
-                        }
-                      }}
-                      aria-label={`View image ${index + 13} of ${decemberImages.length} in gallery`}
-                    >
-                      <img
-                        src={image}
-                        alt="December 2025 Outreach"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        loading="lazy"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+            {/* View All December Photos */}
+            <div className="text-center">
+              <Button
+                variant="outline"
+                onClick={() => openModal(decemberImages, 0)}
+                className="border-2 border-primary/50 dark:border-primary/60 hover:bg-primary/10 dark:hover:bg-primary/20 px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-full font-semibold group"
+              >
+                View All December 2025 Photos
+                <GraduationCap className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
+              </Button>
+            </div>
           </div>
         </section>
 
-        {/* DPS Karnal Campus Visit */}
+        {/* Featured Initiative: DPS Karnal */}
         <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden">
           {/* Decorative elements */}
           <div className="absolute inset-0 -z-10">
@@ -601,161 +631,131 @@ export default function Impact() {
 
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="text-center mb-8 sm:mb-12">
-              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">DECEMBER 2025</Badge>
+              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">SCHOOL PARTNERSHIP</Badge>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
-                DPS Karnal Hosts Arth Bhardwaj: <span className="bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">Cyber Safety & AI Leadership</span>
+                DPS Karnal Hosts Arth <span className="bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">Bhardwaj</span>
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
-                A full-day campus visit where YLCA's founder Arth Bhardwaj met Grades 9-12 and mentored newly nominated YLCA Ambassadors
+                A full-day campus visit where YLCA's founder met Grades 9-12 students and mentored newly nominated ambassadors
               </p>
             </div>
 
-            {/* Content Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 mb-12 sm:mb-16">
-              <div className="space-y-4 sm:space-y-6">
-                <Card className="border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-sm">
-                  <CardContent className="pt-6">
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                      On December 29, 2025, YLCA Founder Arth Bhardwaj visited Delhi Public School (DPS) Karnal, India in person to deepen YLCA's growing partnership with the school. Arth addressed students from Grades 9-12 on why cybersecurity and responsible AI matter in everyday life—and how student-led passion projects build confidence, leadership, and real community impact.
-                    </p>
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mt-4">
-                      A key highlight of the day was a focused planning session with DPS Karnal's six nominated YLCA Ambassadors, who will join the YLCA Global Ambassador Program (Jan 2026 cohort). Together, they mapped out student-led initiatives such as cyber safety awareness drives, responsible AI learning circles, digital citizenship campaigns, and peer-to-peer workshops designed to build digital trust across the school community.
-                    </p>
-                  </CardContent>
-                </Card>
-
-                {/* Key Highlights */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <Card className="border border-primary/20 dark:border-primary/30 bg-primary/5 dark:bg-primary/10">
-                    <CardContent className="pt-4 pb-4">
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-primary mb-1">6</div>
-                        <p className="text-sm text-muted-foreground">New Ambassadors</p>
-                        <p className="text-xs text-primary/80 mt-1">Jan 2026 Cohort</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="border border-secondary/20 dark:border-secondary/30 bg-secondary/5 dark:bg-secondary/10">
-                    <CardContent className="pt-4 pb-4">
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-secondary mb-1">Grades 9-12</div>
-                        <p className="text-sm text-muted-foreground">Students Engaged</p>
-                        <p className="text-xs text-secondary/80 mt-1">Campus-Wide Impact</p>
-                      </div>
-                    </CardContent>
-                  </Card>
+            <div className="mb-12 sm:mb-16">
+              <Card className="border-2 border-secondary/30 dark:border-secondary/40 bg-gradient-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+                <div className="bg-gradient-to-r from-secondary/10 to-primary/10 px-6 py-4 border-b border-border/50">
+                  <div className="flex items-center gap-3">
+                    <Badge variant="default" className="text-xs">DECEMBER 2025</Badge>
+                    <h3 className="text-lg sm:text-xl font-bold text-foreground">DPS Karnal Campus Visit</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-1">Arth Bhardwaj's full-day campus visit and ambassador mentorship</p>
                 </div>
-              </div>
 
-              <div className="space-y-4 sm:space-y-6">
-                {/* Hero Image */}
-                <Card className="border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-sm">
-                  <CardContent className="pt-6">
-                    <div className="aspect-video overflow-hidden rounded-lg border border-border/30">
-                      <img
-                        src="/dps/hero.png"
-                        alt="Arth Bhardwaj at DPS Karnal Campus Visit"
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                        loading="lazy"
-                      />
-                    </div>
-                  </CardContent>
-                </Card>
+                <CardContent className="p-6 sm:p-8">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+                    <div className="space-y-4">
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                        On December 29, 2025, YLCA Founder Arth Bhardwaj visited Delhi Public School (DPS) Karnal, India in person to deepen YLCA's growing partnership with the school. Arth addressed students from Grades 9-12 on why cybersecurity and responsible AI matter in everyday life—and how student-led passion projects build confidence, leadership, and real community impact.
+                      </p>
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                        A key highlight of the day was a focused planning session with DPS Karnal's six nominated YLCA Ambassadors, who will join the YLCA Global Ambassador Program (Jan 2026 cohort). Together, they mapped out student-led initiatives such as cyber safety awareness drives, responsible AI learning circles, digital citizenship campaigns, and peer-to-peer workshops designed to build digital trust across the school community.
+                      </p>
 
-                {/* Image Grid */}
-                <Card className="border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-sm">
-                  <CardContent className="pt-6">
-                    <h3 className="text-lg sm:text-xl font-bold mb-4 text-center">Campus Visit Highlights</h3>
-                    <div className="grid grid-cols-2 gap-3">
-                      {[
-                        "/dps/image.png",
-                        "/dps/WhatsApp Image 2025-12-31 at 13.29.48.jpeg",
-                        "/dps/WhatsApp Image 2025-12-31 at 13.29.48 (1).jpeg",
-                        "/dps/WhatsApp Image 2025-12-31 at 13.29.48 (2).jpeg"
-                      ].map((image, index) => (
-                        <div
-                          key={index}
-                          className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
-                          onClick={() => openModal(dpsImages, index)}
-                          role="button"
-                          tabIndex={0}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                              e.preventDefault()
-                              openModal(dpsImages, index)
-                            }
-                          }}
-                          aria-label={`View DPS Karnal image ${index + 1} in gallery`}
-                        >
-                          <img
-                            src={image}
-                            alt="DPS Karnal Campus Visit"
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                            loading="lazy"
-                          />
+                      {/* Key Highlights */}
+                      <div className="grid grid-cols-2 gap-3 pt-4">
+                        <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
+                          <div className="text-xl font-bold text-secondary mb-1">6</div>
+                          <p className="text-xs text-muted-foreground">New Ambassadors</p>
                         </div>
-                      ))}
+                        <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
+                          <div className="text-xl font-bold text-primary mb-1">Grades 9-12</div>
+                          <p className="text-xs text-muted-foreground">Students Engaged</p>
+                        </div>
+                      </div>
                     </div>
-                  </CardContent>
-                </Card>
-              </div>
+
+                    <div className="space-y-4">
+                      <div className="aspect-video overflow-hidden rounded-lg border border-border/30">
+                        <img
+                          src="/dps/hero.png"
+                          alt="Arth Bhardwaj at DPS Karnal Campus Visit"
+                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
+                          onClick={() => openModal(dpsImages, 0)}
+                          loading="lazy"
+                        />
+                      </div>
+
+                      <h4 className="text-lg font-bold text-foreground mb-3">Campus Visit Highlights</h4>
+                      <div className="grid grid-cols-2 gap-3">
+                        {[
+                          "/dps/image.png",
+                          "/dps/WhatsApp Image 2025-12-31 at 13.29.48.jpeg"
+                        ].map((image, index) => (
+                          <div
+                            key={index}
+                            className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
+                            onClick={() => openModal(dpsImages, index)}
+                            role="button"
+                            tabIndex={0}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault()
+                                openModal(dpsImages, index)
+                              }
+                            }}
+                            aria-label={`View DPS Karnal image ${index + 1} in gallery`}
+                          >
+                            <img
+                              src={image}
+                              alt="DPS Karnal Campus Visit"
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              loading="lazy"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
 
-            {/* Full Width Image Gallery */}
-            <Card className="border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-sm">
-              <CardContent className="pt-6">
-                <h3 className="text-lg sm:text-xl font-bold mb-6 text-center">More Campus Visit Photos</h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                  {dpsImages.map((image, index) => (
-                    <div
-                      key={index}
-                      className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
-                      onClick={() => openModal(dpsImages, index)}
-                      role="button"
-                      tabIndex={0}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                          e.preventDefault()
-                          openModal(dpsImages, index)
-                        }
-                      }}
-                      aria-label={`View image ${index + 1} of ${dpsImages.length} in gallery`}
-                    >
-                      <img
-                        src={image}
-                        alt="DPS Karnal Campus Visit"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        loading="lazy"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+            {/* View All DPS Photos */}
+            <div className="text-center mb-8">
+              <Button
+                variant="outline"
+                onClick={() => openModal(dpsImages, 0)}
+                className="border-2 border-secondary/50 dark:border-secondary/60 hover:bg-secondary/10 dark:hover:bg-secondary/20 px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-full font-semibold group"
+              >
+                View All DPS Karnal Photos
+                <Users className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
+              </Button>
+            </div>
           </div>
         </section>
 
         {/* Call to Action */}
-        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 bg-gradient-to-br from-primary/10 via-card/30 to-secondary/10">
+        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-br from-primary/10 via-secondary/10 to-primary/10">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-foreground px-4">Be Part of Our Impact</h2>
-            <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 px-4">
-              Join YLCA and help us reach even more students around the world.
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-foreground px-4">
+              Join the <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Impact</span>
+            </h2>
+            <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 px-4 max-w-2xl mx-auto">
+              Be part of a global movement empowering teens with cybersecurity and AI knowledge. Your participation can create real change.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
-              <Link href="/get-involved" className="w-full sm:w-auto">
-                <Button className="relative w-full sm:w-auto bg-gradient-to-r from-primary via-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg rounded-full shadow-lg shadow-primary/30 dark:shadow-primary/40 hover:shadow-xl hover:shadow-primary/40 dark:hover:shadow-primary/50 transition-all duration-300 ease-out hover:scale-105 active:scale-100 font-semibold group overflow-hidden">
-                  <span className="relative z-10">Get Involved</span>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
+              <Link href="/get-involved">
+                <Button className="w-full sm:w-auto bg-gradient-to-r from-primary via-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white px-8 sm:px-10 py-6 sm:py-7 text-base sm:text-lg rounded-full shadow-lg shadow-primary/30 dark:shadow-primary/40 hover:shadow-xl hover:shadow-primary/40 dark:hover:shadow-primary/50 transition-all duration-300 hover:scale-105 active:scale-100 font-semibold group overflow-hidden">
+                  <span className="relative z-10 flex items-center justify-center">
+                    Get Involved
+                    <Globe className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:rotate-12 transition-transform duration-300" />
+                  </span>
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
                 </Button>
               </Link>
-              <Link href="/programs" className="w-full sm:w-auto">
-                <Button
-                  variant="outline"
-                  className="w-full sm:w-auto border-2 border-primary/50 dark:border-primary/60 text-foreground hover:bg-primary/10 dark:hover:bg-primary/20 px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg rounded-full bg-background/80 dark:bg-background/60 backdrop-blur-sm transition-all duration-300 ease-out hover:scale-105 active:scale-100 hover:border-primary/70 dark:hover:border-primary/80 hover:shadow-lg hover:shadow-primary/20 dark:hover:shadow-primary/30 font-semibold"
-                >
-                  Explore Programs
+              <Link href="/about">
+                <Button variant="outline" className="w-full sm:w-auto border-2 border-primary/50 dark:border-primary/60 hover:bg-primary/10 dark:hover:bg-primary/20 px-8 sm:px-10 py-6 sm:py-7 text-base sm:text-lg rounded-full font-semibold group">
+                  Learn More About YLCA
+                  <Star className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:rotate-12 transition-transform duration-300" />
                 </Button>
               </Link>
             </div>
