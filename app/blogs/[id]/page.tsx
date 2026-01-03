@@ -32,6 +32,20 @@ interface BlogDetail {
   updatedAt: string
 }
 
+// Fallback images for different blog categories
+const getFallbackImage = (category?: string) => {
+  const categoryImages: Record<string, string> = {
+    'AI & ML': 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=600&fit=crop&crop=center',
+    'Cybersecurity': 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200&h=600&fit=crop&crop=center',
+    'Education': 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&h=600&fit=crop&crop=center',
+    'Careers': 'https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?w=1200&h=600&fit=crop&crop=center',
+    'Research': 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&h=600&fit=crop&crop=center',
+    'Insights': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&h=600&fit=crop&crop=center'
+  }
+
+  return categoryImages[category || ''] || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&h=600&fit=crop&crop=center'
+}
+
 export default function BlogDetailPage() {
   const { id } = useParams()
   const router = useRouter()
@@ -82,6 +96,33 @@ export default function BlogDetailPage() {
     const words = text.trim().split(/\s+/).length
     const minutes = Math.ceil(words / wordsPerMinute)
     return `${minutes} min read`
+  }
+
+  const getBlogCategory = (title: string, description: string): string => {
+    const content = (title + ' ' + description).toLowerCase()
+
+    if (content.includes('ai') || content.includes('artificial intelligence') || content.includes('machine learning')) {
+      return 'AI & ML'
+    }
+    if (content.includes('cybersecurity') || content.includes('security') || content.includes('hacking') || content.includes('privacy')) {
+      return 'Cybersecurity'
+    }
+    if (content.includes('workshop') || content.includes('training') || content.includes('education')) {
+      return 'Education'
+    }
+    if (content.includes('career') || content.includes('job') || content.includes('future')) {
+      return 'Careers'
+    }
+    if (content.includes('research') || content.includes('study') || content.includes('analysis')) {
+      return 'Research'
+    }
+    return 'Insights'
+  }
+
+  // Get category for current blog
+  const getCurrentBlogCategory = () => {
+    if (!blog) return ''
+    return getBlogCategory(blog.title, blog.description)
   }
 
   // Extract plain text from HTML content for sharing
@@ -323,21 +364,31 @@ export default function BlogDetailPage() {
         <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             {/* Featured Image */}
-            {blog.images.length > 0 && (
-              <div className="mb-8 sm:mb-12">
-                <div className="aspect-video w-full rounded-xl overflow-hidden bg-gradient-to-br from-primary/10 via-secondary/10 to-primary/5 dark:from-primary/20 dark:via-secondary/20 dark:to-primary/10">
+            <div className="mb-8 sm:mb-12">
+              <div className="aspect-video w-full rounded-xl overflow-hidden bg-gradient-to-br from-primary/10 via-secondary/10 to-primary/5 dark:from-primary/20 dark:via-secondary/20 dark:to-primary/10">
+                {blog.images.length > 0 ? (
                   <img
                     src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/images/${blog.images[0].imageUrl}`}
                     alt={blog.title}
                     className="w-full h-full object-cover"
                     onError={(e) => {
-                      // Fallback to placeholder if image fails to load
-                      e.currentTarget.style.display = 'none'
+                      // Fallback to internet image if local image fails
+                      e.currentTarget.src = getFallbackImage(getCurrentBlogCategory())
                     }}
                   />
-                </div>
+                ) : (
+                  <img
+                    src={getFallbackImage(getCurrentBlogCategory())}
+                    alt={blog.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      // Final fallback to a generic tech image
+                      e.currentTarget.src = 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&h=600&fit=crop&crop=center'
+                    }}
+                  />
+                )}
               </div>
-            )}
+            </div>
 
             {/* Article Content */}
             <Card className="border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-md shadow-xl">
