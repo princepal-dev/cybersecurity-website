@@ -109,6 +109,16 @@ const decemberImages = [
   "/december/WhatsApp Image 2025-12-27 at 09.24.07.jpeg",
 ]
 
+const sportsWorkshopImages = [
+  "/3rd/WhatsApp Image 2026-01-04 at 09.40.39.jpeg",
+  "/3rd/WhatsApp Image 2026-01-04 at 09.41.29.jpeg",
+  "/3rd/WhatsApp Image 2026-01-04 at 09.41.29 (1).jpeg",
+  "/3rd/WhatsApp Image 2026-01-04 at 09.41.29 (2).jpeg",
+  "/3rd/WhatsApp Image 2026-01-04 at 09.41.29 (3).jpeg",
+  "/3rd/WhatsApp Image 2026-01-04 at 09.41.30.jpeg",
+  "/3rd/WhatsApp Image 2026-01-04 at 09.41.30 (1).jpeg"
+]
+
 const dpsImages = [
   "/dps/hero.png",
   "/dps/image.png",
@@ -511,7 +521,7 @@ export default function Impact() {
           </div>
         </section>
 
-        {/* Recent Highlights */}
+        {/* Founder Arth Bhardwaj & Ambassador Vedika */}
         <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden">
           {/* Decorative elements */}
           <div className="absolute inset-0 -z-10">
@@ -523,10 +533,10 @@ export default function Impact() {
             <div className="text-center mb-8 sm:mb-12">
               <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">LATEST IMPACT</Badge>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
-                Recent <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Highlights</span>
+                Founder Arth Bhardwaj & Ambassador Vedika: <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Hosting Workshops in Delhi Government Schools</span>
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
-                Our most recent initiatives and achievements in cyber safety education
+                YLCA Founder and Ambassador leading hands-on cyber safety workshops across Delhi government schools
               </p>
             </div>
 
@@ -729,6 +739,137 @@ export default function Impact() {
                 View All DPS Karnal Photos
                 <Users className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
               </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* December Sports + AI Workshop */}
+        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden">
+          {/* Decorative elements */}
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute top-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+          </div>
+
+          <div className="max-w-6xl mx-auto relative z-10">
+            <div className="text-center mb-8 sm:mb-12">
+              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">DECEMBER IMPACT</Badge>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
+                Sports + AI <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Digital Safety Workshop</span>
+              </h2>
+              <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
+                YLCA Founder Arth Bhardwaj hosted an interactive workshop for teen athletes in Ambala, Haryana, focusing on online scams, privacy, and AI-driven misinformation.
+              </p>
+            </div>
+
+            {/* Featured Initiative: Sports + AI Workshop */}
+            <div className="mb-12 sm:mb-16">
+              <Card className="border-2 border-secondary/30 dark:border-secondary/40 bg-gradient-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+                <div className="bg-gradient-to-r from-secondary/10 to-primary/10 px-6 py-4 border-b border-border/50">
+                  <div className="flex items-center gap-3">
+                    <Badge variant="default" className="text-xs">DECEMBER 2025</Badge>
+                    <h3 className="text-lg sm:text-xl font-bold text-foreground">Tennis Academy Workshop - Ambala, Haryana</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-1">Teaching digital safety through sports scenarios for teen athletes</p>
+                </div>
+
+                <CardContent className="p-6 sm:p-8">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+                    <div className="space-y-4">
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                        YLCA Founder <span className="font-semibold text-foreground">Arth Bhardwaj</span> hosted a teen workshop at a Tennis Academy in Ambala, Haryana, teaching digital safety through a sports + AI lens in a format that was easy, visual, and interactive—built around real teen-athlete scenarios like team group chats, Instagram DMs, public Wi-Fi, highlight videos, and online gear purchases.
+                      </p>
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                        Students learned account protection (strong passwords, MFA, recovery), smart social media habits, and how to spot scams such as phishing links, fake profiles, urgency tactics, and "pay-to-confirm" requests.
+                      </p>
+
+                      {/* Key Highlights */}
+                      <div className="grid grid-cols-2 gap-3 pt-4">
+                        <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
+                          <div className="text-xl font-bold text-secondary mb-1">Sports Focus</div>
+                          <p className="text-xs text-muted-foreground">Athlete-specific scenarios</p>
+                        </div>
+                        <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
+                          <div className="text-xl font-bold text-primary mb-1">AI Safety</div>
+                          <p className="text-xs text-muted-foreground">Deepfakes & misinformation</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h4 className="text-lg font-bold text-foreground mb-3">Workshop Photos</h4>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        {[
+                          "/3rd/WhatsApp Image 2026-01-04 at 09.40.39.jpeg",
+                          "/3rd/WhatsApp Image 2026-01-04 at 09.41.29.jpeg",
+                          "/3rd/WhatsApp Image 2026-01-04 at 09.41.29 (1).jpeg",
+                          "/3rd/WhatsApp Image 2026-01-04 at 09.41.29 (2).jpeg",
+                          "/3rd/WhatsApp Image 2026-01-04 at 09.41.30.jpeg",
+                          "/3rd/WhatsApp Image 2026-01-04 at 09.41.30 (1).jpeg"
+                        ].map((image, index) => (
+                          <div
+                            key={index}
+                            className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
+                            onClick={() => openModal(sportsWorkshopImages, sportsWorkshopImages.indexOf(image))}
+                            role="button"
+                            tabIndex={0}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault()
+                                openModal(sportsWorkshopImages, sportsWorkshopImages.indexOf(image))
+                              }
+                            }}
+                            aria-label={`View Sports + AI Workshop image ${index + 1} in gallery`}
+                          >
+                            <img
+                              src={image}
+                              alt={`Sports + AI Digital Safety Workshop ${index + 1}`}
+                              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                              loading="lazy"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* New Ambassador */}
+            <div className="mb-8 sm:mb-12">
+              <Card className="border-2 border-primary/30 dark:border-primary/40 bg-gradient-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+                <div className="bg-gradient-to-r from-primary/10 to-secondary/10 px-6 py-4 border-b border-border/50">
+                  <div className="flex items-center gap-3">
+                    <Users className="w-5 h-5 text-primary" />
+                    <h3 className="text-lg sm:text-xl font-bold text-foreground">New Ambassador: Aarush Mangal</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-1">State-level tennis champion joins YLCA's sports community outreach</p>
+                </div>
+
+                <CardContent className="p-6 sm:p-8">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-center">
+                    <div className="space-y-4">
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                        <span className="font-semibold text-foreground">Aarush Mangal</span>, a state-level tennis champion and 9th-grade student from Wehlam who competes across multiple cities, has joined YLCA's global mission as an Ambassador.
+                      </p>
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                        In this role, he will help extend cybersecurity and responsible AI awareness into the sports community—educating student-athletes on digital safety and equipping them to recognize and avoid online scams, including impersonation by fake coaches, fraudulent academies, and deceptive "selection" or "trial" messages.
+                      </p>
+                    </div>
+
+                    <div className="flex justify-center">
+                      <div className="relative">
+                        <img
+                          src="/3rd/WhatsApp Image 2026-01-04 at 09.41.29.jpeg"
+                          alt="Aarush Mangal - YLCA Sports Ambassador"
+                          className="w-48 h-48 sm:w-56 sm:h-56 object-contain rounded-2xl border border-border/40 shadow-lg"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>

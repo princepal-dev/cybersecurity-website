@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
-import { Eye, GraduationCap, Rocket, Shield, Linkedin, ChevronLeft, ChevronRight } from "lucide-react"
+import { Eye, GraduationCap, Rocket, Shield, Linkedin } from "lucide-react"
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -90,6 +90,18 @@ const ambassadors = [
       "Content Quality Assurance",
       "Student Communications Lead"
     ]
+  },
+  {
+    name: "Aarush Mangal",
+    title: "YLCA Sports Ambassador",
+    image: "/3rd/WhatsApp Image 2026-01-04 at 09.41.29.jpeg",
+    description: "State-level tennis champion and 9th-grade student from Wehlam who competes across multiple cities. Now extending cybersecurity awareness into the sports community as a YLCA Ambassador.",
+    achievements: [
+      "State-level tennis champion",
+      "Multi-city competition experience",
+      "YLCA Sports Ambassador",
+      "Community outreach leader"
+    ]
   }
 ]
 
@@ -119,127 +131,6 @@ const leadershipRoles = [
   }
 ]
 
-function AmbassadorCardSection() {
-  const [currentAmbassadorIndex, setCurrentAmbassadorIndex] = useState(0)
-  const [isAutoScrolling, setIsAutoScrolling] = useState(true)
-
-  const nextAmbassador = () => {
-    setCurrentAmbassadorIndex((prev) => (prev + 1) % ambassadors.length)
-  }
-
-  const prevAmbassador = () => {
-    setCurrentAmbassadorIndex((prev) => (prev - 1 + ambassadors.length) % ambassadors.length)
-  }
-
-  // Auto-scroll functionality
-  useEffect(() => {
-    if (!isAutoScrolling) return
-
-    const interval = setInterval(() => {
-      setCurrentAmbassadorIndex((prev) => (prev + 1) % ambassadors.length)
-    }, 4000) // Change ambassador every 4 seconds
-
-    return () => clearInterval(interval)
-  }, [isAutoScrolling])
-
-  const handleCardInteraction = () => {
-    // Pause auto-scroll when user interacts with the card
-    setIsAutoScrolling(false)
-    // Resume auto-scroll after 10 seconds of inactivity
-    setTimeout(() => setIsAutoScrolling(true), 10000)
-  }
-
-  return (
-    <div onMouseEnter={handleCardInteraction} onClick={handleCardInteraction}>
-      <AmbassadorCard
-        currentIndex={currentAmbassadorIndex}
-        onNext={nextAmbassador}
-        onPrev={prevAmbassador}
-      />
-    </div>
-  )
-}
-
-function AmbassadorCard({ currentIndex, onNext, onPrev }: { currentIndex: number, onNext: () => void, onPrev: () => void }) {
-  const ambassador = ambassadors[currentIndex]
-  const [applyModalOpen, setApplyModalOpen] = useState(false)
-
-  return (
-    <Card className="group relative overflow-hidden border-2 border-border/60 dark:border-border/40 bg-gradient-to-br from-card via-card to-card/95 backdrop-blur-sm hover:border-secondary/50 dark:hover:border-secondary/60 transition-all duration-300 hover:shadow-2xl hover:shadow-secondary/25 dark:hover:shadow-secondary/30 hover:-translate-y-2 hover:scale-[1.01]">
-      <div className="absolute inset-0 bg-gradient-to-br from-secondary/10 via-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-      <div className="absolute top-0 right-0 w-40 h-40 bg-secondary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-      {/* Navigation Buttons */}
-      <div className="absolute top-4 left-4 z-10 flex gap-2">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8 bg-background/80 backdrop-blur-sm hover:bg-background/90 transition-all duration-200"
-          onClick={onPrev}
-          disabled={currentIndex === 0}
-        >
-          <ChevronLeft className="h-4 w-4" />
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8 bg-background/80 backdrop-blur-sm hover:bg-background/90 transition-all duration-200"
-          onClick={onNext}
-          disabled={currentIndex === ambassadors.length - 1}
-        >
-          <ChevronRight className="h-4 w-4" />
-        </Button>
-      </div>
-
-      <CardContent className="relative pt-6 px-4 sm:px-6">
-        <div className="flex flex-col md:flex-row gap-4 sm:gap-6">
-          {/* Image */}
-          <div className="flex-shrink-0 mx-auto md:mx-0">
-            <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden border border-border/60 dark:border-border/40 shadow-xl shadow-secondary/20 dark:shadow-secondary/30 group-hover:scale-110 transition-transform duration-300">
-              <img
-                src={ambassador.image}
-                alt={ambassador.name}
-                className="w-full h-full object-top object-cover"
-              />
-            </div>
-          </div>
-
-          {/* Content */}
-          <div className="flex-1 text-center md:text-left">
-            <div className="mb-4">
-              <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2">{ambassador.name}</h3>
-              <p className="text-secondary font-medium text-sm sm:text-base">{ambassador.title}</p>
-            </div>
-
-            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4">
-              {ambassador.description}
-            </p>
-
-            {/* Achievements */}
-            <div className="mb-6">
-              <h4 className="font-semibold text-foreground mb-2 text-sm">Key Achievements:</h4>
-              <ul className="text-xs sm:text-sm text-muted-foreground space-y-1">
-                {ambassador.achievements.map((achievement, idx) => (
-                  <li key={idx} className="flex items-center gap-2">
-                    <span className="text-secondary">•</span>
-                    {achievement}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        {/* Card Counter */}
-        <div className="mt-4 pt-4 border-t border-border/40 text-center">
-          <span className="text-xs text-muted-foreground">
-            Ambassador {currentIndex + 1} of {ambassadors.length}
-          </span>
-        </div>
-      </CardContent>
-    </Card>
-  )
-}
 
 function LeadershipRoleCard({ role, onApply }: { role: typeof leadershipRoles[0], onApply: (roleTitle: string) => void }) {
   const getIcon = (iconType: string) => {
@@ -736,9 +627,9 @@ export default function About() {
               <div className="relative mt-8 md:mt-0">
                 <div className="rounded-2xl sm:rounded-3xl overflow-hidden border border-border/60 dark:border-border/40 shadow-2xl dark:shadow-black/40 group">
                   <img
-                    src="/young-tech-leaders-cybersecurity-ai-innovation.jpg"
+                    src="/banner.jpeg"
                     alt="Young Leaders in Cybersecurity & AI"
-                    className="w-full h-[300px] sm:h-[400px] object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    className="w-full h-[300px] sm:h-[400px] object-contain transition-transform duration-700 ease-out group-hover:scale-105"
                   />
                   <div className="absolute inset-0 ring-1 ring-primary/20 dark:ring-primary/30 rounded-2xl sm:rounded-3xl pointer-events-none"></div>
                 </div>
@@ -878,8 +769,9 @@ export default function About() {
         </section>
 
         {/* YLCA Ambassadors */}
-        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/20">
-          <div className="max-w-4xl mx-auto">
+        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 sm:w-96 sm:h-96 bg-secondary/5 rounded-full blur-3xl"></div>
+          <div className="max-w-6xl mx-auto relative z-10">
             <div className="text-center mb-8 sm:mb-12">
               <Badge variant="secondary" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">YLCA AMBASSADORS</Badge>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 px-4">
@@ -890,7 +782,43 @@ export default function About() {
               </p>
             </div>
 
-            <AmbassadorCardSection />
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {ambassadors.map((ambassador, index) => (
+                  <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                    <Card className="group relative overflow-hidden border-2 border-border/60 dark:border-border/40 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary/40 dark:hover:border-primary/50 h-full">
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <CardHeader className="relative">
+                        <div className="aspect-square w-full mb-4 rounded-xl overflow-hidden border border-border/40">
+                          <img
+                            src={ambassador.image}
+                            alt={ambassador.name}
+                            className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110"
+                          />
+                        </div>
+                        <CardTitle className="text-xl font-bold">{ambassador.name}</CardTitle>
+                      </CardHeader>
+                      <CardContent className="relative">
+                        <CardDescription className="mb-4 text-sm leading-relaxed">
+                          {ambassador.title}
+                        </CardDescription>
+                        <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                          {ambassador.description}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden sm:flex -left-12" />
+              <CarouselNext className="hidden sm:flex -right-12" />
+            </Carousel>
           </div>
         </section>
 
