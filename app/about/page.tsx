@@ -93,16 +93,17 @@ const ambassadors = [
   },
   {
     name: "Aarush Mangal",
-    title: "YLCA Sports Ambassador",
-    image: "/3rd/WhatsApp Image 2026-01-04 at 09.41.29.jpeg",
-    description: "State-level tennis champion and 9th-grade student from Wehlam who competes across multiple cities. Now extending cybersecurity awareness into the sports community as a YLCA Ambassador.",
+    title: "Ambassador for young Athletes group",
+    image: "/arush.png",
+    description: "State and district-level tennis champion from Welham Boys' School in Dehradun, excelling in multiple sports and playing guitar in the school orchestra for three years. Bringing cybersecurity awareness to the sports community as a YLCA Ambassador.",
     achievements: [
-      "State-level tennis champion",
-      "Multi-city competition experience",
-      "YLCA Sports Ambassador",
-      "Community outreach leader"
+      "State and district-level tennis champion",
+      "National tournament selection",
+      "Multi-sport athlete (hockey, football, badminton, volleyball)",
+      "School orchestra guitarist (3 years)",
+      "YLCA Sports Ambassador"
     ]
-  }
+  },
 ]
 
 const leadershipRoles = [
