@@ -9,15 +9,17 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Separator } from "@/components/ui/separator"
-import { BookOpen, Calendar, User, ArrowRight, FileText, Clock, Eye, Star, TrendingUp, Award, Zap } from "lucide-react"
+import { BookOpen, Calendar, User, ArrowRight, FileText, Eye } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
 interface Blog {
   blogId: number
   title: string
-  description: string
+  pdfPath: string
   authorName?: string
+  authorImage?: string
+  authorTitle?: string
   createdAt: string
   updatedAt: string
   featuredImage?: string
@@ -28,17 +30,15 @@ interface Blog {
 interface BlogResponseDTO {
   blogId: number
   title: string
-  description: string
+  pdfPath?: string
+  authorName?: string
+  authorImage?: string
+  authorTitle?: string
   author: {
     userId: number
     username: string
     fullName?: string
   }
-  images: Array<{
-    imageId: number
-    imageUrl: string
-    displayOrder: number
-  }>
   createdAt: string
   updatedAt: string
 }
@@ -72,26 +72,63 @@ export default function BlogsPage() {
           throw new Error(`Failed to fetch blogs: ${response.status}`)
         }
 
-        const data: BlogResponseDTO[] = await response.json()
+        const rawData = await response.json()
 
-        // Transform the data to match our Blog interface
-        const transformedBlogs: Blog[] = data.map(blog => ({
-          blogId: blog.blogId,
-          title: blog.title,
-          description: blog.description,
-          authorName: blog.author.fullName || blog.author.username,
-          createdAt: blog.createdAt,
-          updatedAt: blog.updatedAt,
-          featuredImage: blog.images.length > 0 ? blog.images[0].imageUrl : undefined,
-          category: getBlogCategory(blog.title, blog.description),
-          readingTime: getReadingTime(blog.description)
-        }))
+        // Ensure data is an array
+        if (!Array.isArray(rawData)) {
+          throw new Error('Invalid API response: expected array')
+        }
+
+        const data: BlogResponseDTO[] = rawData
+
+        // Transform the data to match our Blog interface with comprehensive error handling
+        const transformedBlogs: Blog[] = data
+          .filter(blog => blog && typeof blog === 'object' && blog.blogId) // Filter out invalid blog entries
+          .map(blog => {
+            try {
+              return {
+                blogId: (typeof blog.blogId === 'number') ? blog.blogId : 0,
+                title: (blog.title && typeof blog.title === 'string') ? blog.title : 'Untitled Blog',
+                pdfPath: (blog.pdfPath && typeof blog.pdfPath === 'string') ? blog.pdfPath : '',
+                authorName: (blog.authorName && typeof blog.authorName === 'string')
+                  ? blog.authorName
+                  : (blog.author && typeof blog.author === 'object' &&
+                     blog.author.fullName && typeof blog.author.fullName === 'string')
+                    ? blog.author.fullName
+                    : (blog.author && typeof blog.author === 'object' &&
+                       blog.author.username && typeof blog.author.username === 'string')
+                      ? blog.author.username
+                      : 'Unknown Author',
+                authorImage: (blog.authorImage && typeof blog.authorImage === 'string') ? blog.authorImage : '',
+                authorTitle: (blog.authorTitle && typeof blog.authorTitle === 'string') ? blog.authorTitle : '',
+                createdAt: (blog.createdAt && typeof blog.createdAt === 'string') ? blog.createdAt : new Date().toISOString(),
+                updatedAt: (blog.updatedAt && typeof blog.updatedAt === 'string') ? blog.updatedAt : new Date().toISOString(),
+                featuredImage: undefined, // No blog images - always use fallback
+                category: getBlogCategory((blog.title && typeof blog.title === 'string') ? blog.title : ''),
+                readingTime: 'PDF Document'
+              }
+            } catch (transformError) {
+              return {
+                blogId: 0,
+                title: 'Error Loading Blog',
+                pdfPath: '',
+                authorName: 'Unknown Author',
+                authorImage: '',
+                authorTitle: '',
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+                featuredImage: undefined,
+                category: 'Insights',
+                readingTime: 'PDF Document'
+              }
+            }
+          })
 
         setBlogs(transformedBlogs)
         setError(null)
       } catch (err) {
-        console.error('Error fetching blogs:', err)
         setError(err instanceof Error ? err.message : 'Failed to load blogs')
+        setBlogs([]) // Set empty array on error
       } finally {
         setIsLoading(false)
       }
@@ -117,39 +154,36 @@ export default function BlogsPage() {
     return `${minutes} min read`
   }
 
-  const getBlogCategory = (title: string, description: string): string => {
-    const content = (title + ' ' + description).toLowerCase()
+  const getBlogCategory = (title: string): string => {
+    if (!title || typeof title !== 'string') return 'Insights'
 
-    if (content.includes('ai') || content.includes('artificial intelligence') || content.includes('machine learning')) {
-      return 'AI & ML'
+    try {
+      const content = title.toLowerCase()
+
+      if (content.includes('ai') || content.includes('artificial intelligence') || content.includes('machine learning')) {
+        return 'AI & ML'
+      }
+      if (content.includes('cybersecurity') || content.includes('security') || content.includes('hacking') || content.includes('privacy')) {
+        return 'Cybersecurity'
+      }
+      if (content.includes('workshop') || content.includes('training') || content.includes('education')) {
+        return 'Education'
+      }
+      if (content.includes('career') || content.includes('job') || content.includes('future')) {
+        return 'Careers'
+      }
+      if (content.includes('research') || content.includes('study') || content.includes('analysis')) {
+        return 'Research'
+      }
+      return 'Insights'
+    } catch (error) {
+      return 'Insights'
     }
-    if (content.includes('cybersecurity') || content.includes('security') || content.includes('hacking') || content.includes('privacy')) {
-      return 'Cybersecurity'
-    }
-    if (content.includes('workshop') || content.includes('training') || content.includes('education')) {
-      return 'Education'
-    }
-    if (content.includes('career') || content.includes('job') || content.includes('future')) {
-      return 'Careers'
-    }
-    if (content.includes('research') || content.includes('study') || content.includes('analysis')) {
-      return 'Research'
-    }
-    return 'Insights'
   }
 
-  const truncateDescription = (description: string, maxLength: number = 200) => {
-    // Strip HTML tags first
-    const textContent = description.replace(/<[^>]*>/g, '')
-    if (textContent.length <= maxLength) return textContent
-
-    // Find the last complete word within the limit
-    const truncated = textContent.substring(0, maxLength)
-    const lastSpaceIndex = truncated.lastIndexOf(' ')
-
-    return lastSpaceIndex > 0
-      ? truncated.substring(0, lastSpaceIndex) + '...'
-      : truncated + '...'
+  const getBlogDescription = (blog: Blog) => {
+    // Since we don't have descriptions anymore, show PDF info
+    return `PDF Document by ${blog.authorName}${blog.authorTitle ? ` - ${blog.authorTitle}` : ''}`
   }
 
   return (
@@ -157,28 +191,47 @@ export default function BlogsPage() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="pt-24 pb-16 sm:pt-32 sm:pb-20 md:pt-40 md:pb-28 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-muted/20 via-background to-background relative overflow-hidden">
+      <section className="pt-24 pb-16 sm:pt-32 sm:pb-20 md:pt-40 md:pb-28 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-primary/5 via-secondary/5 to-background relative overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0 -z-10">
-          <div className="absolute top-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute top-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '0.5s' }}></div>
         </div>
 
         <div className="max-w-4xl mx-auto relative z-10">
           <div className="text-center mb-8">
-            <Badge variant="default" className="mb-4 sm:mb-6 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold shadow-lg">
+            <Badge variant="default" className="mb-4 sm:mb-6 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold shadow-lg bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 border-0">
               <BookOpen className="w-3 h-3 sm:w-4 sm:h-4 mr-2 inline" />
-              BLOGS
+              BLOGS & INSIGHTS
             </Badge>
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-4 sm:mb-6 text-foreground tracking-tight px-4">
-            Insights on <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Cybersecurity & AI</span>
+            Explore <span className="bg-gradient-to-r from-primary via-purple-500 to-secondary bg-clip-text text-transparent">Cybersecurity & AI</span> Insights
           </h1>
 
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground text-center mb-8 sm:mb-10 leading-relaxed max-w-2xl mx-auto px-4">
-            Stay informed with the latest articles, research, and perspectives from our community of young cybersecurity and AI leaders.
+            Dive into cutting-edge articles, research papers, and expert perspectives from our community of young cybersecurity and AI leaders shaping the future.
           </p>
+
+          {/* Stats */}
+          <div className="flex flex-wrap items-center justify-center gap-8 mt-12">
+            <div className="text-center">
+              <div className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">{blogs.length}+</div>
+              <div className="text-sm text-muted-foreground">Articles</div>
+            </div>
+            <div className="w-px h-12 bg-gradient-to-b from-transparent via-primary/30 to-transparent" />
+            <div className="text-center">
+              <div className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Expert</div>
+              <div className="text-sm text-muted-foreground">Content</div>
+            </div>
+            <div className="w-px h-12 bg-gradient-to-b from-transparent via-primary/30 to-transparent" />
+            <div className="text-center">
+              <div className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Free</div>
+              <div className="text-sm text-muted-foreground">Access</div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -225,207 +278,68 @@ export default function BlogsPage() {
             </div>
           )}
 
-          {/* Featured Blog */}
+          {/* All Blogs Grid */}
           {!isLoading && !error && blogs.length > 0 && (
-            <div className="mb-12 sm:mb-16">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mb-12">
-                <Link href={`/blogs/${blogs[0].blogId}`} className="lg:col-span-2">
-                  <Card className="group cursor-pointer blog-card featured overflow-hidden">
-                    {/* Featured Image */}
-                    <div className="relative aspect-[16/9] overflow-hidden">
-                      {blogs[0].featuredImage ? (
-                        <img
-                          src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/images/${blogs[0].featuredImage}`}
-                          alt={blogs[0].title}
-                          className="w-full h-full object-cover blog-image"
-                          onError={(e) => {
-                            e.currentTarget.style.display = 'none'
-                          }}
-                        />
-                      ) : (
-                        <img
-                          src={getFallbackImage(blogs[0].category)}
-                          alt={blogs[0].title}
-                          className="w-full h-full object-cover blog-image"
-                          onError={(e) => {
-                            // Fallback to a generic tech image if the category-specific one fails
-                            e.currentTarget.src = 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=600&fit=crop&crop=center'
-                          }}
-                        />
-                      )}
-
-                      {/* Featured Badge */}
-                      <div className="absolute top-4 left-4">
-                        <Badge className="bg-primary text-primary-foreground border-0 shadow-lg">
-                          <Star className="w-3 h-3 mr-1" />
-                          Featured
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8">
+              {blogs.map((blog, index) => (
+                <Link key={blog.blogId} href={`/blogs/${blog.blogId}`}>
+                  <Card className="group cursor-pointer blog-card h-full hover:shadow-2xl transition-all duration-300 hover:border-primary/50 hover:-translate-y-2 bg-gradient-to-br from-card via-card to-primary/5 dark:to-primary/10 overflow-hidden relative">
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    
+                    {/* Decorative Element */}
+                    <div className="absolute -top-12 -right-12 w-32 h-32 bg-primary/10 rounded-full blur-3xl group-hover:bg-primary/20 transition-all duration-500" />
+                    
+                    <CardContent className="p-6 relative z-10">
+                      {/* Category Badge with Icon */}
+                      <div className="flex items-center gap-2 mb-4">
+                        <Badge variant="outline" className="text-xs blog-badge bg-primary/10 border-primary/30 text-primary font-semibold px-3 py-1">
+                          {blog.category}
                         </Badge>
-                      </div>
-                    </div>
-
-                    <CardContent className="p-6">
-                      <div className="flex items-center gap-2 mb-3">
-                        <Badge variant="outline" className="text-xs blog-badge">
-                          {blogs[0].category}
-                        </Badge>
-                      </div>
-
-                      <CardTitle className="text-2xl font-bold line-clamp-2 leading-tight blog-title mb-3">
-                        {blogs[0].title}
-                      </CardTitle>
-
-                      <CardDescription className="text-base leading-relaxed line-clamp-3 text-muted-foreground mb-4">
-                        {truncateDescription(blogs[0].description.replace(/<[^>]*>/g, ''), 200)}
-                      </CardDescription>
-
-                      <div className="flex items-center justify-between text-sm text-muted-foreground">
-                        <div className="flex items-center gap-4">
-                          <div className="flex items-center gap-2">
-                            <User className="w-4 h-4" />
-                            <span className="font-medium">{blogs[0].authorName}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Calendar className="w-4 h-4" />
-                            <span>{formatDate(blogs[0].createdAt)}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Clock className="w-4 h-4" />
-                            <span>{blogs[0].readingTime}</span>
+                        <div className="ml-auto">
+                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <FileText className="w-5 h-5 text-primary" />
                           </div>
                         </div>
                       </div>
-                    </CardContent>
-                  </Card>
-                </Link>
 
-                {/* Recent Blogs Sidebar */}
-                <div className="space-y-6">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="p-2 bg-primary/10 rounded-lg">
-                      <TrendingUp className="w-5 h-5 text-primary" />
-                    </div>
-                    <h3 className="text-xl font-bold text-foreground">Recent Articles</h3>
-                  </div>
-
-                  <div className="space-y-4">
-                    {blogs.slice(1, 4).map((blog, index) => (
-                      <Link key={blog.blogId} href={`/blogs/${blog.blogId}`}>
-                        <Card className="group cursor-pointer blog-card p-4">
-                          <div className="flex gap-3">
-                            {/* Thumbnail */}
-                            <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden bg-muted">
-                              {blog.featuredImage ? (
-                                <img
-                                  src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/images/${blog.featuredImage}`}
-                                  alt={blog.title}
-                                  className="w-full h-full object-cover blog-image"
-                                  onError={(e) => {
-                                    e.currentTarget.style.display = 'none'
-                                  }}
-                                />
-                              ) : (
-                                <img
-                                  src={getFallbackImage(blog.category)}
-                                  alt={blog.title}
-                                  className="w-full h-full object-cover blog-image"
-                                  onError={(e) => {
-                                    e.currentTarget.src = 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=400&fit=crop&crop=center'
-                                  }}
-                                />
-                              )}
-                            </div>
-
-                            {/* Content */}
-                            <div className="flex-1 min-w-0">
-                              <Badge variant="outline" className="text-xs mb-2 blog-badge">
-                                {blog.category}
-                              </Badge>
-                              <h4 className="font-semibold text-sm line-clamp-2 blog-title leading-tight mb-1">
-                                {blog.title}
-                              </h4>
-                              <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                                <span>{formatDate(blog.createdAt)}</span>
-                                <span>•</span>
-                                <span>{blog.readingTime}</span>
-                              </div>
-                            </div>
-                          </div>
-                        </Card>
-                      </Link>
-                    ))}
-                  </div>
-
-                  {/* View All Link */}
-                  <div className="pt-4 border-t border-border/50">
-                    <Link href="#all-blogs">
-                      <Button variant="ghost" className="w-full justify-center text-primary hover:text-primary/80 hover:bg-primary/5">
-                        <span className="font-medium">View All Articles</span>
-                        <ArrowRight className="w-4 h-4 ml-2" />
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* All Blogs Grid */}
-          {!isLoading && !error && blogs.length > 0 && (
-            <div id="all-blogs" className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8">
-              {blogs.slice(1).map((blog, index) => (
-                <Link key={blog.blogId} href={`/blogs/${blog.blogId}`}>
-                  <Card className="group cursor-pointer blog-card h-full">
-                    {/* Blog Image */}
-                    <div className="relative aspect-[16/10] overflow-hidden rounded-t-lg">
-                      {blog.featuredImage ? (
-                        <img
-                          src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/images/${blog.featuredImage}`}
-                          alt={blog.title}
-                          className="w-full h-full object-cover blog-image"
-                          onError={(e) => {
-                            e.currentTarget.style.display = 'none'
-                          }}
-                        />
-                      ) : (
-                        <img
-                          src={getFallbackImage(blog.category)}
-                          alt={blog.title}
-                          className="w-full h-full object-cover blog-image"
-                          onError={(e) => {
-                            e.currentTarget.src = 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=600&fit=crop&crop=center'
-                          }}
-                        />
-                      )}
-
-                      {/* Category Badge */}
-                      <div className="absolute top-3 left-3">
-                        <Badge variant="secondary" className="bg-white/95 text-muted-foreground hover:bg-white border-0 shadow-sm text-xs px-2 py-1">
-                          {blog.category}
-                        </Badge>
-                      </div>
-                    </div>
-
-                    <CardContent className="p-5">
-                      <CardTitle className="text-lg font-bold line-clamp-2 leading-tight blog-title mb-2">
+                      {/* Title with gradient on hover */}
+                      <CardTitle className="text-xl font-bold line-clamp-2 leading-tight blog-title mb-4 group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-secondary group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
                         {blog.title}
                       </CardTitle>
 
-                      <CardDescription className="text-sm leading-relaxed line-clamp-2 text-muted-foreground mb-4">
-                        {truncateDescription(blog.description.replace(/<[^>]*>/g, ''), 100)}
+                      {/* Description */}
+                      <CardDescription className="text-sm leading-relaxed line-clamp-3 text-muted-foreground mb-6 min-h-[60px]">
+                        {getBlogDescription(blog)}
                       </CardDescription>
 
-                      <div className="flex items-center justify-between text-xs text-muted-foreground">
+                      {/* Divider */}
+                      <div className="w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent mb-4" />
+
+                      {/* Author and Meta Info */}
+                      <div className="flex flex-col gap-3 text-xs">
                         <div className="flex items-center gap-2">
-                          <User className="w-3.5 h-3.5" />
-                          <span className="font-medium truncate max-w-[80px]">{blog.authorName}</span>
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/30 to-secondary/30 flex items-center justify-center">
+                            <User className="w-4 h-4 text-primary" />
+                          </div>
+                          <span className="font-semibold text-foreground">{blog.authorName}</span>
                         </div>
-                        <div className="flex items-center gap-3">
-                          <span>{formatDate(blog.createdAt)}</span>
-                          <div className="flex items-center gap-1">
-                            <Clock className="w-3 h-3" />
-                            <span>{blog.readingTime}</span>
+                        <div className="flex items-center justify-between text-muted-foreground">
+                          <div className="flex items-center gap-1.5">
+                            <Calendar className="w-3.5 h-3.5 text-primary/70" />
+                            <span>{formatDate(blog.createdAt)}</span>
+                          </div>
+                          <div className="flex items-center gap-1.5 bg-primary/10 px-2 py-1 rounded-full">
+                            <FileText className="w-3.5 h-3.5 text-primary" />
+                            <span className="text-primary font-medium">PDF</span>
                           </div>
                         </div>
+                      </div>
+
+                      {/* Read More Arrow */}
+                      <div className="mt-4 flex items-center gap-2 text-primary font-semibold text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span>Read Article</span>
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                       </div>
                     </CardContent>
                   </Card>

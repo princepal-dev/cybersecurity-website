@@ -10,24 +10,22 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Separator } from "@/components/ui/separator"
-import { BookOpen, Calendar, User, ArrowLeft, Clock, Share2, Eye, ArrowRight, Copy, Check, Quote, Star, Lightbulb, Target, Zap, Shield } from "lucide-react"
+import { BookOpen, Calendar, User, ArrowLeft, Clock, Share2, Eye, ArrowRight, Copy, Check, Quote, Star, Lightbulb, Target, Zap, Shield, ChevronLeft, ChevronRight, FileText, Loader2 } from "lucide-react"
 import Link from "next/link"
 import { useToast } from "@/hooks/use-toast"
 
 interface BlogDetail {
   blogId: number
   title: string
-  description: string
+  pdfPath: string
+  authorName?: string
+  authorImage?: string
+  authorTitle?: string
   author: {
     userId: number
     username: string
     fullName?: string
   }
-  images: Array<{
-    imageId: number
-    imageUrl: string
-    displayOrder: number
-  }>
   createdAt: string
   updatedAt: string
 }
@@ -54,6 +52,12 @@ export default function BlogDetailPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [shareCopied, setShareCopied] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pdfLoaded, setPdfLoaded] = useState(false)
+  const [isAnimating, setIsAnimating] = useState(false)
+  const [pdfError, setPdfError] = useState<string | null>(null)
+  const [pdfKey, setPdfKey] = useState(0) // Key to force iframe reload
+  const [pageDirection, setPageDirection] = useState<'next' | 'prev' | null>(null)
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -67,11 +71,36 @@ export default function BlogDetailPage() {
           throw new Error(`Failed to fetch blog: ${response.status}`)
         }
 
-        const data: BlogDetail = await response.json()
+        const rawData = await response.json()
+
+        // Validate the response structure
+        if (!rawData || typeof rawData !== 'object' || !rawData.blogId) {
+          throw new Error('Invalid blog data received from API')
+        }
+
+        const data: BlogDetail = {
+          blogId: (typeof rawData.blogId === 'number') ? rawData.blogId : 0,
+          title: (rawData.title && typeof rawData.title === 'string') ? rawData.title : 'Untitled Blog',
+          pdfPath: (rawData.pdfPath && typeof rawData.pdfPath === 'string') ? rawData.pdfPath : '',
+          authorName: (rawData.authorName && typeof rawData.authorName === 'string')
+            ? rawData.authorName
+            : (rawData.author && typeof rawData.author === 'object' &&
+               rawData.author.fullName && typeof rawData.author.fullName === 'string')
+              ? rawData.author.fullName
+              : (rawData.author && typeof rawData.author === 'object' &&
+                 rawData.author.username && typeof rawData.author.username === 'string')
+                ? rawData.author.username
+                : 'Unknown Author',
+          authorImage: (rawData.authorImage && typeof rawData.authorImage === 'string') ? rawData.authorImage : '',
+          authorTitle: (rawData.authorTitle && typeof rawData.authorTitle === 'string') ? rawData.authorTitle : '',
+          author: (rawData.author && typeof rawData.author === 'object') ? rawData.author : { userId: 0, username: 'unknown', fullName: '' },
+          createdAt: (rawData.createdAt && typeof rawData.createdAt === 'string') ? rawData.createdAt : new Date().toISOString(),
+          updatedAt: (rawData.updatedAt && typeof rawData.updatedAt === 'string') ? rawData.updatedAt : new Date().toISOString()
+        }
+
         setBlog(data)
         setError(null)
       } catch (err) {
-        console.error('Error fetching blog:', err)
         setError(err instanceof Error ? err.message : 'Failed to load blog')
       } finally {
         setIsLoading(false)
@@ -98,56 +127,45 @@ export default function BlogDetailPage() {
     return `${minutes} min read`
   }
 
-  const getBlogCategory = (title: string, description: string): string => {
-    const content = (title + ' ' + description).toLowerCase()
+  const getBlogCategory = (title: string): string => {
+    if (!title || typeof title !== 'string') return 'Insights'
 
-    if (content.includes('ai') || content.includes('artificial intelligence') || content.includes('machine learning')) {
-      return 'AI & ML'
+    try {
+      const content = title.toLowerCase()
+
+      if (content.includes('ai') || content.includes('artificial intelligence') || content.includes('machine learning')) {
+        return 'AI & ML'
+      }
+      if (content.includes('cybersecurity') || content.includes('security') || content.includes('hacking') || content.includes('privacy')) {
+        return 'Cybersecurity'
+      }
+      if (content.includes('workshop') || content.includes('training') || content.includes('education')) {
+        return 'Education'
+      }
+      if (content.includes('career') || content.includes('job') || content.includes('future')) {
+        return 'Careers'
+      }
+      if (content.includes('research') || content.includes('study') || content.includes('analysis')) {
+        return 'Research'
+      }
+      return 'Insights'
+    } catch (error) {
+      return 'Insights'
     }
-    if (content.includes('cybersecurity') || content.includes('security') || content.includes('hacking') || content.includes('privacy')) {
-      return 'Cybersecurity'
-    }
-    if (content.includes('workshop') || content.includes('training') || content.includes('education')) {
-      return 'Education'
-    }
-    if (content.includes('career') || content.includes('job') || content.includes('future')) {
-      return 'Careers'
-    }
-    if (content.includes('research') || content.includes('study') || content.includes('analysis')) {
-      return 'Research'
-    }
-    return 'Insights'
   }
 
   // Get category for current blog
   const getCurrentBlogCategory = () => {
     if (!blog) return ''
-    return getBlogCategory(blog.title, blog.description)
-  }
-
-  // Extract plain text from HTML content for sharing
-  const extractTextFromHtml = (html: string, maxLength: number = 150) => {
-    if (!html) return ''
-    // Remove HTML tags
-    const text = html.replace(/<[^>]*>/g, '')
-    // Decode HTML entities
-    const decoded = text
-      .replace(/&nbsp;/g, ' ')
-      .replace(/&amp;/g, '&')
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&quot;/g, '"')
-      .replace(/&#39;/g, "'")
-    // Trim and limit length
-    return decoded.trim().substring(0, maxLength) + (decoded.length > maxLength ? '...' : '')
+    return getBlogCategory(blog.title)
   }
 
   const shareBlog = async () => {
     if (!blog) return
 
     const shareUrl = window.location.href
-    const shareTitle = blog.title
-    const shareText = extractTextFromHtml(blog.description)
+    const shareTitle = blog.title || 'Blog Article'
+    const shareText = `Check out this article: ${blog.title || 'Blog Article'}`
 
     try {
       // Try native Web Share API first (mobile devices)
@@ -176,7 +194,6 @@ export default function BlogDetailPage() {
     } catch (error) {
       // Handle share cancellation or errors
       if ((error as Error).name !== 'AbortError') {
-        console.error('Share failed:', error)
         toast({
           title: "Share failed",
           description: "Unable to share article. Please try again.",
@@ -186,66 +203,276 @@ export default function BlogDetailPage() {
     }
   }
 
-  // Clean, professional content renderer
-  const renderContent = (content: string) => {
-    if (!content) return null
+  // PDF Navigation functions
+  const goToPreviousPage = () => {
+    if (currentPage > 1 && !isAnimating) {
+      setIsAnimating(true)
+      setPageDirection('prev')
+      const newPage = currentPage - 1
+      setCurrentPage(newPage)
+      setPdfKey(prev => prev + 1) // Force iframe reload
+      setTimeout(() => {
+        setIsAnimating(false)
+        setPageDirection(null)
+      }, 600)
+    }
+  }
 
-    // Simple HTML processing - just clean up and format
-    let processedContent = content
+  const goToNextPage = () => {
+    if (!isAnimating) {
+      setIsAnimating(true)
+      setPageDirection('next')
+      const newPage = currentPage + 1
+      setCurrentPage(newPage)
+      setPdfKey(prev => prev + 1) // Force iframe reload
+      setTimeout(() => {
+        setIsAnimating(false)
+        setPageDirection(null)
+      }, 600)
+    }
+  }
 
-    // If it's plain text, convert to simple HTML
-    if (!/<[a-z][\s\S]*>/i.test(content)) {
-      processedContent = content
-        .split('\n\n')
-        .map(paragraph => {
-          const trimmed = paragraph.trim()
-          if (!trimmed) return ''
+  const goToPage = (page: number) => {
+    if (page >= 1 && !isAnimating) {
+      setIsAnimating(true)
+      setPageDirection(page > currentPage ? 'next' : 'prev')
+      setCurrentPage(page)
+      setPdfKey(prev => prev + 1) // Force iframe reload
+      setTimeout(() => {
+        setIsAnimating(false)
+        setPageDirection(null)
+      }, 600)
+    }
+  }
 
-          // Simple heading detection
-          if (trimmed.length < 100 && !trimmed.includes('.') && !trimmed.includes('?') && !trimmed.includes('!')) {
-            return `<h2 class="blog-heading">${trimmed}</h2>`
-          }
-
-          // Simple list detection
-          if (trimmed.startsWith('•') || trimmed.startsWith('-') || trimmed.startsWith('*')) {
-            return `<ul class="blog-list"><li>${trimmed.replace(/^[*•\-]\s*/, '')}</li></ul>`
-          }
-
-          if (/^\d+\./.test(trimmed)) {
-            return `<ol class="blog-list"><li>${trimmed.replace(/^\d+\.\s*/, '')}</li></ol>`
-          }
-
-          // Simple quote detection
-          if (trimmed.startsWith('"') || trimmed.length < 150) {
-            return `<blockquote class="blog-quote">${trimmed}</blockquote>`
-          }
-
-          return `<p class="blog-paragraph">${trimmed}</p>`
-        })
-        .filter(p => p)
-        .join('')
+  // PDF Viewer Component
+  const renderPdfViewer = () => {
+    // Check if pdfPath exists and is not empty
+    const hasPdf = blog?.pdfPath && typeof blog.pdfPath === 'string' && blog.pdfPath.trim().length > 0
+    
+    if (!hasPdf) {
+      return (
+        <div className="flex flex-col items-center justify-center py-16 text-center">
+          <FileText className="w-16 h-16 text-muted-foreground/50 mb-4" />
+          <h3 className="text-lg font-semibold text-muted-foreground mb-2">PDF Not Available</h3>
+          <p className="text-sm text-muted-foreground">The PDF content for this article is currently being prepared.</p>
+        </div>
+      )
     }
 
-    // Basic HTML cleanup for existing HTML content
-    processedContent = processedContent
-      .replace(/<h[1-6]>/gi, (match) => `<h2 class="blog-heading">`)
-      .replace(/<\/h[1-6]>/gi, '</h2>')
-      .replace(/<p>/gi, '<p class="blog-paragraph">')
-      .replace(/<ul>/gi, '<ul class="blog-list">')
-      .replace(/<ol>/gi, '<ol class="blog-list">')
-      .replace(/<blockquote>/gi, '<blockquote class="blog-quote">')
-      .replace(/<strong>/gi, '<strong class="blog-strong">')
-      .replace(/<em>/gi, '<em class="blog-emphasis">')
+    // Construct PDF URL - ensure it starts with / and use the API base URL
+    // Add parameters to hide browser's built-in PDF controls (toolbar, navigation panes, etc.)
+    const pdfPath = blog.pdfPath.startsWith('/') ? blog.pdfPath : `/${blog.pdfPath}`
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'
+    // toolbar=0: Hide toolbar (download, print, etc.)
+    // navpanes=0: Hide navigation panes
+    // scrollbar=0: Hide scrollbar
+    // view=FitV: Fit page height (shows full page vertically)
+    // page=X: Go to specific page
+    const pdfUrl = `${apiBaseUrl}${pdfPath}#toolbar=0&navpanes=0&scrollbar=0&view=FitV&page=${currentPage}`
 
     return (
-      <div className="blog-content">
-        <div
-          className="prose prose-lg max-w-none"
-          dangerouslySetInnerHTML={{ __html: processedContent }}
-        />
+      <div className="space-y-6">
+        {pdfError && (
+          <div className="bg-destructive/10 border border-destructive/50 rounded-lg p-4 mb-4">
+            <p className="text-destructive text-sm">{pdfError}</p>
+            <Button
+              variant="outline"
+              size="sm"
+              className="mt-2"
+              onClick={() => {
+                setPdfError(null)
+                setPdfLoaded(false)
+              }}
+            >
+              Try Again
+            </Button>
+          </div>
+        )}
+        
+        {/* PDF Viewer Container */}
+        <div className="relative bg-white dark:bg-gray-900 rounded-lg shadow-2xl border perspective-1000" style={{ overflow: 'hidden' }}>
+          <style jsx>{`
+            .perspective-1000 {
+              perspective: 1500px;
+            }
+            .page-turn-next {
+              animation: pageTurnNext 0.6s ease-in-out;
+            }
+            .page-turn-prev {
+              animation: pageTurnPrev 0.6s ease-in-out;
+            }
+            .pdf-no-scroll {
+              position: relative;
+            }
+            .pdf-no-scroll::after {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              pointer-events: none;
+              z-index: 1;
+            }
+            .pdf-no-scroll iframe {
+              overflow: hidden !important;
+            }
+            @keyframes pageTurnNext {
+              0% {
+                transform: rotateY(0deg);
+                opacity: 1;
+              }
+              50% {
+                transform: rotateY(-90deg);
+                opacity: 0.5;
+              }
+              100% {
+                transform: rotateY(0deg);
+                opacity: 1;
+              }
+            }
+            @keyframes pageTurnPrev {
+              0% {
+                transform: rotateY(0deg);
+                opacity: 1;
+              }
+              50% {
+                transform: rotateY(90deg);
+                opacity: 0.5;
+              }
+              100% {
+                transform: rotateY(0deg);
+                opacity: 1;
+              }
+            }
+          `}</style>
+          <div className={`
+            pdf-no-scroll
+            ${pageDirection === 'next' ? 'page-turn-next' : ''}
+            ${pageDirection === 'prev' ? 'page-turn-prev' : ''}
+            transform-gpu
+          `} style={{ overflow: 'hidden' }}>
+            {!pdfLoaded && !pdfError && (
+              <div className="absolute inset-0 flex items-center justify-center bg-muted/50 z-10">
+                <div className="text-center">
+                  <Loader2 className="w-8 h-8 animate-spin mx-auto mb-2 text-primary" />
+                  <p className="text-sm text-muted-foreground">Loading PDF...</p>
+                </div>
+              </div>
+            )}
+            <div style={{ 
+              overflow: 'hidden', 
+              position: 'relative', 
+              height: '1000px',
+              touchAction: 'none',
+              overscrollBehavior: 'none'
+            }} className="sm:h-[1200px] md:h-[1400px] lg:h-[1500px]">
+              <iframe
+                key={pdfKey}
+                src={pdfUrl}
+                className="w-full h-full border-0"
+                title={`PDF Viewer - ${blog.title}`}
+                style={{ 
+                  overflow: 'hidden',
+                  touchAction: 'none',
+                  pointerEvents: 'none',
+                  userSelect: 'none'
+                }}
+                scrolling="no"
+                onLoad={() => {
+                  setPdfLoaded(true)
+                  setPdfError(null)
+                }}
+                onError={() => {
+                  setPdfError('Failed to load PDF. Please try refreshing the page.')
+                  setPdfLoaded(false)
+                }}
+              />
+              {/* Overlay to block scroll but allow navigation buttons */}
+              <div 
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  pointerEvents: 'all',
+                  cursor: 'default',
+                  zIndex: 2
+                }}
+                onWheel={(e) => e.preventDefault()}
+                onTouchMove={(e) => e.preventDefault()}
+              />
+            </div>
+          </div>
+
+          {/* Navigation Overlay */}
+          <div className="absolute inset-0 pointer-events-none">
+            {/* Previous Page Button */}
+            <button
+              onClick={goToPreviousPage}
+              disabled={currentPage <= 1 || isAnimating || !pdfLoaded}
+              className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-auto p-3 bg-black/50 hover:bg-black/70 text-white rounded-full transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed shadow-lg hover:scale-110"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+
+            {/* Next Page Button */}
+            <button
+              onClick={goToNextPage}
+              disabled={isAnimating || !pdfLoaded}
+              className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-auto p-3 bg-black/50 hover:bg-black/70 text-white rounded-full transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed shadow-lg hover:scale-110"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+
+        {/* Page Navigation Controls */}
+        <div className="flex items-center justify-center gap-4">
+          <Button
+            variant="outline"
+            onClick={goToPreviousPage}
+            disabled={currentPage <= 1 || isAnimating || !pdfLoaded}
+            className="flex items-center gap-2"
+          >
+            <ChevronLeft className="w-4 h-4" />
+            Previous
+          </Button>
+
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-muted-foreground">Page</span>
+            <input
+              type="number"
+              min={1}
+              value={currentPage}
+              onChange={(e) => {
+                const page = parseInt(e.target.value)
+                if (page >= 1) {
+                  goToPage(page)
+                }
+              }}
+              className="w-20 px-2 py-1 text-center border rounded"
+              placeholder="Page"
+              disabled={!pdfLoaded}
+            />
+          </div>
+
+          <Button
+            variant="outline"
+            onClick={goToNextPage}
+            className="flex items-center gap-2"
+            disabled={isAnimating || !pdfLoaded}
+          >
+            Next
+            <ChevronRight className="w-4 h-4" />
+          </Button>
+        </div>
       </div>
     )
   }
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -315,21 +542,27 @@ export default function BlogDetailPage() {
           {!isLoading && !error && blog && (
             <>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-4 sm:mb-6 text-foreground tracking-tight px-4 leading-tight">
-                {blog.title}
+                {blog.title || 'Blog Article'}
               </h1>
 
               <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-sm sm:text-base text-muted-foreground mb-8">
                 <div className="flex items-center gap-2">
                   <User className="w-4 h-4" />
-                  <span>{blog.author.fullName || blog.author.username}</span>
+                  <span>{blog.authorName || (blog.author ? blog.author.fullName || blog.author.username : 'Unknown Author')}</span>
+                  {blog.authorTitle && (
+                    <>
+                      <span className="text-muted-foreground/50">•</span>
+                      <span>{blog.authorTitle}</span>
+                    </>
+                  )}
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
                   <span>{formatDate(blog.createdAt)}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4" />
-                  <span>{getReadingTime(blog.description)}</span>
+                  <FileText className="w-4 h-4" />
+                  <span>PDF Document</span>
                 </div>
               </div>
 
@@ -363,37 +596,10 @@ export default function BlogDetailPage() {
       {!isLoading && !error && blog && (
         <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            {/* Featured Image */}
-            <div className="mb-8 sm:mb-12">
-              <div className="aspect-video w-full rounded-xl overflow-hidden bg-gradient-to-br from-primary/10 via-secondary/10 to-primary/5 dark:from-primary/20 dark:via-secondary/20 dark:to-primary/10">
-                {blog.images.length > 0 ? (
-                  <img
-                    src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/images/${blog.images[0].imageUrl}`}
-                    alt={blog.title}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      // Fallback to internet image if local image fails
-                      e.currentTarget.src = getFallbackImage(getCurrentBlogCategory())
-                    }}
-                  />
-                ) : (
-                  <img
-                    src={getFallbackImage(getCurrentBlogCategory())}
-                    alt={blog.title}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      // Final fallback to a generic tech image
-                      e.currentTarget.src = 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&h=600&fit=crop&crop=center'
-                    }}
-                  />
-                )}
-              </div>
-            </div>
-
-            {/* Article Content */}
+            {/* PDF Content */}
             <Card className="border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-md shadow-xl">
               <CardContent className="pt-8 sm:pt-12 pb-8 sm:pb-12 px-6 sm:px-8 lg:px-12">
-                {renderContent(blog.description)}
+                {renderPdfViewer()}
               </CardContent>
             </Card>
 
@@ -403,17 +609,29 @@ export default function BlogDetailPage() {
                 <CardContent className="pt-6 sm:pt-8 pb-6 sm:pb-8">
                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/25 to-primary/10 dark:from-primary/35 dark:to-primary/20 flex items-center justify-center">
+                      {blog.authorImage && blog.authorImage.trim().length > 0 ? (
+                        <img
+                          src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}${blog.authorImage.startsWith('/') ? blog.authorImage : `/${blog.authorImage}`}`}
+                          alt={blog.authorName || (blog.author ? blog.author.fullName || blog.author.username : 'Unknown Author')}
+                          className="w-12 h-12 rounded-full object-cover border-2 border-primary/20"
+                          onError={(e) => {
+                            // Fallback to initials if image fails
+                            e.currentTarget.style.display = 'none'
+                            e.currentTarget.nextElementSibling!.style.display = 'flex'
+                          }}
+                        />
+                      ) : null}
+                      <div className={`w-12 h-12 rounded-full bg-gradient-to-br from-primary/25 to-primary/10 dark:from-primary/35 dark:to-primary/20 flex items-center justify-center ${blog.authorImage ? 'hidden' : ''}`}>
                         <span className="text-primary font-bold text-lg">
-                          {(blog.author.fullName || blog.author.username).charAt(0).toUpperCase()}
+                          {(blog.authorName || (blog.author ? blog.author.fullName || blog.author.username : 'Unknown Author')).charAt(0).toUpperCase()}
                         </span>
                       </div>
                       <div>
                         <p className="font-semibold text-foreground">
-                          {blog.author.fullName || blog.author.username}
+                          {blog.authorName || (blog.author ? blog.author.fullName || blog.author.username : 'Unknown Author')}
                         </p>
                         <p className="text-sm text-muted-foreground">
-                          Author • Cybersecurity & AI Expert
+                          {blog.authorTitle || 'Cybersecurity & AI Expert'}
                         </p>
                       </div>
                     </div>

@@ -119,6 +119,14 @@ const sportsWorkshopImages = [
   "/3rd/WhatsApp Image 2026-01-04 at 09.41.30 (1).jpeg"
 ]
 
+const vedikaJan2026Images = [
+  "/9th/WhatsApp Image 2026-01-09 at 13.08.36.jpeg",
+  "/9th/WhatsApp Image 2026-01-09 at 13.08.36 (1).jpeg",
+  "/9th/WhatsApp Image 2026-01-09 at 13.08.36 (2).jpeg",
+  "/9th/WhatsApp Image 2026-01-09 at 13.08.36 (3).jpeg",
+  "/9th/WhatsApp Image 2026-01-09 at 13.08.37.jpeg"
+]
+
 const dpsImages = [
   "/dps/hero.png",
   "/dps/image.png",
@@ -870,6 +878,125 @@ export default function Impact() {
                   </div>
                 </CardContent>
               </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Jan 2026: Ambassador Vedika Leads Independent Workshop */}
+        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden">
+          {/* Decorative elements */}
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute top-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+          </div>
+
+          <div className="max-w-6xl mx-auto relative z-10">
+            <div className="text-center mb-8 sm:mb-12">
+              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm bg-gradient-to-r from-primary to-secondary">JAN 2026 - LATEST</Badge>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
+                YLCA Milestone: <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Ambassador Vedika Leads the Next Wave of Workshops in Delhi</span>
+              </h2>
+              <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
+                The first fully independent government-school workshop led by Ambassador Vedika marks a new chapter for YLCA
+              </p>
+            </div>
+
+            {/* Featured Initiative: Jan 2026 */}
+            <div className="mb-12 sm:mb-16">
+              <Card className="border-2 border-primary/30 dark:border-primary/40 bg-gradient-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+                <div className="bg-gradient-to-r from-primary/10 to-secondary/10 px-6 py-4 border-b border-border/50">
+                  <div className="flex items-center gap-3">
+                    <Badge variant="default" className="text-xs">JANUARY 2026</Badge>
+                    <h3 className="text-lg sm:text-xl font-bold text-foreground">Ambassador-Led Workshop at Sarvodaya Bal Vidyalaya, New Delhi</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-1">100+ students empowered with cybersecurity and responsible AI knowledge</p>
+                </div>
+
+                <CardContent className="p-6 sm:p-8">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+                    <div className="space-y-4">
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                        YLCA is entering its next milestone for 2026: ambassadors are now leading the mission on the ground—independently and at scale. During his recent visit to India, YLCA Founder <span className="font-semibold text-foreground">Arth Bhardwaj</span> (California, USA) met with multiple ambassadors and co-hosted sessions across Delhi and Haryana (Delhi, Karnal, and Ambala), aligning on YLCA's 2026 strategy and training student leaders to confidently run workshops on their own.
+                      </p>
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                        The impact of that training is already visible: YLCA's first fully independent government-school session was successfully led by <span className="font-semibold text-foreground">Ambassador Vedika</span> at Sarvodaya Bal Vidyalaya, New Delhi, reaching 100+ students (Grade 8+) with practical lessons on cybersecurity, teen digital safety, scam awareness, responsible AI (including deepfakes), and anti-cyberbullying.
+                      </p>
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed font-medium">
+                        This marks the start of a new chapter for YLCA—where a scalable ambassador network multiplies impact and grows the mission city-by-city, and ultimately, around the world.
+                      </p>
+
+                      {/* Key Highlights */}
+                      <div className="grid grid-cols-2 gap-3 pt-4">
+                        <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
+                          <div className="text-xl font-bold text-primary mb-1">100+</div>
+                          <p className="text-xs text-muted-foreground">Students Reached</p>
+                        </div>
+                        <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
+                          <div className="text-xl font-bold text-secondary mb-1">1st</div>
+                          <p className="text-xs text-muted-foreground">Independent Workshop</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h4 className="text-lg font-bold text-foreground mb-3">Workshop Highlights</h4>
+                      <div className="grid grid-cols-2 gap-3">
+                        {[
+                          "/9th/WhatsApp Image 2026-01-09 at 13.08.36.jpeg",
+                          "/9th/WhatsApp Image 2026-01-09 at 13.08.36 (1).jpeg",
+                          "/9th/WhatsApp Image 2026-01-09 at 13.08.36 (2).jpeg",
+                          "/9th/WhatsApp Image 2026-01-09 at 13.08.36 (3).jpeg"
+                        ].map((image, index) => (
+                          <div
+                            key={index}
+                            className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
+                            onClick={() => openModal(vedikaJan2026Images, vedikaJan2026Images.indexOf(image))}
+                            role="button"
+                            tabIndex={0}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault()
+                                openModal(vedikaJan2026Images, vedikaJan2026Images.indexOf(image))
+                              }
+                            }}
+                            aria-label={`View Ambassador Vedika Jan 2026 image ${index + 1} in gallery`}
+                          >
+                            <img
+                              src={image}
+                              alt={`Ambassador Vedika Workshop Jan 2026 ${index + 1}`}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              loading="lazy"
+                            />
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Ambassador Spotlight */}
+                      <div className="mt-6 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg p-4 border border-border/30">
+                        <div className="flex items-center gap-3 mb-2">
+                          <Users className="w-5 h-5 text-primary" />
+                          <h5 className="font-bold text-foreground">Ambassador Spotlight</h5>
+                        </div>
+                        <p className="text-sm text-muted-foreground">
+                          <span className="font-semibold text-foreground">Vedika</span> demonstrated exceptional leadership, delivering engaging content and empowering students to take charge of their digital safety.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* View All Photos */}
+            <div className="text-center">
+              <Button
+                variant="outline"
+                onClick={() => openModal(vedikaJan2026Images, 0)}
+                className="border-2 border-primary/50 dark:border-primary/60 hover:bg-primary/10 dark:hover:bg-primary/20 px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-full font-semibold group"
+              >
+                View All Workshop Photos
+                <Star className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
+              </Button>
             </div>
           </div>
         </section>

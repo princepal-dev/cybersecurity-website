@@ -125,6 +125,94 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Meet the Founder - Compact Card */}
+      <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-1/2 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="max-w-4xl mx-auto relative z-10">
+          <Card className="group relative overflow-hidden border-2 border-primary/30 dark:border-primary/40 bg-gradient-to-br from-card via-card to-primary/5 dark:to-primary/10 backdrop-blur-sm shadow-2xl hover:shadow-3xl transition-all duration-300 hover:-translate-y-1">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            
+            <CardHeader className="relative pb-4 text-center px-4 sm:px-6 pt-6">
+              <div className="flex items-center justify-center gap-2 mb-3">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-primary/30 via-primary/20 to-primary/10 dark:from-primary/40 dark:via-primary/30 dark:to-primary/20 rounded-xl flex items-center justify-center shadow-lg shadow-primary/20 dark:shadow-primary/30">
+                  <Users className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                </div>
+              </div>
+              <CardTitle className="text-2xl sm:text-3xl font-bold tracking-tight">Meet the Founder</CardTitle>
+            </CardHeader>
+            
+            <CardContent className="relative px-4 sm:px-6 pb-6 space-y-5">
+              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed text-center">
+                <span className="font-semibold text-foreground">Arth Bhardwaj</span> (California, USA) is the high-school founder of YLCA, leading student workshops and building a global ambassador network to promote teen digital safety, cybersecurity awareness, and responsible AI. He is also the author of{" "}
+                <span className="font-semibold text-foreground">Cybersecurity for Teens</span> (Amazon Kindle), an Amazon Best Seller / #1 New Release in its category. Arth's community work and youth-led impact have also been featured in{" "}
+                <span className="font-semibold text-foreground">The Tribune</span> (India) for YLCA's workshops and outreach across 2025.
+              </p>
+
+              {/* Featured Images - Amazon Bestseller & Tribune Feature */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                {/* Amazon Bestseller */}
+                <div className="group/img relative rounded-xl overflow-hidden border-2 border-border/60 dark:border-border/40 bg-card/80 hover:border-primary/50 dark:hover:border-primary/60 transition-all duration-300 hover:shadow-xl">
+                  <div className="aspect-[4/3] relative overflow-hidden">
+                    <img
+                      src="/amazon.jpeg"
+                      alt="Cybersecurity for Teens - Amazon Best Seller"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover/img:translate-y-0 transition-transform duration-300">
+                      <p className="text-xs font-semibold">Amazon Best Seller #1</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Tribune Newspaper Feature */}
+                <div className="group/img relative rounded-xl overflow-hidden border-2 border-border/60 dark:border-border/40 bg-white dark:bg-gray-100 hover:border-secondary/50 dark:hover:border-secondary/60 transition-all duration-300 hover:shadow-xl">
+                  <div className="aspect-[3/4] relative overflow-hidden">
+                    <img
+                      src="/paper.png"
+                      alt="Featured in The Tribune India - YLCA Workshops"
+                      className="w-full h-full object-contain transition-transform duration-500 group-hover/img:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover/img:translate-y-0 transition-transform duration-300">
+                      <p className="text-xs font-semibold">Featured in The Tribune</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
+                <Link href="/about" className="w-full sm:w-auto">
+                  <Button variant="outline" className="w-full sm:w-auto border-2 border-primary/50 dark:border-primary/60 hover:bg-primary/10 dark:hover:bg-primary/20 px-5 py-2.5 text-sm rounded-full font-semibold group">
+                    About Arth
+                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                  </Button>
+                </Link>
+                <Link href="/impact" className="w-full sm:w-auto">
+                  <Button variant="outline" className="w-full sm:w-auto border-2 border-secondary/50 dark:border-secondary/60 hover:bg-secondary/10 dark:hover:bg-secondary/20 px-5 py-2.5 text-sm rounded-full font-semibold group">
+                    Impact
+                    <Award className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
+                  </Button>
+                </Link>
+                <a href="https://www.amazon.com/dp/B0FMPF2WN5" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
+                  <Button className="w-full sm:w-auto bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white px-5 py-2.5 text-sm rounded-full font-semibold group shadow-lg shadow-primary/30 dark:shadow-primary/40">
+                    Book
+                    <Star className="w-4 h-4 ml-2 group-hover:scale-110 transition-transform duration-300" />
+                  </Button>
+                </a>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
       {/* Impact Snapshot */}
       <section className="py-16 sm:py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-muted/30 via-background to-background relative overflow-hidden">
         {/* Animated background */}
