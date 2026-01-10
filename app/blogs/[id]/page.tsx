@@ -1,6 +1,9 @@
 "use client"
 
 import { useState, useEffect } from "react"
+
+// Force dynamic rendering to avoid build-time API calls
+export const dynamic = 'force-dynamic'
 import "./blog-content.css"
 import { useParams, useRouter } from "next/navigation"
 import { Navigation } from "@/components/navigation"

@@ -1,6 +1,9 @@
 "use client"
 
 import { useState, useEffect } from "react"
+
+// Force dynamic rendering to avoid build-time API calls
+export const dynamic = 'force-dynamic'
 import "./blog-listing.css"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
@@ -9,7 +12,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Separator } from "@/components/ui/separator"
-import { BookOpen, Calendar, User, ArrowRight, FileText, Eye } from "lucide-react"
+import { BookOpen, Calendar, User, ArrowRight, FileText, Eye, Star } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
