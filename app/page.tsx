@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { Clock, AlertTriangle, Bot, Globe, Users, Rocket, Shield, TrendingUp, Award, Sparkles, ArrowRight, CheckCircle2, Star, Briefcase } from "lucide-react"
+import { Clock, AlertTriangle, Bot, Globe, Users, Rocket, Shield, TrendingUp, Award, Sparkles, ArrowRight, CheckCircle2, Star, Briefcase, ExternalLink, Download } from "lucide-react"
 import Link from "next/link"
 
 export default function Home() {
@@ -155,40 +155,87 @@ export default function Home() {
               </p>
 
               {/* Featured Images - Amazon Bestseller & Tribune Feature */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-                {/* Amazon Bestseller */}
-                <div className="group/img relative rounded-xl overflow-hidden border-2 border-border/60 dark:border-border/40 bg-card/80 hover:border-primary/50 dark:hover:border-primary/60 transition-all duration-300 hover:shadow-xl">
-                  <div className="aspect-[4/3] relative overflow-hidden">
-                    <img
-                      src="/amazon.jpeg"
-                      alt="Cybersecurity for Teens - Amazon Best Seller"
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300"></div>
-                    <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover/img:translate-y-0 transition-transform duration-300">
-                      <p className="text-xs font-semibold">Amazon Best Seller #1</p>
+              <div className="space-y-6 pt-4">
+                {/* Top Row: Amazon Images (Horizontal Layout) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Amazon Bestseller */}
+                  <a 
+                    href="https://www.amazon.com/dp/B0FMPF2WN5" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="block group/img relative rounded-xl overflow-hidden border-2 border-border/60 dark:border-border/40 bg-card/80 hover:border-primary/50 dark:hover:border-primary/60 transition-all duration-300 hover:shadow-xl cursor-pointer"
+                  >
+                    <div className="aspect-[4/3] relative overflow-hidden">
+                      <img
+                        src="/amazon.jpeg"
+                        alt="Cybersecurity for Teens - Amazon Best Seller"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover/img:translate-y-0 transition-transform duration-300">
+                        <p className="text-xs font-semibold">Amazon Best Seller #1 - Click to View</p>
+                      </div>
                     </div>
-                  </div>
+                  </a>
+
+                  {/* Amazon Book Cover */}
+                  <a 
+                    href="https://www.amazon.com/dp/B0FMPF2WN5" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="block group/img relative rounded-xl overflow-hidden border-2 border-border/60 dark:border-border/40 bg-white dark:bg-gray-50 hover:border-primary/50 dark:hover:border-primary/60 transition-all duration-300 hover:shadow-xl cursor-pointer"
+                  >
+                    <div className="aspect-[4/3] relative overflow-hidden">
+                      <img
+                        src="/amazon-img.png"
+                        alt="Cybersecurity for Teens - Book on Amazon"
+                        className="w-full h-full object-contain transition-transform duration-500 group-hover/img:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover/img:translate-y-0 transition-transform duration-300">
+                        <p className="text-xs font-semibold">Available on Amazon - Click to View</p>
+                      </div>
+                    </div>
+                  </a>
                 </div>
 
-                {/* Tribune Newspaper Feature */}
-                <div className="group/img relative rounded-xl overflow-hidden border-2 border-border/60 dark:border-border/40 bg-white dark:bg-gray-100 hover:border-secondary/50 dark:hover:border-secondary/60 transition-all duration-300 hover:shadow-xl">
-                  <div className="aspect-[3/4] relative overflow-hidden">
-                    <img
-                      src="/paper.png"
-                      alt="Featured in The Tribune India - YLCA Workshops"
-                      className="w-full h-full object-contain transition-transform duration-500 group-hover/img:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300"></div>
-                    <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover/img:translate-y-0 transition-transform duration-300">
-                      <p className="text-xs font-semibold">Featured in The Tribune</p>
+                {/* Bottom Row: Tribune Newspaper Features (Vertical Layout) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Tribune Newspaper Clipping */}
+                  <div className="group/img relative rounded-xl overflow-hidden border-2 border-border/60 dark:border-border/40 bg-white dark:bg-gray-100 hover:border-secondary/50 dark:hover:border-secondary/60 transition-all duration-300 hover:shadow-xl">
+                    <div className="aspect-[3/4] relative overflow-hidden">
+                      <img
+                        src="/paper.png"
+                        alt="Featured in The Tribune India - YLCA Workshops"
+                        className="w-full h-full object-contain transition-transform duration-500 group-hover/img:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover/img:translate-y-0 transition-transform duration-300">
+                        <p className="text-xs font-semibold">Featured in The Tribune (Print)</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Featured Page from Tribune */}
+                  <div className="group/img relative rounded-xl overflow-hidden border-2 border-border/60 dark:border-border/40 bg-white dark:bg-gray-100 hover:border-secondary/50 dark:hover:border-secondary/60 transition-all duration-300 hover:shadow-xl">
+                    <div className="aspect-[3/4] relative overflow-hidden">
+                      <img
+                        src="/WhatsApp Image 2026-01-09 at 13.20.51.jpeg"
+                        alt="Tribune Page - YLCA Featured Article"
+                        className="w-full h-full object-cover object-center transition-transform duration-500 group-hover/img:scale-105"
+                        style={{ objectPosition: 'center 60%' }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover/img:translate-y-0 transition-transform duration-300">
+                        <p className="text-xs font-semibold">Tribune Article Page</p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center pt-2">
                 <Link href="/about" className="w-full sm:w-auto">
                   <Button variant="outline" className="w-full sm:w-auto border-2 border-primary/50 dark:border-primary/60 hover:bg-primary/10 dark:hover:bg-primary/20 px-5 py-2.5 text-sm rounded-full font-semibold group">
                     About Arth
@@ -201,6 +248,18 @@ export default function Home() {
                     <Award className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
                   </Button>
                 </Link>
+                <a href="https://share.google/AuVhoq0Y0yYr4BtYH" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
+                  <Button variant="outline" className="w-full sm:w-auto border-2 border-secondary/50 dark:border-secondary/60 hover:bg-secondary/10 dark:hover:bg-secondary/20 px-5 py-2.5 text-sm rounded-full font-semibold group">
+                    Tribune Article
+                    <ExternalLink className="w-4 h-4 ml-2 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
+                  </Button>
+                </a>
+                <a href="/Haryana Tribune.pdf" download="YLCA_Tribune_Feature.pdf" className="w-full sm:w-auto">
+                  <Button variant="outline" className="w-full sm:w-auto border-2 border-secondary/50 dark:border-secondary/60 hover:bg-secondary/10 dark:hover:bg-secondary/20 px-5 py-2.5 text-sm rounded-full font-semibold group">
+                    Download Newspaper
+                    <Download className="w-4 h-4 ml-2 group-hover:translate-y-0.5 transition-transform duration-300" />
+                  </Button>
+                </a>
                 <a href="https://www.amazon.com/dp/B0FMPF2WN5" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
                   <Button className="w-full sm:w-auto bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white px-5 py-2.5 text-sm rounded-full font-semibold group shadow-lg shadow-primary/30 dark:shadow-primary/40">
                     Book
