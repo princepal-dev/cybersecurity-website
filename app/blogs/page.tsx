@@ -303,8 +303,8 @@ export default function BlogsPage() {
                           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                             <FileText className="w-5 h-5 text-primary" />
                           </div>
-                        </div>
                       </div>
+                    </div>
 
                       {/* Title with gradient on hover */}
                       <CardTitle className="text-xl font-bold line-clamp-2 leading-tight blog-title mb-4 group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-secondary group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
@@ -330,7 +330,7 @@ export default function BlogsPage() {
                         <div className="flex items-center justify-between text-muted-foreground">
                           <div className="flex items-center gap-1.5">
                             <Calendar className="w-3.5 h-3.5 text-primary/70" />
-                            <span>{formatDate(blog.createdAt)}</span>
+                          <span>{formatDate(blog.createdAt)}</span>
                           </div>
                           <div className="flex items-center gap-1.5 bg-primary/10 px-2 py-1 rounded-full">
                             <FileText className="w-3.5 h-3.5 text-primary" />

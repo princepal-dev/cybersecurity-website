@@ -371,9 +371,9 @@ export default function BlogDetailPage() {
               touchAction: 'none',
               overscrollBehavior: 'none'
             }} className="sm:h-[1200px] md:h-[1400px] lg:h-[1500px]">
-              <iframe
+            <iframe
                 key={pdfKey}
-                src={pdfUrl}
+              src={pdfUrl}
                 className="w-full h-full border-0"
                 title={`PDF Viewer - ${blog.title}`}
                 style={{ 
@@ -391,7 +391,7 @@ export default function BlogDetailPage() {
                   setPdfError('Failed to load PDF. Please try refreshing the page.')
                   setPdfLoaded(false)
                 }}
-              />
+            />
               {/* Overlay to block scroll but allow navigation buttons */}
               <div 
                 style={{

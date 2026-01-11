@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
-import { Users, GraduationCap, Globe, Star, ChevronLeft, ChevronRight, X } from "lucide-react"
+import { Users, GraduationCap, Globe, Star, ChevronLeft, ChevronRight, X, Rocket } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 
@@ -539,7 +539,7 @@ export default function Impact() {
 
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="text-center mb-8 sm:mb-12">
-              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">LATEST IMPACT</Badge>
+              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">DECEMBER IMPACT</Badge>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
                 Founder Arth Bhardwaj & Ambassador Vedika: <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Hosting Workshops in Delhi Government Schools</span>
               </h2>
@@ -867,12 +867,13 @@ export default function Impact() {
                     </div>
 
                     <div className="flex justify-center">
-                      <div className="relative">
+                      <div className="relative rounded-xl overflow-hidden border-2 border-border/40 shadow-lg group w-48 h-48 sm:w-56 sm:h-56">
                         <img
-                          src="/3rd/WhatsApp Image 2026-01-04 at 09.41.29.jpeg"
+                          src="/arush.png"
                           alt="Aarush Mangal - YLCA Sports Ambassador"
-                          className="w-48 h-48 sm:w-56 sm:h-56 object-contain rounded-2xl border border-border/40 shadow-lg"
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                         />
+                        <div className="absolute inset-0 ring-1 ring-primary/20 dark:ring-primary/30 rounded-xl pointer-events-none"></div>
                       </div>
                     </div>
                   </div>
@@ -988,7 +989,7 @@ export default function Impact() {
             </div>
 
             {/* View All Photos */}
-            <div className="text-center">
+            <div className="text-center mb-12 sm:mb-16">
               <Button
                 variant="outline"
                 onClick={() => openModal(vedikaJan2026Images, 0)}
@@ -997,6 +998,63 @@ export default function Impact() {
                 View All Workshop Photos
                 <Star className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
               </Button>
+            </div>
+
+            {/* New Ambassador Spotlight - Yuvam Loonker */}
+            <div className="mb-8 sm:mb-12">
+              <div className="text-center mb-6 sm:mb-8">
+                <Badge variant="secondary" className="mb-3 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">NEW AMBASSADOR SPOTLIGHT</Badge>
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground tracking-tight px-4">
+                  <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Yuvam Loonker Joins YLCA as Director of Innovation Programs</span>
+                </h3>
+              </div>
+
+              <Card className="border-2 border-secondary/30 dark:border-secondary/40 bg-gradient-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+                <div className="bg-gradient-to-r from-secondary/10 to-primary/10 px-6 py-4 border-b border-border/50">
+                  <div className="flex items-center gap-3">
+                    <Badge variant="secondary" className="text-xs sm:text-sm">January 2026</Badge>
+                    <h3 className="text-lg sm:text-xl font-bold text-foreground">Yuvam Loonker - Director of Innovation Programs & Regional Lead</h3>
+                  </div>
+                </div>
+
+                <CardContent className="p-6 sm:p-8">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+                    {/* Ambassador Profile */}
+                    <div className="lg:col-span-1">
+                      <div className="relative rounded-xl overflow-hidden border-2 border-border/40 shadow-lg group">
+                        <img
+                          src="/yuvam.png"
+                          alt="Yuvam Loonker - YLCA Director of Innovation Programs"
+                          className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 ring-1 ring-secondary/20 dark:ring-secondary/30 rounded-xl pointer-events-none"></div>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="lg:col-span-2 space-y-4">
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                        YLCA is excited to welcome <span className="font-semibold text-foreground">Yuvam Loonker</span> (JBCN International School, Mumbai) as our newest ambassador and a key leader for 2026. Yuvam will serve a dual role—helping expand YLCA's global mission across Western and Southern India by conducting school workshops, recruiting and mentoring new ambassadors, and strengthening student-led outreach in the region.
+                      </p>
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                        As YLCA's <span className="font-semibold text-foreground">Director of Innovation Programs</span>, Yuvam will lead the launch of YLCA's hands-on innovation track—building hackathons, capstone projects, and portfolio showcases that give students real-world ways to explore cybersecurity and responsible AI.
+                      </p>
+
+                      {/* Key Highlights */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
+                          <div className="text-lg font-bold text-secondary mb-1">West & South India</div>
+                          <p className="text-xs text-muted-foreground">Regional Lead</p>
+                        </div>
+                        <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
+                          <div className="text-lg font-bold text-primary mb-1">Hackathons</div>
+                          <p className="text-xs text-muted-foreground">Innovation Programs</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>

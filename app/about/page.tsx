@@ -69,40 +69,35 @@ const advisors = [
 const ambassadors = [
   {
     name: "Vedika Jain",
+    school: "Sarvodaya Bal Vidyalaya, New Delhi",
     title: "YLCA Ambassador - Government Schools (Delhi)",
     image: "/vedika.jpeg",
-    description: "10th-grade STEM enthusiast and mathematics Olympiad awardee. Founded Youth Voice Journal and Kitaab4U to promote education and creativity.",
-    achievements: [
-      "Mathematics Olympiad awardee",
-      "Founded Youth Voice Journal",
-      "Launched Kitaab4U initiative",
-      "STEM leadership in Delhi"
-    ]
+    intro: "10th-grade STEM enthusiast and mathematics Olympiad awardee. Leading YLCA's first independent government school workshops in Delhi, bringing cybersecurity and AI awareness to underserved communities.",
+    socialLink: null
+  },
+  {
+    name: "Yuvam Loonker",
+    school: "JBCN International School, Mumbai",
+    title: "Director of Innovation Programs",
+    image: "/yuvam.png",
+    intro: "Global lead for YLCA's hackathons and capstone programs, creating hands-on pathways for students with real-world projects and competitions. Regional Outreach Lead for West & South India.",
+    socialLink: null
   },
   {
     name: "Avni Bhardwaj",
+    school: "Challenger School, Sunnyvale, California",
     title: "YLCA Blog Manager & Editorial Coordinator",
     image: "/avni.png",
-    description: "Leads YLCA's student communications through blogs and newsletters—supports ambassadors with outlines, ensures quality and tone, and shares stories.",
-    achievements: [
-      "YLCA Blog Manager",
-      "Editorial Coordinator",
-      "Content Quality Assurance",
-      "Student Communications Lead"
-    ]
+    intro: "Leads YLCA's student communications through blogs and newsletters. Supports ambassadors with outlines, ensures quality and tone, and shares impact stories.",
+    socialLink: null
   },
   {
     name: "Aarush Mangal",
-    title: "Ambassador for young Athletes group",
+    school: "Welham Boys' School, Dehradun",
+    title: "Ambassador for Young Athletes Group",
     image: "/arush.png",
-    description: "State and district-level tennis champion from Welham Boys' School in Dehradun, excelling in multiple sports and playing guitar in the school orchestra for three years. Bringing cybersecurity awareness to the sports community as a YLCA Ambassador.",
-    achievements: [
-      "State and district-level tennis champion",
-      "National tournament selection",
-      "Multi-sport athlete (hockey, football, badminton, volleyball)",
-      "School orchestra guitarist (3 years)",
-      "YLCA Sports Ambassador"
-    ]
+    intro: "State and district-level tennis champion bringing cybersecurity awareness to the sports community. Educating student-athletes on digital safety and protecting them from online scams.",
+    socialLink: null
   },
 ]
 
@@ -803,15 +798,29 @@ export default function About() {
                             className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110"
                           />
                         </div>
-                        <CardTitle className="text-xl font-bold">{ambassador.name}</CardTitle>
+                        <CardTitle className="text-xl font-bold mb-2">{ambassador.name}</CardTitle>
+                        <p className="text-sm text-muted-foreground font-medium">{ambassador.school}</p>
                       </CardHeader>
                       <CardContent className="relative">
-                        <CardDescription className="mb-4 text-sm leading-relaxed">
-                          {ambassador.title}
-                        </CardDescription>
-                        <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-                          {ambassador.description}
+                        <div className="mb-3">
+                          <Badge variant="secondary" className="text-[10px] px-2 py-0.5">
+                            {ambassador.title}
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                          {ambassador.intro}
                         </p>
+                        {ambassador.socialLink && (
+                          <a
+                            href={ambassador.socialLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 text-primary hover:text-secondary transition-colors text-sm font-medium"
+                          >
+                            <Linkedin className="w-4 h-4" />
+                            Connect
+                          </a>
+                        )}
                       </CardContent>
                     </Card>
                   </CarouselItem>

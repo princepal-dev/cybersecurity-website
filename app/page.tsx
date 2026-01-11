@@ -154,9 +154,43 @@ export default function Home() {
                 <span className="font-semibold text-foreground">The Tribune</span> (India) for YLCA's workshops and outreach across 2025.
               </p>
 
-              {/* Featured Images - Amazon Bestseller & Tribune Feature */}
+              {/* Featured Images - Tribune Feature & Amazon Bestseller */}
               <div className="space-y-6 pt-4">
-                {/* Top Row: Amazon Images (Horizontal Layout) */}
+                {/* Top Row: Tribune Newspaper Features (Vertical Layout) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Tribune Newspaper Clipping */}
+                  <div className="group/img relative rounded-xl overflow-hidden border-2 border-border/60 dark:border-border/40 bg-white dark:bg-gray-100 hover:border-secondary/50 dark:hover:border-secondary/60 transition-all duration-300 hover:shadow-xl">
+                    <div className="aspect-[3/4] relative overflow-hidden">
+                      <img
+                        src="/paper.png"
+                        alt="Featured in The Tribune India - YLCA Workshops"
+                        className="w-full h-full object-contain transition-transform duration-500 group-hover/img:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover/img:translate-y-0 transition-transform duration-300">
+                        <p className="text-xs font-semibold">Featured in The Tribune (Print)</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Featured Page from Tribune */}
+                  <div className="group/img relative rounded-xl overflow-hidden border-2 border-border/60 dark:border-border/40 bg-white dark:bg-gray-100 hover:border-secondary/50 dark:hover:border-secondary/60 transition-all duration-300 hover:shadow-xl">
+                    <div className="aspect-[3/4] relative overflow-hidden">
+                      <img
+                        src="/WhatsApp Image 2026-01-09 at 13.20.51.jpeg"
+                        alt="Tribune Page - YLCA Featured Article"
+                        className="w-full h-full object-cover object-center transition-transform duration-500 group-hover/img:scale-105"
+                        style={{ objectPosition: 'center 60%' }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover/img:translate-y-0 transition-transform duration-300">
+                        <p className="text-xs font-semibold">Tribune Article Page</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom Row: Amazon Images (Horizontal Layout) */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Amazon Bestseller */}
                   <a 
@@ -197,40 +231,6 @@ export default function Home() {
                       </div>
                     </div>
                   </a>
-                </div>
-
-                {/* Bottom Row: Tribune Newspaper Features (Vertical Layout) */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Tribune Newspaper Clipping */}
-                  <div className="group/img relative rounded-xl overflow-hidden border-2 border-border/60 dark:border-border/40 bg-white dark:bg-gray-100 hover:border-secondary/50 dark:hover:border-secondary/60 transition-all duration-300 hover:shadow-xl">
-                    <div className="aspect-[3/4] relative overflow-hidden">
-                      <img
-                        src="/paper.png"
-                        alt="Featured in The Tribune India - YLCA Workshops"
-                        className="w-full h-full object-contain transition-transform duration-500 group-hover/img:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300"></div>
-                      <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover/img:translate-y-0 transition-transform duration-300">
-                        <p className="text-xs font-semibold">Featured in The Tribune (Print)</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Featured Page from Tribune */}
-                  <div className="group/img relative rounded-xl overflow-hidden border-2 border-border/60 dark:border-border/40 bg-white dark:bg-gray-100 hover:border-secondary/50 dark:hover:border-secondary/60 transition-all duration-300 hover:shadow-xl">
-                    <div className="aspect-[3/4] relative overflow-hidden">
-                      <img
-                        src="/WhatsApp Image 2026-01-09 at 13.20.51.jpeg"
-                        alt="Tribune Page - YLCA Featured Article"
-                        className="w-full h-full object-cover object-center transition-transform duration-500 group-hover/img:scale-105"
-                        style={{ objectPosition: 'center 60%' }}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300"></div>
-                      <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover/img:translate-y-0 transition-transform duration-300">
-                        <p className="text-xs font-semibold">Tribune Article Page</p>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
 
