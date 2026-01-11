@@ -294,7 +294,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
               <div className="absolute top-0 right-0 w-40 h-40 bg-primary/8 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
               <CardContent className="relative pt-6 sm:pt-8 pb-6 sm:pb-8 px-4">
-                <div className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-br from-primary via-primary to-primary/80 bg-clip-text text-transparent mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-500 ease-out">2000+</div>
+                <div className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-br from-primary via-primary to-primary/80 bg-clip-text text-transparent mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-500 ease-out">2500+</div>
                 <CardDescription className="font-semibold text-xs sm:text-sm uppercase tracking-wider">Students Reached</CardDescription>
               </CardContent>
             </Card>
@@ -302,7 +302,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-br from-secondary/8 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
               <div className="absolute top-0 right-0 w-40 h-40 bg-secondary/8 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
               <CardContent className="relative pt-6 sm:pt-8 pb-6 sm:pb-8 px-4">
-                <div className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-br from-secondary via-secondary to-secondary/80 bg-clip-text text-transparent mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-500 ease-out">20+</div>
+                <div className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-br from-secondary via-secondary to-secondary/80 bg-clip-text text-transparent mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-500 ease-out">25+</div>
                 <CardDescription className="font-semibold text-xs sm:text-sm uppercase tracking-wider">Workshops Delivered</CardDescription>
               </CardContent>
             </Card>
@@ -310,8 +310,8 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
               <div className="absolute top-0 right-0 w-40 h-40 bg-primary/8 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
               <CardContent className="relative pt-6 sm:pt-8 pb-6 sm:pb-8 px-4">
-                <div className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-br from-primary via-primary to-primary/80 bg-clip-text text-transparent mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-500 ease-out">1</div>
-                <CardDescription className="font-semibold text-xs sm:text-sm uppercase tracking-wider">Corporate Partnership</CardDescription>
+                <div className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-br from-primary via-primary to-primary/80 bg-clip-text text-transparent mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-500 ease-out">3</div>
+                <CardDescription className="font-semibold text-xs sm:text-sm uppercase tracking-wider">Corporate Partnerships</CardDescription>
               </CardContent>
             </Card>
             <Card className="group relative overflow-hidden text-center border border-border/50 dark:border-border/30 bg-card/90 backdrop-blur-md transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-secondary/30 dark:hover:shadow-secondary/40 hover:-translate-y-3 hover:border-secondary/60 dark:hover:border-secondary/70">
