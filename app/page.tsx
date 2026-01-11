@@ -190,24 +190,24 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Bottom Row: Amazon Images (Horizontal Layout) */}
+                {/* Bottom Row: Tribune Online & Amazon Book (Horizontal Layout) */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Amazon Bestseller */}
+                  {/* Tribune Online Article */}
                   <a 
-                    href="https://www.amazon.com/dp/B0FMPF2WN5" 
+                    href="https://share.google/AuVhoq0Y0yYr4BtYH" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="block group/img relative rounded-xl overflow-hidden border-2 border-border/60 dark:border-border/40 bg-card/80 hover:border-primary/50 dark:hover:border-primary/60 transition-all duration-300 hover:shadow-xl cursor-pointer"
+                    className="block group/img relative rounded-xl overflow-hidden border-2 border-border/60 dark:border-border/40 bg-white dark:bg-gray-100 hover:border-secondary/50 dark:hover:border-secondary/60 transition-all duration-300 hover:shadow-xl cursor-pointer"
                   >
                     <div className="aspect-[4/3] relative overflow-hidden">
                       <img
-                        src="/amazon.jpeg"
-                        alt="Cybersecurity for Teens - Amazon Best Seller"
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105"
+                        src="/tribune.png"
+                        alt="Featured in The Tribune Online - YLCA Coverage"
+                        className="w-full h-full object-contain transition-transform duration-500 group-hover/img:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300"></div>
                       <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover/img:translate-y-0 transition-transform duration-300">
-                        <p className="text-xs font-semibold">Amazon Best Seller #1 - Click to View</p>
+                        <p className="text-xs font-semibold">Tribune Online Article - Click to View</p>
                       </div>
                     </div>
                   </a>
