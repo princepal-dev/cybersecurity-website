@@ -1056,6 +1056,87 @@ export default function Impact() {
                 </CardContent>
               </Card>
             </div>
+
+            {/* DPS Karnal Cybersecurity Club Launch */}
+            <div className="mt-12 sm:mt-16">
+              <Card className="border-2 border-primary/30 dark:border-primary/40 bg-gradient-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+                <div className="bg-gradient-to-r from-primary/10 to-secondary/10 px-6 py-4 border-b border-border/50">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center gap-3">
+                      <Badge variant="default" className="text-xs sm:text-sm">January 2026</Badge>
+                      <h3 className="text-lg sm:text-xl font-bold text-foreground">A New Chapter at DPS Karnal: The Cybersecurity Club Goes Live</h3>
+                    </div>
+                    <p className="text-sm text-muted-foreground italic">When screen time goes up, DPS Karnal YLCA ambassadors step up.</p>
+                  </div>
+                </div>
+
+                <CardContent className="p-6 sm:p-8">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+                    {/* Workshop Image */}
+                    <div className="lg:col-span-1">
+                      <div className="relative rounded-xl overflow-hidden border-2 border-border/40 shadow-lg group">
+                        <img
+                          src="/20th Jan/WhatsApp Image 2026-01-20 at 20.36.29.jpeg"
+                          alt="DPS Karnal Cybersecurity Club Launch - YLCA Ambassadors"
+                          className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                          <p className="text-xs font-semibold">DPS Karnal Online Workshop Session</p>
+                        </div>
+                      </div>
+                      
+                      {/* Ambassador Team */}
+                      <div className="mt-4 p-4 bg-secondary/5 dark:bg-secondary/10 rounded-lg border border-border/30">
+                        <h4 className="text-sm font-bold text-foreground mb-2 flex items-center gap-2">
+                          <Users className="w-4 h-4 text-secondary" />
+                          Leading Ambassadors
+                        </h4>
+                        <p className="text-xs text-muted-foreground leading-relaxed">
+                          Krishiv Arora, Diti Chaudhary, Aarna Bansal, Garvit Handa, and Kanishka Walia
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="lg:col-span-2 space-y-4">
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                        During the winter break, when students were at home spending extra time on phones, laptops and other devices, YLCA ambassadors at <span className="font-semibold text-foreground">DPS Karnal</span> came into action and turned that screen time into a powerful learning opportunity by launching their first <span className="font-semibold text-foreground">Cyber Safety Workshop</span>.
+                      </p>
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                        In just a time period of three days, the team conducted <span className="font-semibold text-foreground">6 online workshops</span> for grade 7–8 students. With 25–30 students per session, they reached a total of <span className="font-semibold text-foreground">150 students</span>, a strong start, especially for a student-led initiative. Each workshop was energetic and interactive: students asked thoughtful questions, cleared doubts confidently, and stayed engaged throughout the session.
+                      </p>
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                        The workshops created real moments of reflection on everyday digital habits—signifying stronger passwords, scam awareness, safer browsing and responsible social media behavior.
+                      </p>
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                        This milestone also marked the formal kick-off of the <span className="font-semibold text-foreground">DPS Karnal Cybersecurity Club</span>, opening a new chapter powered by student leadership. The ambassadors are excited to build this foundation with more hands-on sessions, activities and awareness events in the coming years, expanding impact both within the school and the local community.
+                      </p>
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed italic">
+                        It's a meaningful first step towards YLCA's global mission: a student-led ambassador network driving multifold outreach and building a culture of digital safety.
+                      </p>
+
+                      {/* Key Impact Stats */}
+                      <div className="grid grid-cols-3 gap-3 pt-4">
+                        <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
+                          <div className="text-xl sm:text-2xl font-bold text-primary mb-1">150</div>
+                          <p className="text-xs text-muted-foreground">Students Reached</p>
+                        </div>
+                        <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
+                          <div className="text-xl sm:text-2xl font-bold text-secondary mb-1">6</div>
+                          <p className="text-xs text-muted-foreground">Workshops</p>
+                        </div>
+                        <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
+                          <div className="text-xl sm:text-2xl font-bold text-primary mb-1">3 Days</div>
+                          <p className="text-xs text-muted-foreground">Winter Break</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </section>
 

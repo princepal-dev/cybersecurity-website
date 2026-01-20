@@ -99,6 +99,94 @@ const ambassadors = [
     intro: "State and district-level tennis champion bringing cybersecurity awareness to the sports community. Educating student-athletes on digital safety and protecting them from online scams.",
     socialLink: null
   },
+  {
+    name: "Atharv Uppal",
+    school: "Auckland House School For Boys, Shimla, Himachal Pradesh",
+    title: "YLCA Ambassador",
+    image: "/ambassadors/Auckland House School For Boys_ ATHARV UPPAL.jpeg",
+    intro: "9th-grade student passionate about creating a safe and secure environment in terms of cybercrime and cybersecurity. Aspires to learn and implement techniques in today's world of advancement and technology.",
+    socialLink: null
+  },
+  {
+    name: "Aarav Sharma",
+    school: "Auckland House School For Boys, Shimla",
+    title: "YLCA Ambassador",
+    image: "/ambassadors/AHSB_AARAV SHARMA.jpeg",
+    intro: "9th-grade student from Shimla with a strong interest in cybersecurity and AI safety. Motivated to spread awareness about cyber threats and help students use the internet safely and responsibly.",
+    socialLink: null
+  },
+  {
+    name: "Aaidhan Gowher",
+    school: "Auckland House School For Boys, Shimla, Himachal Pradesh",
+    title: "YLCA Ambassador",
+    image: "/ambassadors/Aaidhan Gowher.jpeg",
+    intro: "Class 10 student with a focused interest in artificial intelligence and ethical innovation. Leading initiatives to build a safer, more informed, and future-ready digital community for students.",
+    socialLink: "https://www.linkedin.com/in/aaidhan-gowher-3468563a6/"
+  },
+  {
+    name: "Shivankit Kanwar",
+    school: "Auckland House School For Boys, Shimla, Himachal Pradesh",
+    title: "YLCA Ambassador",
+    image: "/ambassadors/ShivankitKanwar_ProfilePhoto.jpg.jpg",
+    intro: "12th-grade student interested in how technology shapes our world. Exploring cybersecurity and AI to understand digital systems, online safety, and emerging tech trends through collaboration.",
+    socialLink: null
+  },
+  {
+    name: "Aainesh Bhandari",
+    school: "Delhi Public School, Dwarka Expressway, Gurugram, Haryana",
+    title: "YLCA Ambassador",
+    image: "/ambassadors/DPSdwarkaexp_AaineshBhandari.jpg",
+    intro: "11th-grade student with a keen interest in AI and cyber security. Striving to bring about awareness to create a safer, kinder, and more forgiving online space for everyone.",
+    socialLink: "https://www.linkedin.com/in/aainesh-bhandari-5727b93a6"
+  },
+  {
+    name: "Diti Chaudhary",
+    school: "Delhi Public School Karnal, Haryana",
+    title: "YLCA Ambassador",
+    image: "/ambassadors/Dpsk_diti_.jpg",
+    intro: "10th-grade AI enthusiast with a strong interest in learning and leadership. Committed to empowering students with digital awareness and creating a safer, more responsible online space.",
+    socialLink: "https://www.linkedin.com/in/diti-chaudhary-630a443a1"
+  },
+  {
+    name: "Kanishka Walia",
+    school: "Delhi Public School Karnal, Haryana",
+    title: "YLCA Ambassador",
+    image: "/ambassadors/Dpsk_Kanishka.jpg",
+    intro: "10th-grade curious learner who loves learning and leading. Striving to promote smart and ethical ways of using technology and helping others stay safe on online platforms.",
+    socialLink: null
+  },
+  {
+    name: "Himadri Das",
+    school: "JBCN International School Oshiwara, Mumbai",
+    title: "YLCA Ambassador",
+    image: "/ambassadors/JBCN_HimadriDas.jpg",
+    intro: "11th-grade tech enthusiast and AI/embedded microcontroller hobbyist. Leading school's Tech club and aspiring to create an inclusive environment for aspiring technologists.",
+    socialLink: null
+  },
+  {
+    name: "Panache Kataria",
+    school: "JBCN International School Oshiwara, Mumbai, Maharashtra",
+    title: "YLCA Ambassador",
+    image: "/ambassadors/JBCN_PanacheKataria.png",
+    intro: "11th-grade student innovator working at the intersection of AI and real-world problem solving. Designing initiatives that use technology to improve safety, strengthen awareness, and drive social impact.",
+    socialLink: "https://www.linkedin.com/in/panache-kataria-0a39872a3"
+  },
+  {
+    name: "Rudra Ramaswamy",
+    school: "JBCN International School Oshiwara, Mumbai, Maharashtra",
+    title: "YLCA Ambassador",
+    image: "/ambassadors/YLCA_profile_pic.jpeg",
+    intro: "11th-grade DP student who enjoys coding and problem-solving. Passionate about spreading awareness on cybersecurity and AI to protect vulnerable internet users.",
+    socialLink: null
+  },
+  {
+    name: "Agrima Tripathi",
+    school: "Kothari International School, Noida",
+    title: "YLCA Ambassador",
+    image: "/ambassadors/WhatsApp Image 2026-01-18 at 20.03.16.jpeg",
+    intro: "Enthusiastic 9th-grade innovator spreading awareness about the dangers and ethics of technology. Helping fellow students use technology ethically and protect themselves from cybercrime.",
+    socialLink: null
+  },
 ]
 
 const leadershipRoles = [
