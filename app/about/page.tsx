@@ -175,7 +175,7 @@ const ambassadors = [
     name: "Rudra Ramaswamy",
     school: "JBCN International School Oshiwara, Mumbai, Maharashtra",
     title: "YLCA Ambassador",
-    image: "/ambassadors/YLCA_profile_pic.jpeg",
+    image: "/ambassadors/Rudra Ramaswamy.jpeg",
     intro: "11th-grade DP student who enjoys coding and problem-solving. Passionate about spreading awareness on cybersecurity and AI to protect vulnerable internet users.",
     socialLink: null
   },
@@ -183,7 +183,7 @@ const ambassadors = [
     name: "Agrima Tripathi",
     school: "Kothari International School, Noida",
     title: "YLCA Ambassador",
-    image: "/ambassadors/WhatsApp Image 2026-01-18 at 20.03.16.jpeg",
+    image: "/ambassadors/AgrimaTripathi.jpeg",
     intro: "Enthusiastic 9th-grade innovator spreading awareness about the dangers and ethics of technology. Helping fellow students use technology ethically and protect themselves from cybercrime.",
     socialLink: null
   },
@@ -892,7 +892,7 @@ export default function About() {
                       <CardContent className="relative">
                         <div className="mb-3">
                           <Badge variant="secondary" className="text-[10px] px-2 py-0.5">
-                            {ambassador.title}
+                          {ambassador.title}
                           </Badge>
                         </div>
                         <p className="text-sm text-muted-foreground leading-relaxed mb-4">

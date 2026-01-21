@@ -61,6 +61,7 @@ export default function BlogDetailPage() {
   const [pdfError, setPdfError] = useState<string | null>(null)
   const [pdfKey, setPdfKey] = useState(0) // Key to force iframe reload
   const [pageDirection, setPageDirection] = useState<'next' | 'prev' | null>(null)
+  const [totalPages, setTotalPages] = useState<number | null>(null)
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -112,6 +113,50 @@ export default function BlogDetailPage() {
 
     fetchBlog()
   }, [id])
+
+  // Load PDF and get total page count
+  useEffect(() => {
+    const loadPdfPageCount = async () => {
+      if (!blog?.pdfPath || typeof window === 'undefined') return
+
+      try {
+        // Dynamically load PDF.js from CDN
+        if (!(window as any).pdfjsLib) {
+          const script = document.createElement('script')
+          script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js'
+          document.head.appendChild(script)
+          
+          await new Promise((resolve, reject) => {
+            script.onload = resolve
+            script.onerror = reject
+          })
+        }
+
+        const pdfjsLib = (window as any).pdfjsLib
+        if (!pdfjsLib) {
+          console.error('PDF.js library not loaded')
+          return
+        }
+
+        // Set worker path
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'
+
+        const pdfPath = blog.pdfPath.startsWith('/') ? blog.pdfPath : `/${blog.pdfPath}`
+        const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'
+        const pdfUrl = `${apiBaseUrl}${pdfPath}`
+
+        const loadingTask = pdfjsLib.getDocument(pdfUrl)
+        const pdf = await loadingTask.promise
+        setTotalPages(pdf.numPages)
+      } catch (error) {
+        console.error('Error loading PDF page count:', error)
+        // If we can't get the page count, set it to null (unlimited scrolling)
+        setTotalPages(null)
+      }
+    }
+
+    loadPdfPageCount()
+  }, [blog?.pdfPath])
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -222,7 +267,8 @@ export default function BlogDetailPage() {
   }
 
   const goToNextPage = () => {
-    if (!isAnimating) {
+    // Check if we've reached the last page
+    if (!isAnimating && (totalPages === null || currentPage < totalPages)) {
       setIsAnimating(true)
       setPageDirection('next')
       const newPage = currentPage + 1
@@ -236,7 +282,7 @@ export default function BlogDetailPage() {
   }
 
   const goToPage = (page: number) => {
-    if (page >= 1 && !isAnimating) {
+    if (page >= 1 && !isAnimating && (totalPages === null || page <= totalPages)) {
       setIsAnimating(true)
       setPageDirection(page > currentPage ? 'next' : 'prev')
       setCurrentPage(page)
@@ -424,7 +470,7 @@ export default function BlogDetailPage() {
             {/* Next Page Button */}
             <button
               onClick={goToNextPage}
-              disabled={isAnimating || !pdfLoaded}
+              disabled={isAnimating || !pdfLoaded || (totalPages !== null && currentPage >= totalPages)}
               className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-auto p-3 bg-black/50 hover:bg-black/70 text-white rounded-full transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed shadow-lg hover:scale-110"
             >
               <ChevronRight className="w-6 h-6" />
@@ -449,6 +495,7 @@ export default function BlogDetailPage() {
             <input
               type="number"
               min={1}
+              max={totalPages || undefined}
               value={currentPage}
               onChange={(e) => {
                 const page = parseInt(e.target.value)
@@ -460,13 +507,16 @@ export default function BlogDetailPage() {
               placeholder="Page"
               disabled={!pdfLoaded}
             />
+            {totalPages !== null && (
+              <span className="text-sm text-muted-foreground">of {totalPages}</span>
+            )}
           </div>
 
           <Button
             variant="outline"
             onClick={goToNextPage}
             className="flex items-center gap-2"
-            disabled={isAnimating || !pdfLoaded}
+            disabled={isAnimating || !pdfLoaded || (totalPages !== null && currentPage >= totalPages)}
           >
             Next
             <ChevronRight className="w-4 h-4" />

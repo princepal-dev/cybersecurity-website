@@ -967,7 +967,7 @@ export default function Impact() {
                               alt={`Ambassador Vedika Workshop Jan 2026 ${index + 1}`}
                               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                               loading="lazy"
-                            />
+                        />
                           </div>
                         ))}
                       </div>
