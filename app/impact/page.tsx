@@ -11,6 +11,8 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { Users, GraduationCap, Globe, Star, ChevronLeft, ChevronRight, X, Rocket } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
+import { AnimatedNumber } from "@/components/animated-number"
+import { ImpactMap } from "@/components/impact-map"
 
 const storiesImages = [
   "/stories/Copy of Add-Nov26-LudhianaSchool1.png",
@@ -377,7 +379,7 @@ export default function Impact() {
               </p>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+            <div id="impact-page-stats" className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
               <Card className="group relative overflow-hidden text-center border-2 border-border/60 dark:border-border/40 bg-gradient-to-br from-card via-card to-card/95 backdrop-blur-sm transition-all duration-300 hover:shadow-2xl hover:shadow-primary/25 dark:hover:shadow-primary/30 hover:-translate-y-2 hover:border-primary/50 dark:hover:border-primary/60 hover:scale-[1.02]">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -387,7 +389,9 @@ export default function Impact() {
                       <Users className="w-8 h-8 text-primary" />
                     </div>
                   </div>
-                  <div className="text-4xl md:text-5xl font-bold bg-gradient-to-br from-primary via-primary to-primary/80 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300">2500+</div>
+                  <div className="text-4xl md:text-5xl font-bold bg-gradient-to-br from-primary via-primary to-primary/80 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300 tabular-nums min-h-[1.2em]">
+                    <AnimatedNumber value={2500} suffix="+" observeSectionId="impact-page-stats" />
+                  </div>
                   <CardDescription className="font-semibold text-sm">Students Reached</CardDescription>
                 </CardContent>
               </Card>
@@ -400,7 +404,9 @@ export default function Impact() {
                       <GraduationCap className="w-8 h-8 text-secondary" />
                     </div>
                   </div>
-                  <div className="text-4xl md:text-5xl font-bold bg-gradient-to-br from-secondary via-secondary to-secondary/80 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300">25+</div>
+                  <div className="text-4xl md:text-5xl font-bold bg-gradient-to-br from-secondary via-secondary to-secondary/80 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300 tabular-nums min-h-[1.2em]">
+                    <AnimatedNumber value={25} suffix="+" observeSectionId="impact-page-stats" />
+                  </div>
                   <CardDescription className="font-semibold text-sm">Workshops Delivered</CardDescription>
                 </CardContent>
               </Card>
@@ -413,13 +419,18 @@ export default function Impact() {
                       <Globe className="w-8 h-8 text-primary" />
                     </div>
                   </div>
-                  <div className="text-4xl md:text-5xl font-bold bg-gradient-to-br from-primary via-primary to-primary/80 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300">3</div>
+                  <div className="text-4xl md:text-5xl font-bold bg-gradient-to-br from-primary via-primary to-primary/80 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300 tabular-nums min-h-[1.2em]">
+                    <AnimatedNumber value={3} observeSectionId="impact-page-stats" />
+                  </div>
                   <CardDescription className="font-semibold text-sm">Corporate Partners</CardDescription>
                 </CardContent>
               </Card>
             </div>
           </div>
         </section>
+
+        {/* Event Locations Map */}
+        <ImpactMap />
 
         {/* Success Stories & Testimonials */}
         <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background">
