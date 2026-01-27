@@ -138,6 +138,13 @@ const dpsImages = [
   "/dps/WhatsApp Image 2025-12-31 at 13.29.48 (3).jpeg"
 ]
 
+const republicDayImages = [
+  "/26th jan/WhatsApp Image 2026-01-27 at 09.32.45.jpeg",
+  "/26th jan/WhatsApp Image 2026-01-27 at 09.32.46.jpeg",
+  "/26th jan/WhatsApp Image 2026-01-27 at 09.32.47 (1).jpeg",
+  "/26th jan/WhatsApp Image 2026-01-27 at 09.32.47.jpeg",
+]
+
 function StoriesCarousel({ onOpenModal }: { onOpenModal: (images: string[], index: number) => void }) {
   // Show only first 12 images for cleaner carousel
   const featuredImages = storiesImages.slice(0, 12);
@@ -1148,6 +1155,117 @@ export default function Impact() {
                 </CardContent>
               </Card>
             </div>
+          </div>
+        </section>
+
+        {/* Republic Day Cyber Safety Workshop */}
+        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden">
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute top-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+          </div>
+
+          <div className="max-w-6xl mx-auto relative z-10">
+            <div className="text-center mb-8 sm:mb-12">
+              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm bg-gradient-to-r from-secondary to-primary">JAN 2026</Badge>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
+                Republic Day <span className="bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">Cyber Safety Workshop</span>
+              </h2>
+              <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
+                Community cyber awareness session led by Ambassador Krishiv Arora (DPS Karnal)
+              </p>
+            </div>
+
+            <Card className="border-2 border-secondary/30 dark:border-secondary/40 bg-gradient-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+              <div className="bg-gradient-to-r from-secondary/10 to-primary/10 px-6 py-4 border-b border-border/50">
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-3">
+                    <Badge variant="default" className="text-xs sm:text-sm">January 26, 2026</Badge>
+                    <h3 className="text-lg sm:text-xl font-bold text-foreground">Republic Day Cyber Safety Workshop Led by YLCA Ambassador</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground italic">50+ participants · Adults + children</p>
+                </div>
+              </div>
+
+              <CardContent className="p-6 sm:p-8">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+                  {/* Workshop Image Grid */}
+                  <div className="lg:col-span-1 space-y-4">
+                    <div className="relative rounded-xl overflow-hidden border-2 border-border/40 shadow-lg group">
+                      <img
+                        src={republicDayImages[0]}
+                        alt="Republic Day Cyber Safety Workshop - YLCA Ambassador Krishiv Arora"
+                        className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer"
+                        loading="lazy"
+                        onClick={() => openModal(republicDayImages, 0)}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                        <p className="text-xs font-semibold">Republic Day Cyber Safety Workshop</p>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      {republicDayImages.slice(1).map((image, index) => (
+                        <div
+                          key={image}
+                          className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
+                          onClick={() => openModal(republicDayImages, index + 1)}
+                          role="button"
+                          tabIndex={0}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault()
+                              openModal(republicDayImages, index + 1)
+                            }
+                          }}
+                          aria-label={`View Republic Day workshop image ${index + 2} in gallery`}
+                        >
+                          <img
+                            src={image}
+                            alt={`Republic Day Cyber Safety Workshop ${index + 2}`}
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            loading="lazy"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="lg:col-span-2 space-y-4">
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                      On <span className="font-semibold text-foreground">26 January 2026 (Republic Day)</span>, YLCA ambassadors turned a national celebration into a meaningful opportunity to strengthen community cyber awareness. Our Cybersecurity Ambassador{" "}
+                      <span className="font-semibold text-foreground">Krishiv Arora (DPS Karnal)</span> led an engaging workshop for both adults and children, with{" "}
+                      <span className="font-semibold text-foreground">50+ participants</span> in attendance.
+                    </p>
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                      The session focused on practical, everyday online safety and responsible digital behavior—delivered in a simple, relatable format that encouraged active participation throughout.
+                    </p>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4">
+                      <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
+                        <div className="text-lg sm:text-xl font-bold text-secondary mb-1">Community-First</div>
+                        <p className="text-xs text-muted-foreground">Open to families, not just students</p>
+                      </div>
+                      <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
+                        <div className="text-lg sm:text-xl font-bold text-primary mb-1">Practical Learning</div>
+                        <p className="text-xs text-muted-foreground">Everyday cyber safety habits</p>
+                      </div>
+                      <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
+                        <div className="text-lg sm:text-xl font-bold text-secondary mb-1">High Engagement</div>
+                        <p className="text-xs text-muted-foreground">Interactive Q&A and discussion</p>
+                      </div>
+                    </div>
+
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed italic">
+                      Participants gained confidence to identify common cyber risks, avoid online traps, and adopt safer digital habits—turning awareness into action. YLCA is proud of{" "}
+                      <span className="font-semibold text-foreground">Krishiv Arora</span> and our DPS Karnal ambassadors for consistently stepping up to make communities more cyber-aware.
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </section>
 
