@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
-import { Eye, GraduationCap, Rocket, Shield, Linkedin } from "lucide-react"
+import { Eye, GraduationCap, Rocket, Shield, Linkedin, Link2 } from "lucide-react"
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -73,6 +73,14 @@ const ambassadors = [
     title: "YLCA Ambassador - Government Schools (Delhi)",
     image: "/vedika.jpeg",
     intro: "10th-grade STEM enthusiast and mathematics Olympiad awardee. Leading YLCA's first independent government school workshops in Delhi, bringing cybersecurity and AI awareness to underserved communities.",
+    socialLink: null
+  },
+  {
+    name: "Henry Whitehead",
+    school: "Saint Francis High School, Mountain View, California, USA",
+    title: "YLCA Ambassador",
+    image: "/ambassadors/henry.jpeg",
+    intro: "11th-grade student from the Bay Area passionate about cybersecurity and digital safety. Helping spread awareness and empower students to stay safe online.",
     socialLink: null
   },
   {
@@ -852,14 +860,38 @@ export default function About() {
           </div>
         </section>
 
-        {/* YLCA Ambassadors */}
-        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden">
+        {/* YLCA Ambassadors - shareable link: /about#ambassadors */}
+        <section id="ambassadors" className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden scroll-mt-24">
           <div className="absolute top-0 right-0 w-64 h-64 sm:w-96 sm:h-96 bg-secondary/5 rounded-full blur-3xl"></div>
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="text-center mb-8 sm:mb-12">
               <Badge variant="secondary" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">YLCA AMBASSADORS</Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 px-4">
-                Meet Our <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Ambassadors</span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 px-4 flex flex-wrap items-center justify-center gap-2">
+                <span>
+                  Meet Our <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Ambassadors</span>
+                </span>
+                <a
+                  href="#ambassadors"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    const url = typeof window !== "undefined" ? `${window.location.origin}/about#ambassadors` : "/about#ambassadors"
+                    navigator.clipboard?.writeText(url).then(() => {
+                      const btn = e.currentTarget
+                      const label = btn.getAttribute("aria-label")
+                      btn.setAttribute("aria-label", "Link copied!")
+                      btn.classList.add("ring-2", "ring-primary")
+                      setTimeout(() => {
+                        btn.setAttribute("aria-label", label ?? "Copy link")
+                        btn.classList.remove("ring-2", "ring-primary")
+                      }, 1500)
+                    })
+                  }}
+                  className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0"
+                  aria-label="Copy link to this section"
+                  title="Copy link to share"
+                >
+                  <Link2 className="w-5 h-5" />
+                </a>
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
                 Inspiring youth leaders bringing cybersecurity and AI education to communities worldwide.

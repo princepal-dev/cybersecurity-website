@@ -56,6 +56,11 @@ const storiesImages = [
   "/new1/WhatsApp Image 2025-12-15 at 10.03.36 (8).jpeg",
   "/new1/WhatsApp Image 2025-12-15 at 10.03.36.jpeg",
   "/new1/WhatsApp Image 2025-12-15 at 10.03.37.jpeg",
+  "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.00.jpeg",
+  "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.00 (1).jpeg",
+  "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.01.jpeg",
+  "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.01 (1).jpeg",
+  "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.06.jpeg",
 ]
 
 const decemberImages = [
@@ -143,6 +148,14 @@ const republicDayImages = [
   "/26th jan/WhatsApp Image 2026-01-27 at 09.32.46.jpeg",
   "/26th jan/WhatsApp Image 2026-01-27 at 09.32.47 (1).jpeg",
   "/26th jan/WhatsApp Image 2026-01-27 at 09.32.47.jpeg",
+]
+
+const westIndiaJan30Images = [
+  "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.00.jpeg",
+  "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.00 (1).jpeg",
+  "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.01.jpeg",
+  "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.01 (1).jpeg",
+  "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.06.jpeg",
 ]
 
 function StoriesCarousel({ onOpenModal }: { onOpenModal: (images: string[], index: number) => void }) {
@@ -1266,6 +1279,160 @@ export default function Impact() {
                 </div>
               </CardContent>
             </Card>
+          </div>
+        </section>
+
+        {/* YLCA West India Chapter Kickoff – JBCN Mumbai */}
+        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden">
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute top-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+          </div>
+
+          <div className="max-w-6xl mx-auto relative z-10">
+            <div className="text-center mb-8 sm:mb-12">
+              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">JAN 2026</Badge>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
+                YLCA West India Chapter <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Kicks Off</span>
+              </h2>
+              <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
+                Regional Lead Yuvam Loonker and ambassadors kick off the first workshop at JBCN Mumbai
+              </p>
+            </div>
+
+            <Card className="border-2 border-primary/30 dark:border-primary/40 bg-gradient-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+              <div className="bg-gradient-to-r from-primary/10 to-secondary/10 px-6 py-4 border-b border-border/50">
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-3">
+                    <Badge variant="default" className="text-xs sm:text-sm">January 30, 2026</Badge>
+                    <h3 className="text-lg sm:text-xl font-bold text-foreground">YLCA West India Chapter Kicks Off: First Workshop at JBCN Mumbai</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground italic">50+ 8th grade students · Yuvam Loonker, Panache Kataria, Rudra Ramaswamy, Himadri Das</p>
+                </div>
+              </div>
+
+              <CardContent className="p-6 sm:p-8">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+                  {/* Workshop images + video */}
+                  <div className="lg:col-span-1 space-y-4">
+                    <div className="relative rounded-xl overflow-hidden border-2 border-border/40 shadow-lg group">
+                      <img
+                        src={westIndiaJan30Images[0]}
+                        alt="YLCA West India Chapter workshop at JBCN Mumbai"
+                        className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer"
+                        loading="lazy"
+                        onClick={() => openModal(westIndiaJan30Images, 0)}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                        <p className="text-xs font-semibold">West India Chapter – JBCN Mumbai</p>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      {westIndiaJan30Images.slice(1, 5).map((image, index) => (
+                        <div
+                          key={image}
+                          className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
+                          onClick={() => openModal(westIndiaJan30Images, index + 1)}
+                          role="button"
+                          tabIndex={0}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault()
+                              openModal(westIndiaJan30Images, index + 1)
+                            }
+                          }}
+                          aria-label={`View West India JBCN workshop image ${index + 2}`}
+                        >
+                          <img
+                            src={image}
+                            alt={`West India Chapter JBCN Mumbai ${index + 2}`}
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            loading="lazy"
+                          />
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="rounded-xl overflow-hidden border border-border/30 bg-muted/20">
+                      <p className="text-xs font-semibold text-foreground px-3 py-2 border-b border-border/50">Workshop clip</p>
+                      <video
+                        src="/30th Jan/WhatsApp Video 2026-01-27 at 15.22.47.mp4"
+                        controls
+                        className="w-full aspect-video object-contain"
+                        playsInline
+                        preload="metadata"
+                      >
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
+                  </div>
+
+                  {/* Article content */}
+                  <div className="lg:col-span-2 space-y-4">
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                      YLCA's West India Chapter officially kicked off with an energetic, student-led cybersecurity workshop at JBCN School, Mumbai—led by Regional Lead{" "}
+                      <span className="font-semibold text-foreground">Yuvam Loonker</span> along with YLCA ambassadors{" "}
+                      <span className="font-semibold text-foreground">Panache Kataria</span>,{" "}
+                      <span className="font-semibold text-foreground">Rudra Ramaswamy</span>, and{" "}
+                      <span className="font-semibold text-foreground">Himadri Das</span>. With 50+ 8th grade students in attendance, the session was designed to be hands-on, fast-paced, and practical—so students didn't just "hear about cybersecurity," they actually practiced it.
+                    </p>
+
+                    <h4 className="text-base font-bold text-foreground mt-6">What students learned (and why it mattered)</h4>
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                      The workshop focused on the kinds of threats teens face most often—suspicious links, fake messages, social media scams, and account takeovers. The ambassadors walked students through how cyberattacks work in real life, and how small habits (like recognizing red flags early) can prevent bigger issues.
+                    </p>
+
+                    <h4 className="text-base font-bold text-foreground mt-4">Hands-on activities that made it stick</h4>
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                      This wasn't a lecture-style session. Students were actively involved throughout:
+                    </p>
+                    <ul className="list-disc list-inside text-sm sm:text-base text-muted-foreground space-y-1">
+                      <li><strong className="text-foreground">Phishing Detection Challenge:</strong> students identified phishing emails by spotting common red flags (urgent language, suspicious links, fake sender details).</li>
+                      <li><strong className="text-foreground">"Create-a-Phishing Email" Activity (Awareness-Only):</strong> students learned how scams are written so they can recognize and avoid them—not to misuse them.</li>
+                      <li><strong className="text-foreground">Mock "Virus File" Demo (Safe Simulation):</strong> a controlled activity that helped students understand what malware is and how it can spread.</li>
+                      <li><strong className="text-foreground">Interactive Quizzes (Kahoot/Wayground):</strong> rapid-fire questions kept everyone engaged and reinforced key ideas in a fun way.</li>
+                    </ul>
+                    <p className="text-sm text-muted-foreground">
+                      Quiz link used in the session:{" "}
+                      <a href="https://wayground.com/admin/quiz/6975c16612bcf9d454f39b21" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">wayground.com/admin/quiz/6975c16612bcf9d454f39b21</a>
+                    </p>
+
+                    <h4 className="text-base font-bold text-foreground mt-4">Real stories, real learning</h4>
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                      One of the most powerful parts of the workshop was the discussion: students shared real experiences of suspicious messages, hacked accounts, and online scams they've seen—then learned what they could do differently next time. That mix of real stories + guided practice is what made the session memorable.
+                    </p>
+
+                    <div className="bg-muted/30 dark:bg-muted/20 rounded-xl p-4 sm:p-5 border border-border/50 mt-6">
+                      <h4 className="text-sm font-bold text-foreground mb-3 uppercase tracking-wide">Impact Snapshot</h4>
+                      <ul className="text-sm text-muted-foreground space-y-1">
+                        <li><strong className="text-foreground">Location:</strong> JBCN School, Mumbai</li>
+                        <li><strong className="text-foreground">Chapter:</strong> YLCA West India</li>
+                        <li><strong className="text-foreground">Audience:</strong> 50+ students (8th grade)</li>
+                        <li><strong className="text-foreground">Format:</strong> highly interactive workshop + quizzes + activities</li>
+                        <li><strong className="text-foreground">Outcomes:</strong> students learned to spot phishing attempts, understand malware basics, and build stronger online safety habits</li>
+                      </ul>
+                    </div>
+
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed italic mt-4">
+                      YLCA's mission is "teens teaching teens"—and this kickoff at JBCN is a strong start for West India. We're excited to run more workshops across schools and communities, and empower more students to protect their digital lives with confidence.
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <div className="text-center mt-8">
+              <Button
+                variant="outline"
+                onClick={() => openModal(westIndiaJan30Images, 0)}
+                className="border-2 border-primary/50 dark:border-primary/60 hover:bg-primary/10 dark:hover:bg-primary/20 px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-full font-semibold group"
+              >
+                View All West India Chapter Photos
+                <GraduationCap className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
+              </Button>
+            </div>
           </div>
         </section>
 
