@@ -8,13 +8,18 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
-import { Users, GraduationCap, Globe, Star, ChevronLeft, ChevronRight, X, Rocket } from "lucide-react"
+import { Users, GraduationCap, Globe, Star, ChevronLeft, ChevronRight, X, Rocket, Link2 } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { AnimatedNumber } from "@/components/animated-number"
 import { ImpactMap } from "@/components/impact-map"
 
 const storiesImages = [
+  "/25 aug/WhatsApp Image 2026-01-31 at 16.50.08.jpeg",
+  "/25 aug/WhatsApp Image 2026-01-31 at 16.50.08 (1).jpeg",
+  "/25 aug/WhatsApp Image 2026-01-31 at 16.51.47.jpeg",
+  "/25 aug/WhatsApp Image 2026-01-31 at 16.51.51.jpeg",
+  "/25 aug/WhatsApp Image 2026-01-31 at 16.51.52.jpeg",
   "/stories/Copy of Add-Nov26-LudhianaSchool1.png",
   "/stories/Add-L6.png",
   "/stories/Add-l8.png",
@@ -156,6 +161,14 @@ const westIndiaJan30Images = [
   "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.01.jpeg",
   "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.01 (1).jpeg",
   "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.06.jpeg",
+]
+
+const august2025Images = [
+  "/25 aug/WhatsApp Image 2026-01-31 at 16.50.08.jpeg",
+  "/25 aug/WhatsApp Image 2026-01-31 at 16.50.08 (1).jpeg",
+  "/25 aug/WhatsApp Image 2026-01-31 at 16.51.47.jpeg",
+  "/25 aug/WhatsApp Image 2026-01-31 at 16.51.51.jpeg",
+  "/25 aug/WhatsApp Image 2026-01-31 at 16.51.52.jpeg",
 ]
 
 function StoriesCarousel({ onOpenModal }: { onOpenModal: (images: string[], index: number) => void }) {
@@ -452,13 +465,14 @@ export default function Impact() {
         {/* Event Locations Map */}
         <ImpactMap />
 
-        {/* Success Stories & Testimonials */}
-        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background">
+        {/* Success Stories & Testimonials - shareable: /impact#success-stories */}
+        <section id="success-stories" className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background scroll-mt-24">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-8 sm:mb-12 md:mb-16">
               <Badge variant="secondary" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">SUCCESS STORIES</Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
-                Voices from Our <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Community</span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
+                <span>Voices from Our <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Community</span></span>
+                <a href="#success-stories" onClick={(e) => { e.preventDefault(); const url = typeof window !== "undefined" ? `${window.location.origin}/impact#success-stories` : "/impact#success-stories"; navigator.clipboard?.writeText(url).then(() => { const btn = e.currentTarget; btn.setAttribute("aria-label", "Link copied!"); btn.classList.add("ring-2", "ring-primary"); setTimeout(() => { btn.setAttribute("aria-label", "Copy link"); btn.classList.remove("ring-2", "ring-primary"); }, 1500); }); }} className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0" aria-label="Copy link" title="Copy link to share"><Link2 className="w-5 h-5" /></a>
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
                 Real stories from ambassadors, teachers, and students who are making a difference through YLCA.
@@ -542,13 +556,14 @@ export default function Impact() {
           </div>
         </section>
 
-        {/* Photo Gallery Showcase */}
-        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/20">
+        {/* Photo Gallery Showcase - shareable: /impact#photo-gallery */}
+        <section id="photo-gallery" className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/20 scroll-mt-24">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-8 sm:mb-12 md:mb-16">
               <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">PHOTO GALLERY</Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
-                Moments That <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Matter</span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
+                <span>Moments That <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Matter</span></span>
+                <a href="#photo-gallery" onClick={(e) => { e.preventDefault(); const url = typeof window !== "undefined" ? `${window.location.origin}/impact#photo-gallery` : "/impact#photo-gallery"; navigator.clipboard?.writeText(url).then(() => { const btn = e.currentTarget; btn.setAttribute("aria-label", "Link copied!"); btn.classList.add("ring-2", "ring-primary"); setTimeout(() => { btn.setAttribute("aria-label", "Copy link"); btn.classList.remove("ring-2", "ring-primary"); }, 1500); }); }} className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0" aria-label="Copy link" title="Copy link to share"><Link2 className="w-5 h-5" /></a>
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
                 Capturing the energy, learning, and impact of YLCA workshops and events around the world.
@@ -560,8 +575,123 @@ export default function Impact() {
           </div>
         </section>
 
-        {/* Founder Arth Bhardwaj & Ambassador Vedika */}
-        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden">
+        {/* August 2025 – From Book to Action - shareable: /impact#august-2025 */}
+        <section id="august-2025" className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden scroll-mt-24">
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute top-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+          </div>
+
+          <div className="max-w-6xl mx-auto relative z-10">
+            <div className="text-center mb-8 sm:mb-12">
+              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">AUGUST 2025</Badge>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
+                <span>From Book to Action: <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Cybersecurity for Teens Workshop Empowers Local Students</span></span>
+                <a href="#august-2025" onClick={(e) => { e.preventDefault(); const url = typeof window !== "undefined" ? `${window.location.origin}/impact#august-2025` : "/impact#august-2025"; navigator.clipboard?.writeText(url).then(() => { const btn = e.currentTarget; btn.setAttribute("aria-label", "Link copied!"); btn.classList.add("ring-2", "ring-primary"); setTimeout(() => { btn.setAttribute("aria-label", "Copy link"); btn.classList.remove("ring-2", "ring-primary"); }, 1500); }); }} className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0" aria-label="Copy link" title="Copy link to share"><Link2 className="w-5 h-5" /></a>
+              </h2>
+              <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
+                August 2025 — Live Zoom workshop for middle and high school students in Cupertino and Saratoga
+              </p>
+            </div>
+
+            <Card className="border-2 border-primary/30 dark:border-primary/40 bg-gradient-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+              <div className="bg-gradient-to-r from-primary/10 to-secondary/10 px-6 py-4 border-b border-border/50">
+                <div className="flex items-center gap-3">
+                  <Badge variant="default" className="text-xs">AUGUST 2025</Badge>
+                  <h3 className="text-lg sm:text-xl font-bold text-foreground">From Book to Action: Cybersecurity for Teens Workshop Empowers Local Students/Teens</h3>
+                </div>
+                <p className="text-sm text-muted-foreground mt-1">Following the launch of Cybersecurity for Teens on Amazon — Founder Arth Bhardwaj hosted a live Zoom workshop for Cupertino & Saratoga students</p>
+              </div>
+
+              <CardContent className="p-6 sm:p-8">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+                  <div className="lg:col-span-1 space-y-4">
+                    <div className="relative rounded-xl overflow-hidden border-2 border-border/40 shadow-lg group">
+                      <img
+                        src={august2025Images[0]}
+                        alt="Cybersecurity for Teens workshop — August 2025"
+                        className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer"
+                        loading="lazy"
+                        onClick={() => openModal(august2025Images, 0)}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                        <p className="text-xs font-semibold">August 2025 — Book to Action Workshop</p>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      {august2025Images.slice(1, 5).map((image, index) => (
+                        <div
+                          key={image}
+                          className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
+                          onClick={() => openModal(august2025Images, index + 1)}
+                          role="button"
+                          tabIndex={0}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault()
+                              openModal(august2025Images, index + 1)
+                            }
+                          }}
+                          aria-label={`View August 2025 workshop image ${index + 2}`}
+                        >
+                          <img
+                            src={image}
+                            alt={`Cybersecurity for Teens Workshop August 2025 ${index + 2}`}
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            loading="lazy"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="lg:col-span-2 space-y-4">
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                      Following the launch of{" "}
+                      <a href="https://www.amazon.com/dp/B0FMPF2WN5" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:text-secondary underline underline-offset-2">Cybersecurity for Teens on Amazon</a>, our Founder{" "}
+                      <span className="font-semibold text-foreground">Arth Bhardwaj</span> hosted a live Zoom workshop for middle and high school students in Cupertino and Saratoga to introduce the book's purpose and turn it into an actionable, student-friendly playbook for online safety.
+                    </p>
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                      Building on real threats teens face—from scams and phishing to account takeovers and misinformation—the session walked students through how to use the book as a step-by-step self-learning manual, with practical checklists, mini-challenges, and habits they could apply immediately.
+                    </p>
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                      The workshop also showed students how to convert learning into leadership by using the book as a blueprint to launch a cybersecurity club at their school—planning a first meeting, choosing topics, and running peer-led awareness sessions.
+                    </p>
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed font-medium">
+                      Students left with clear next steps, resources to keep learning independently, and the confidence to become digital-safety leaders in their own school communities.
+                    </p>
+                    <div className="pt-4">
+                      <a
+                        href="https://www.amazon.com/dp/B0FMPF2WN5"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-secondary transition-colors underline underline-offset-2"
+                      >
+                        View Cybersecurity for Teens on Amazon
+                        <span className="sr-only">(opens in new tab)</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <div className="text-center mt-8">
+              <Button
+                variant="outline"
+                onClick={() => openModal(august2025Images, 0)}
+                className="border-2 border-primary/50 dark:border-primary/60 hover:bg-primary/10 dark:hover:bg-primary/20 px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-full font-semibold group"
+              >
+                View All August 2025 Workshop Photos
+                <GraduationCap className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* Founder Arth Bhardwaj & Ambassador Vedika - shareable: /impact#december-vedika */}
+        <section id="december-vedika" className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden scroll-mt-24">
           {/* Decorative elements */}
           <div className="absolute inset-0 -z-10">
             <div className="absolute top-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
@@ -571,8 +701,9 @@ export default function Impact() {
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="text-center mb-8 sm:mb-12">
               <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">DECEMBER IMPACT</Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
-                Founder Arth Bhardwaj & Ambassador Vedika: <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Hosting Workshops in Delhi Government Schools</span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
+                <span>Founder Arth Bhardwaj & Ambassador Vedika: <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Hosting Workshops in Delhi Government Schools</span></span>
+                <a href="#december-vedika" onClick={(e) => { e.preventDefault(); const url = typeof window !== "undefined" ? `${window.location.origin}/impact#december-vedika` : "/impact#december-vedika"; navigator.clipboard?.writeText(url).then(() => { const btn = e.currentTarget; btn.setAttribute("aria-label", "Link copied!"); btn.classList.add("ring-2", "ring-primary"); setTimeout(() => { btn.setAttribute("aria-label", "Copy link"); btn.classList.remove("ring-2", "ring-primary"); }, 1500); }); }} className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0" aria-label="Copy link" title="Copy link to share"><Link2 className="w-5 h-5" /></a>
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
                 YLCA Founder and Ambassador leading hands-on cyber safety workshops across Delhi government schools
@@ -670,8 +801,8 @@ export default function Impact() {
           </div>
         </section>
 
-        {/* Featured Initiative: DPS Karnal */}
-        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden">
+        {/* Featured Initiative: DPS Karnal - shareable: /impact#dps-karnal */}
+        <section id="dps-karnal" className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden scroll-mt-24">
           {/* Decorative elements */}
           <div className="absolute inset-0 -z-10">
             <div className="absolute top-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse"></div>
@@ -681,8 +812,9 @@ export default function Impact() {
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="text-center mb-8 sm:mb-12">
               <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">SCHOOL PARTNERSHIP</Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
-                DPS Karnal Hosts Arth <span className="bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">Bhardwaj</span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
+                <span>DPS Karnal Hosts Arth <span className="bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">Bhardwaj</span></span>
+                <a href="#dps-karnal" onClick={(e) => { e.preventDefault(); const url = typeof window !== "undefined" ? `${window.location.origin}/impact#dps-karnal` : "/impact#dps-karnal"; navigator.clipboard?.writeText(url).then(() => { const btn = e.currentTarget; btn.setAttribute("aria-label", "Link copied!"); btn.classList.add("ring-2", "ring-primary"); setTimeout(() => { btn.setAttribute("aria-label", "Copy link"); btn.classList.remove("ring-2", "ring-primary"); }, 1500); }); }} className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0" aria-label="Copy link" title="Copy link to share"><Link2 className="w-5 h-5" /></a>
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
                 A full-day campus visit where YLCA's founder met Grades 9-12 students and mentored newly nominated ambassadors
@@ -782,8 +914,8 @@ export default function Impact() {
           </div>
         </section>
 
-        {/* December Sports + AI Workshop */}
-        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden">
+        {/* December Sports + AI Workshop - shareable: /impact#sports-ai-workshop */}
+        <section id="sports-ai-workshop" className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden scroll-mt-24">
           {/* Decorative elements */}
           <div className="absolute inset-0 -z-10">
             <div className="absolute top-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
@@ -793,8 +925,9 @@ export default function Impact() {
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="text-center mb-8 sm:mb-12">
               <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">DECEMBER IMPACT</Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
-                Sports + AI <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Digital Safety Workshop</span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
+                <span>Sports + AI <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Digital Safety Workshop</span></span>
+                <a href="#sports-ai-workshop" onClick={(e) => { e.preventDefault(); const url = typeof window !== "undefined" ? `${window.location.origin}/impact#sports-ai-workshop` : "/impact#sports-ai-workshop"; navigator.clipboard?.writeText(url).then(() => { const btn = e.currentTarget; btn.setAttribute("aria-label", "Link copied!"); btn.classList.add("ring-2", "ring-primary"); setTimeout(() => { btn.setAttribute("aria-label", "Copy link"); btn.classList.remove("ring-2", "ring-primary"); }, 1500); }); }} className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0" aria-label="Copy link" title="Copy link to share"><Link2 className="w-5 h-5" /></a>
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
                 YLCA Founder Arth Bhardwaj hosted an interactive workshop for teen athletes in Ambala, Haryana, focusing on online scams, privacy, and AI-driven misinformation.
@@ -914,8 +1047,8 @@ export default function Impact() {
           </div>
         </section>
 
-        {/* Jan 2026: Ambassador Vedika Leads Independent Workshop */}
-        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden">
+        {/* Jan 2026: Ambassador Vedika Leads Independent Workshop - shareable: /impact#vedika-jan-2026 */}
+        <section id="vedika-jan-2026" className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden scroll-mt-24">
           {/* Decorative elements */}
           <div className="absolute inset-0 -z-10">
             <div className="absolute top-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
@@ -925,8 +1058,9 @@ export default function Impact() {
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="text-center mb-8 sm:mb-12">
               <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm bg-gradient-to-r from-primary to-secondary">JAN 2026 - LATEST</Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
-                YLCA Milestone: <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Ambassador Vedika Leads the Next Wave of Workshops in Delhi</span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
+                <span>YLCA Milestone: <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Ambassador Vedika Leads the Next Wave of Workshops in Delhi</span></span>
+                <a href="#vedika-jan-2026" onClick={(e) => { e.preventDefault(); const url = typeof window !== "undefined" ? `${window.location.origin}/impact#vedika-jan-2026` : "/impact#vedika-jan-2026"; navigator.clipboard?.writeText(url).then(() => { const btn = e.currentTarget; btn.setAttribute("aria-label", "Link copied!"); btn.classList.add("ring-2", "ring-primary"); setTimeout(() => { btn.setAttribute("aria-label", "Copy link"); btn.classList.remove("ring-2", "ring-primary"); }, 1500); }); }} className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0" aria-label="Copy link" title="Copy link to share"><Link2 className="w-5 h-5" /></a>
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
                 The first fully independent government-school workshop led by Ambassador Vedika marks a new chapter for YLCA
@@ -1088,8 +1222,8 @@ export default function Impact() {
               </Card>
             </div>
 
-            {/* DPS Karnal Cybersecurity Club Launch */}
-            <div className="mt-12 sm:mt-16">
+            {/* DPS Karnal Cybersecurity Club Launch - shareable: /impact#dps-karnal-club */}
+            <div id="dps-karnal-club" className="mt-12 sm:mt-16 scroll-mt-24">
               <Card className="border-2 border-primary/30 dark:border-primary/40 bg-gradient-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
                 <div className="bg-gradient-to-r from-primary/10 to-secondary/10 px-6 py-4 border-b border-border/50">
                   <div className="flex flex-col gap-2">
@@ -1171,8 +1305,8 @@ export default function Impact() {
           </div>
         </section>
 
-        {/* Republic Day Cyber Safety Workshop */}
-        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden">
+        {/* Republic Day Cyber Safety Workshop - shareable: /impact#republic-day */}
+        <section id="republic-day" className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden scroll-mt-24">
           <div className="absolute inset-0 -z-10">
             <div className="absolute top-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse"></div>
             <div className="absolute bottom-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
@@ -1181,8 +1315,9 @@ export default function Impact() {
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="text-center mb-8 sm:mb-12">
               <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm bg-gradient-to-r from-secondary to-primary">JAN 2026</Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
-                Republic Day <span className="bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">Cyber Safety Workshop</span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
+                <span>Republic Day <span className="bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">Cyber Safety Workshop</span></span>
+                <a href="#republic-day" onClick={(e) => { e.preventDefault(); const url = typeof window !== "undefined" ? `${window.location.origin}/impact#republic-day` : "/impact#republic-day"; navigator.clipboard?.writeText(url).then(() => { const btn = e.currentTarget; btn.setAttribute("aria-label", "Link copied!"); btn.classList.add("ring-2", "ring-primary"); setTimeout(() => { btn.setAttribute("aria-label", "Copy link"); btn.classList.remove("ring-2", "ring-primary"); }, 1500); }); }} className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0" aria-label="Copy link" title="Copy link to share"><Link2 className="w-5 h-5" /></a>
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
                 Community cyber awareness session led by Ambassador Krishiv Arora (DPS Karnal)
@@ -1282,8 +1417,8 @@ export default function Impact() {
           </div>
         </section>
 
-        {/* YLCA West India Chapter Kickoff – JBCN Mumbai */}
-        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden">
+        {/* YLCA West India Chapter Kickoff – JBCN Mumbai - shareable: /impact#west-india */}
+        <section id="west-india" className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden scroll-mt-24">
           <div className="absolute inset-0 -z-10">
             <div className="absolute top-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
             <div className="absolute bottom-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
@@ -1292,8 +1427,9 @@ export default function Impact() {
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="text-center mb-8 sm:mb-12">
               <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">JAN 2026</Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
-                YLCA West India Chapter <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Kicks Off</span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
+                <span>YLCA West India Chapter <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Kicks Off</span></span>
+                <a href="#west-india" onClick={(e) => { e.preventDefault(); const url = typeof window !== "undefined" ? `${window.location.origin}/impact#west-india` : "/impact#west-india"; navigator.clipboard?.writeText(url).then(() => { const btn = e.currentTarget; btn.setAttribute("aria-label", "Link copied!"); btn.classList.add("ring-2", "ring-primary"); setTimeout(() => { btn.setAttribute("aria-label", "Copy link"); btn.classList.remove("ring-2", "ring-primary"); }, 1500); }); }} className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0" aria-label="Copy link" title="Copy link to share"><Link2 className="w-5 h-5" /></a>
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
                 Regional Lead Yuvam Loonker and ambassadors kick off the first workshop at JBCN Mumbai
