@@ -57,8 +57,18 @@ export function Hero() {
         </div>
       </div>
 
+      
+
       {/* Hero Images Grid */}
       <div className="mt-8 sm:mt-12 max-w-4xl mx-auto animate-slide-up px-4 sm:px-6 lg:px-8">
+        {/* Hero workshop image - students in cybersecurity session */}
+        <div className="rounded-xl overflow-hidden border-2 border-border/60 dark:border-border/40 shadow-lg mb-6">
+                <img
+                  src="/home.jpeg"
+                  alt="YLCA students in a cybersecurity workshop — peer-to-peer learning in action"
+                  className="w-full h-auto object-cover"
+                />
+              </div>
         <div className="grid grid-cols-2 gap-3 sm:gap-4 place-items-center">
           {/* Image 1 - Existing */}
           <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-border/60 dark:border-border/40 bg-gradient-to-br from-card to-card/50 p-0.5 sm:p-1 shadow-2xl dark:shadow-black/40 transition-all duration-500 ease-out hover:shadow-3xl dark:hover:shadow-black/60 group">

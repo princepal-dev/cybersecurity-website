@@ -195,6 +195,30 @@ const ambassadors = [
     intro: "Enthusiastic 9th-grade innovator spreading awareness about the dangers and ethics of technology. Helping fellow students use technology ethically and protect themselves from cybercrime.",
     socialLink: null
   },
+  {
+    name: "Mehar Bajaj",
+    school: "Epic Academy School, Lathrop, California, USA",
+    title: "YLCA Ambassador",
+    image: "/ambassadors/mehar.jpeg",
+    intro: "Middle school student and state-level volleyball player. Bringing cybersecurity and digital safety awareness to her school and team while balancing academics and athletics.",
+    socialLink: null
+  },
+  {
+    name: "Sanvi Jain",
+    school: "Sacred Heart Convent International School, Ludhiana, Punjab, India",
+    title: "YLCA Ambassador",
+    image: "/ambassadors/sanvi.png",
+    intro: "11th-grade student passionate about AI, cybersecurity, and digital marketing. Spreading awareness about safe internet use, cyber risks, and helping build a safer, more conscious digital space for everyone.",
+    socialLink: null
+  },
+  {
+    name: "Aarna Malhotra",
+    school: "Sacred Heart Convent International School, Ludhiana, Punjab, India",
+    title: "YLCA Ambassador",
+    image: "/ambassadors/aarna.png",
+    intro: "Grade 9 student with a strong interest in AI, digital awareness, and communication. Promoting safer, more responsible, and empathetic online spaces for young users as a YLCA Ambassador.",
+    socialLink: null
+  },
 ]
 
 const leadershipRoles = [

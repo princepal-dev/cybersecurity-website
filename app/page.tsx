@@ -158,6 +158,8 @@ export default function Home() {
                 <span className="font-semibold text-foreground">The Tribune</span> (India) for YLCA's workshops and outreach across 2025.
               </p>
 
+              
+
               {/* Featured Images - Tribune Feature & Amazon Bestseller */}
               <div className="space-y-6 pt-4">
                 {/* Top Row: Tribune Newspaper Features (Vertical Layout) */}

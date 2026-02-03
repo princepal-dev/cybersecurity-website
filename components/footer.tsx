@@ -1,5 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
+import { Instagram } from "lucide-react"
 
 export function Footer() {
   return (
@@ -18,7 +19,16 @@ export function Footer() {
                 />
               </div>
             </div>
-            <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">Empowering Teens to Secure the Digital World</p>
+            <p className="text-muted-foreground text-sm leading-relaxed max-w-xs mb-4">Empowering Teens to Secure the Digital World</p>
+            <a
+              href="https://www.instagram.com/ylca_global/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-200 font-medium"
+            >
+              <Instagram className="w-4 h-4" />
+              Follow us on Instagram
+            </a>
           </div>
 
           <div>
