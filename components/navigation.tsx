@@ -18,6 +18,7 @@ export function Navigation() {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About" },
+    { href: "/ambassadors", label: "Ambassadors" },
     { href: "/impact", label: "Impact" },
     { href: "/programs", label: "Programs" },
     { href: "/blogs", label: "Blogs" },

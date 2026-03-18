@@ -17,8 +17,8 @@ const stats = [
   },
   {
     value: 25,
-    suffix: "+",
-    label: "Workshops Delivered",
+    suffix: "",
+    label: "Schools Reached",
     gradient: "from-secondary via-secondary to-secondary/80",
     cardVariant: "secondary" as const,
   },
@@ -30,7 +30,7 @@ const stats = [
     cardVariant: "primary" as const,
   },
   {
-    value: 50,
+    value: 60,
     suffix: "+",
     label: "Trained Ambassadors",
     gradient: "from-secondary via-secondary to-secondary/80",

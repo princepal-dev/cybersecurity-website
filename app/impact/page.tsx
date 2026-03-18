@@ -1,1725 +1,3984 @@
-'use client'
+"use client";
 
-import { Navigation } from "@/components/navigation"
-import { Footer } from "@/components/footer"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
-import { Users, GraduationCap, Globe, Star, ChevronLeft, ChevronRight, X, Rocket, Link2 } from "lucide-react"
-import Link from "next/link"
-import { useState, useEffect } from "react"
-import { AnimatedNumber } from "@/components/animated-number"
-import { ImpactMap } from "@/components/impact-map"
+import { Navigation } from "@/components/navigation";
+import { Footer } from "@/components/footer";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+} from "@/components/ui/carousel";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+    Users,
+    GraduationCap,
+    Globe,
+    Star,
+    ChevronLeft,
+    ChevronRight,
+    X,
+    Rocket,
+    Link2,
+} from "lucide-react";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { AnimatedNumber } from "@/components/animated-number";
+import { ImpactMap } from "@/components/impact-map";
+import {
+    ChartContainer,
+    ChartTooltip,
+    ChartTooltipContent,
+    ChartLegend,
+    ChartLegendContent,
+    type ChartConfig,
+} from "@/components/ui/chart";
+import {
+    Bar,
+    BarChart,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    ResponsiveContainer,
+} from "recharts";
 
 const storiesImages = [
-  "/WhatsApp Image 2026-02-03 at 13.40.29.jpeg",
-  "/WhatsApp Image 2026-02-03 at 13.40.29 (1).jpeg",
-  "/1 Feb/WhatsApp Image 2026-02-02 at 13.07.42.jpeg",
-  "/1 Feb/WhatsApp Image 2026-02-02 at 13.07.42 (1).jpeg",
-  "/25 aug/WhatsApp Image 2026-01-31 at 16.50.08.jpeg",
-  "/25 aug/WhatsApp Image 2026-01-31 at 16.50.08 (1).jpeg",
-  "/25 aug/WhatsApp Image 2026-01-31 at 16.51.47.jpeg",
-  "/25 aug/WhatsApp Image 2026-01-31 at 16.51.51.jpeg",
-  "/25 aug/WhatsApp Image 2026-01-31 at 16.51.52.jpeg",
-  "/stories/Copy of Add-Nov26-LudhianaSchool1.png",
-  "/stories/Add-L6.png",
-  "/stories/Add-l8.png",
-  "/stories/Add-IMG-20251202-WA0012.jpg",
-  "/stories/Add-IMG-20251202-WA0016.jpg",
-  "/stories/Add-IMG-20251202-WA0018.jpg",
-  "/stories/Add-IMG-20251202-WA0020.jpg",
-  "/stories/Add-L2.png",
-  "/stories/Add-L3.png",
-  "/stories/Add-Ludhina1.png",
-  "/stories/Add-Workshop screenshot.jpg",
-  "/stories/AddL4.png",
-  "/stories/Copy of Add-IMG-20251202-WA0012.jpg",
-  "/stories/Screenshot 2025-12-01 215830.png",
-  "/stories/WhatsApp Image 2025-12-06 at 12.52.31.jpeg",
-  "/stories/WhatsApp Image 2025-12-06 at 12.54.29.jpeg",
-  "/stories/WhatsApp Image 2025-12-06 at 12.56.18.jpeg",
-  "/stories/WhatsApp Image 2025-12-06 at 12.56.19.jpeg",
-  "/stories/WhatsApp Image 2025-12-06 at 12.56.19 (1).jpeg",
-  "/new1/WhatsApp Image 2025-12-15 at 10.01.46.jpeg",
-  "/new1/WhatsApp Image 2025-12-15 at 10.02.29.jpeg",
-  "/new1/WhatsApp Image 2025-12-15 at 10.03.34 (1).jpeg",
-  "/new1/WhatsApp Image 2025-12-15 at 10.03.34.jpeg",
-  "/new1/WhatsApp Image 2025-12-15 at 10.03.35 (1).jpeg",
-  "/new1/WhatsApp Image 2025-12-15 at 10.03.35 (2).jpeg",
-  "/new1/WhatsApp Image 2025-12-15 at 10.03.35 (3).jpeg",
-  "/new1/WhatsApp Image 2025-12-15 at 10.03.35 (4).jpeg",
-  "/new1/WhatsApp Image 2025-12-15 at 10.03.35 (5).jpeg",
-  "/new1/WhatsApp Image 2025-12-15 at 10.03.35 (6).jpeg",
-  "/new1/WhatsApp Image 2025-12-15 at 10.03.35 (7).jpeg",
-  "/new1/WhatsApp Image 2025-12-15 at 10.03.35.jpeg",
-  "/new1/WhatsApp Image 2025-12-15 at 10.03.36 (1).jpeg",
-  "/new1/WhatsApp Image 2025-12-15 at 10.03.36 (2).jpeg",
-  "/new1/WhatsApp Image 2025-12-15 at 10.03.36 (3).jpeg",
-  "/new1/WhatsApp Image 2025-12-15 at 10.03.36 (4).jpeg",
-  "/new1/WhatsApp Image 2025-12-15 at 10.03.36 (5).jpeg",
-  "/new1/WhatsApp Image 2025-12-15 at 10.03.36 (6).jpeg",
-  "/new1/WhatsApp Image 2025-12-15 at 10.03.36 (7).jpeg",
-  "/new1/WhatsApp Image 2025-12-15 at 10.03.36 (8).jpeg",
-  "/new1/WhatsApp Image 2025-12-15 at 10.03.36.jpeg",
-  "/new1/WhatsApp Image 2025-12-15 at 10.03.37.jpeg",
-  "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.00.jpeg",
-  "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.00 (1).jpeg",
-  "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.01.jpeg",
-  "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.01 (1).jpeg",
-  "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.06.jpeg",
-]
+    // Feb 2026 – Cupertino presentation
+    "/Feb 11/WhatsApp Image 2026-03-18 at 10.33.15.jpeg",
+    "/Feb 11/WhatsApp Image 2026-03-18 at 10.33.15 (1).jpeg",
+    "/Feb 11/WhatsApp Image 2026-03-18 at 10.33.15 (2).jpeg",
+    // Feb 2026 – IEEE / SVCC AI + Security (representative)
+    "/1 Feb/WhatsApp Image 2026-03-10 at 09.56.56.jpeg",
+    "/1 Feb/WhatsApp Image 2026-03-10 at 09.56.56 (1).jpeg",
+    // Feb 2026 – Global cohort kickoff
+    "/1 Feb/WhatsApp Image 2026-02-02 at 13.07.42.jpeg",
+    "/1 Feb/WhatsApp Image 2026-02-02 at 13.07.42 (1).jpeg",
+    // Feb 2026 – DPS Karnal Cybersecurity Club Launch
+    "/20th Jan/WhatsApp Image 2026-01-20 at 20.36.29.jpeg",
+    // Feb 2026 – Vedika Jan workshops (representative)
+    "/9th/WhatsApp Image 2026-01-09 at 13.08.36.jpeg",
+    // Jan 2026 – West India Chapter kickoff
+    "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.00.jpeg",
+    "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.00 (1).jpeg",
+    "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.01.jpeg",
+    "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.01 (1).jpeg",
+    "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.06.jpeg",
+    // Jan 2026 – Sports + AI workshop (subset)
+    "/3rd/WhatsApp Image 2026-01-04 at 09.40.39.jpeg",
+    "/3rd/WhatsApp Image 2026-01-04 at 09.41.29.jpeg",
+    "/3rd/WhatsApp Image 2026-01-04 at 09.41.30 (1).jpeg",
+    // Jan 2026 – Republic Day workshop
+    "/26th jan/WhatsApp Image 2026-01-27 at 09.32.45.jpeg",
+    "/26th jan/WhatsApp Image 2026-01-27 at 09.32.46.jpeg",
+    "/26th jan/WhatsApp Image 2026-01-27 at 09.32.47.jpeg",
+    // Dec 2025 – Ludhiana & early stories (existing story set)
+    "/stories/Copy of Add-Nov26-LudhianaSchool1.png",
+    "/stories/Add-L6.png",
+    "/stories/Add-l8.png",
+    "/stories/Add-IMG-20251202-WA0012.jpg",
+    "/stories/Add-IMG-20251202-WA0016.jpg",
+    "/stories/Add-IMG-20251202-WA0018.jpg",
+    "/stories/Add-IMG-20251202-WA0020.jpg",
+    "/stories/Add-L2.png",
+    "/stories/Add-L3.png",
+    "/stories/Add-Ludhina1.png",
+    "/stories/Add-Workshop screenshot.jpg",
+    "/stories/AddL4.png",
+    "/stories/Screenshot 2025-12-01 215830.png",
+    "/stories/WhatsApp Image 2025-12-06 at 12.52.31.jpeg",
+    "/stories/WhatsApp Image 2025-12-06 at 12.54.29.jpeg",
+    "/stories/WhatsApp Image 2025-12-06 at 12.56.18.jpeg",
+    "/stories/WhatsApp Image 2025-12-06 at 12.56.19.jpeg",
+    "/stories/WhatsApp Image 2025-12-06 at 12.56.19 (1).jpeg",
+    // Dec 2025 – DPS Karnal visit (subset)
+    "/dps/hero.png",
+    "/dps/image.png",
+    // Dec 2025 – December outreach (subset)
+    "/december/WhatsApp Image 2025-12-27 at 09.22.57.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.45.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.24.01.jpeg",
+    // Dec 2025 – new1 December story (subset)
+    "/new1/WhatsApp Image 2025-12-15 at 10.01.46.jpeg",
+    "/new1/WhatsApp Image 2025-12-15 at 10.02.29.jpeg",
+    "/new1/WhatsApp Image 2025-12-15 at 10.03.34.jpeg",
+    "/new1/WhatsApp Image 2025-12-15 at 10.03.35 (1).jpeg",
+    "/new1/WhatsApp Image 2025-12-15 at 10.03.36.jpeg",
+    // Aug 2025 – Book to Action workshop
+    "/25 aug/WhatsApp Image 2026-01-31 at 16.50.08.jpeg",
+    "/25 aug/WhatsApp Image 2026-01-31 at 16.50.08 (1).jpeg",
+    "/25 aug/WhatsApp Image 2026-01-31 at 16.51.47.jpeg",
+    "/25 aug/WhatsApp Image 2026-01-31 at 16.51.51.jpeg",
+    "/25 aug/WhatsApp Image 2026-01-31 at 16.51.52.jpeg",
+    // Feb 2026 – February 3 gallery images
+    "/WhatsApp Image 2026-02-03 at 13.40.29.jpeg",
+    "/WhatsApp Image 2026-02-03 at 13.40.29 (1).jpeg",
+];
 
 const decemberImages = [
-  "/december/WhatsApp Image 2025-12-27 at 09.22.57.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.22.59 (1).jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.22.59.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.00.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.01.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.02 (1).jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.02.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.03 (1).jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.03.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.08.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.09 (1).jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.09.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.10.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.11 (1).jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.11.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.12 (1).jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.12.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.13 (1).jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.13.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.14 (1).jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.14.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.45.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.46 (1).jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.46.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.48 (1).jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.48.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.49 (1).jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.49.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.50.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.51.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.52.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.54 (1).jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.54.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.55 (1).jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.55.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.56 (1).jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.56.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.57.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.58 (1).jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.58.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.59 (1).jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.23.59.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.24.00.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.24.01 (1).jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.24.01.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.24.02.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.24.03.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.24.04.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.24.05.jpeg",
-  "/december/WhatsApp Image 2025-12-27 at 09.24.07.jpeg",
-]
+    "/december/WhatsApp Image 2025-12-27 at 09.22.57.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.22.59 (1).jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.22.59.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.00.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.01.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.02 (1).jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.02.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.03 (1).jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.03.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.08.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.09 (1).jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.09.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.10.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.11 (1).jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.11.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.12 (1).jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.12.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.13 (1).jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.13.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.14 (1).jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.14.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.45.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.46 (1).jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.46.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.48 (1).jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.48.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.49 (1).jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.49.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.50.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.51.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.52.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.54 (1).jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.54.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.55 (1).jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.55.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.56 (1).jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.56.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.57.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.58 (1).jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.58.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.59 (1).jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.23.59.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.24.00.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.24.01 (1).jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.24.01.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.24.02.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.24.03.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.24.04.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.24.05.jpeg",
+    "/december/WhatsApp Image 2025-12-27 at 09.24.07.jpeg",
+];
 
 const sportsWorkshopImages = [
-  "/3rd/WhatsApp Image 2026-01-04 at 09.40.39.jpeg",
-  "/3rd/WhatsApp Image 2026-01-04 at 09.41.29.jpeg",
-  "/3rd/WhatsApp Image 2026-01-04 at 09.41.29 (1).jpeg",
-  "/3rd/WhatsApp Image 2026-01-04 at 09.41.29 (2).jpeg",
-  "/3rd/WhatsApp Image 2026-01-04 at 09.41.29 (3).jpeg",
-  "/3rd/WhatsApp Image 2026-01-04 at 09.41.30.jpeg",
-  "/3rd/WhatsApp Image 2026-01-04 at 09.41.30 (1).jpeg"
-]
+    "/3rd/WhatsApp Image 2026-01-04 at 09.40.39.jpeg",
+    "/3rd/WhatsApp Image 2026-01-04 at 09.41.29.jpeg",
+    "/3rd/WhatsApp Image 2026-01-04 at 09.41.29 (1).jpeg",
+    "/3rd/WhatsApp Image 2026-01-04 at 09.41.29 (2).jpeg",
+    "/3rd/WhatsApp Image 2026-01-04 at 09.41.29 (3).jpeg",
+    "/3rd/WhatsApp Image 2026-01-04 at 09.41.30.jpeg",
+    "/3rd/WhatsApp Image 2026-01-04 at 09.41.30 (1).jpeg",
+];
 
 const vedikaJan2026Images = [
-  "/9th/WhatsApp Image 2026-01-09 at 13.08.36.jpeg",
-  "/9th/WhatsApp Image 2026-01-09 at 13.08.36 (1).jpeg",
-  "/9th/WhatsApp Image 2026-01-09 at 13.08.36 (2).jpeg",
-  "/9th/WhatsApp Image 2026-01-09 at 13.08.36 (3).jpeg",
-  "/9th/WhatsApp Image 2026-01-09 at 13.08.37.jpeg"
-]
+    "/9th/WhatsApp Image 2026-01-09 at 13.08.36.jpeg",
+    "/9th/WhatsApp Image 2026-01-09 at 13.08.36 (1).jpeg",
+    "/9th/WhatsApp Image 2026-01-09 at 13.08.36 (2).jpeg",
+    "/9th/WhatsApp Image 2026-01-09 at 13.08.36 (3).jpeg",
+    "/9th/WhatsApp Image 2026-01-09 at 13.08.37.jpeg",
+];
 
 const dpsImages = [
-  "/dps/hero.png",
-  "/dps/image.png",
-  "/dps/WhatsApp Image 2025-12-31 at 13.29.48.jpeg",
-  "/dps/WhatsApp Image 2025-12-31 at 13.29.48 (1).jpeg",
-  "/dps/WhatsApp Image 2025-12-31 at 13.29.48 (2).jpeg",
-  "/dps/WhatsApp Image 2025-12-31 at 13.29.48 (3).jpeg"
-]
+    "/dps/hero.png",
+    "/dps/image.png",
+    "/dps/WhatsApp Image 2025-12-31 at 13.29.48.jpeg",
+    "/dps/WhatsApp Image 2025-12-31 at 13.29.48 (1).jpeg",
+    "/dps/WhatsApp Image 2025-12-31 at 13.29.48 (2).jpeg",
+    "/dps/WhatsApp Image 2025-12-31 at 13.29.48 (3).jpeg",
+];
 
 const republicDayImages = [
-  "/26th jan/WhatsApp Image 2026-01-27 at 09.32.45.jpeg",
-  "/26th jan/WhatsApp Image 2026-01-27 at 09.32.46.jpeg",
-  "/26th jan/WhatsApp Image 2026-01-27 at 09.32.47 (1).jpeg",
-  "/26th jan/WhatsApp Image 2026-01-27 at 09.32.47.jpeg",
-]
+    "/26th jan/WhatsApp Image 2026-01-27 at 09.32.45.jpeg",
+    "/26th jan/WhatsApp Image 2026-01-27 at 09.32.46.jpeg",
+    "/26th jan/WhatsApp Image 2026-01-27 at 09.32.47 (1).jpeg",
+    "/26th jan/WhatsApp Image 2026-01-27 at 09.32.47.jpeg",
+];
 
 const westIndiaJan30Images = [
-  "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.00.jpeg",
-  "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.00 (1).jpeg",
-  "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.01.jpeg",
-  "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.01 (1).jpeg",
-  "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.06.jpeg",
-]
+    "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.00.jpeg",
+    "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.00 (1).jpeg",
+    "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.01.jpeg",
+    "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.01 (1).jpeg",
+    "/30th Jan/WhatsApp Image 2026-01-27 at 15.22.06.jpeg",
+];
 
 const august2025Images = [
-  "/25 aug/WhatsApp Image 2026-01-31 at 16.50.08.jpeg",
-  "/25 aug/WhatsApp Image 2026-01-31 at 16.50.08 (1).jpeg",
-  "/25 aug/WhatsApp Image 2026-01-31 at 16.51.47.jpeg",
-  "/25 aug/WhatsApp Image 2026-01-31 at 16.51.51.jpeg",
-  "/25 aug/WhatsApp Image 2026-01-31 at 16.51.52.jpeg",
-]
+    "/25 aug/WhatsApp Image 2026-01-31 at 16.50.08.jpeg",
+    "/25 aug/WhatsApp Image 2026-01-31 at 16.50.08 (1).jpeg",
+    "/25 aug/WhatsApp Image 2026-01-31 at 16.51.47.jpeg",
+    "/25 aug/WhatsApp Image 2026-01-31 at 16.51.51.jpeg",
+    "/25 aug/WhatsApp Image 2026-01-31 at 16.51.52.jpeg",
+];
 
 const feb2026CohortImages = [
-  "/1 Feb/WhatsApp Image 2026-02-02 at 13.07.42.jpeg",
-  "/1 Feb/WhatsApp Image 2026-02-02 at 13.07.42 (1).jpeg",
-]
+    "/1 Feb/WhatsApp Image 2026-02-02 at 13.07.42.jpeg",
+    "/1 Feb/WhatsApp Image 2026-02-02 at 13.07.42 (1).jpeg",
+];
 
-function StoriesCarousel({ onOpenModal }: { onOpenModal: (images: string[], index: number) => void }) {
-  // Show only first 12 images for cleaner carousel
-  const featuredImages = storiesImages.slice(0, 12);
+const ieeeFeb2026Images = [
+    "/1 Feb/WhatsApp Image 2026-03-10 at 09.56.56.jpeg",
+    "/1 Feb/WhatsApp Image 2026-03-10 at 09.56.56 (1).jpeg",
+];
 
-  return (
-    <div className="mb-8 sm:mb-12 md:mb-16">
-      <Carousel
-        opts={{
-          align: "start",
-          loop: true,
-        }}
-        className="w-full"
-      >
-        <CarouselContent className="-ml-2 md:-ml-4">
-          {featuredImages.map((image, index) => (
-            <CarouselItem key={index} className="pl-2 md:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/4">
-              <div
-                className="group relative rounded-xl overflow-hidden border border-border/50 bg-card shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer"
-                onClick={() => onOpenModal(featuredImages, index)}
-                role="button"
-                tabIndex={0}
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter' || e.key === ' ') {
-                                e.preventDefault()
-                                onOpenModal(featuredImages, index)
-                              }
-                            }}
-                aria-label={`View story image ${index + 1}`}
-              >
-                <div className="aspect-square overflow-hidden bg-muted/20">
-                  <img
-                    src={image}
-                    alt={`YLCA Impact Story ${index + 1}`}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <p className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
-                      View Full Gallery
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious className="hidden sm:flex -left-12 bg-background/90 hover:bg-background border-border/60" />
-        <CarouselNext className="hidden sm:flex -right-12 bg-background/90 hover:bg-background border-border/60" />
-      </Carousel>
+const feb11CouncilImages = [
+    "/Feb 11/WhatsApp Image 2026-03-18 at 10.33.15.jpeg",
+    "/Feb 11/WhatsApp Image 2026-03-18 at 10.33.15 (1).jpeg",
+    "/Feb 11/WhatsApp Image 2026-03-18 at 10.33.15 (2).jpeg",
+];
 
-      {/* View All Photos Button */}
-      <div className="text-center mt-8">
-        <Button
-          variant="outline"
-          onClick={() => onOpenModal(storiesImages, 0)}
-          className="border-2 border-primary/50 dark:border-primary/60 hover:bg-primary/10 dark:hover:bg-primary/20 px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-full font-semibold group"
-        >
-          View All Photos
-          <Globe className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
-        </Button>
-      </div>
-    </div>
-  )
+const quarterlyImpactData = [
+    { quarter: "Q2 2025", schools: 3, ambassadors: 5, hours: 40 },
+    { quarter: "Q3 2025", schools: 8, ambassadors: 15, hours: 90 },
+    { quarter: "Q4 2025", schools: 16, ambassadors: 35, hours: 200 },
+    { quarter: "Q1 2026", schools: 25, ambassadors: 60, hours: 320 },
+];
+
+const quarterlyImpactConfig: ChartConfig = {
+    schools: {
+        label: "Schools Reached",
+        color: "hsl(var(--primary))",
+    },
+    ambassadors: {
+        label: "Ambassadors",
+        color: "hsl(var(--secondary))",
+    },
+    hours: {
+        label: "Hours (approx.)",
+        color: "hsl(var(--muted-foreground))",
+    },
+};
+
+function StoriesCarousel({
+    onOpenModal,
+}: {
+    onOpenModal: (images: string[], index: number) => void;
+}) {
+    // Show only first 12 images for cleaner carousel
+    const featuredImages = storiesImages.slice(0, 12);
+
+    return (
+        <div className="mb-8 sm:mb-12 md:mb-16">
+            <Carousel
+                opts={{
+                    align: "start",
+                    loop: true,
+                }}
+                className="w-full"
+            >
+                <CarouselContent className="-ml-2 md:-ml-4">
+                    {featuredImages.map((image, index) => (
+                        <CarouselItem
+                            key={index}
+                            className="pl-2 md:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/4"
+                        >
+                            <div
+                                className="group relative rounded-xl overflow-hidden border border-border/50 bg-card shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer"
+                                onClick={() =>
+                                    onOpenModal(featuredImages, index)
+                                }
+                                role="button"
+                                tabIndex={0}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter" || e.key === " ") {
+                                        e.preventDefault();
+                                        onOpenModal(featuredImages, index);
+                                    }
+                                }}
+                                aria-label={`View story image ${index + 1}`}
+                            >
+                                <div className="aspect-square overflow-hidden bg-muted/20">
+                                    <img
+                                        src={image}
+                                        alt={`YLCA Impact Story ${index + 1}`}
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                        loading="lazy"
+                                    />
+                                </div>
+                                <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <div className="absolute bottom-4 left-4 right-4">
+                                        <p className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                                            View Full Gallery
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </CarouselItem>
+                    ))}
+                </CarouselContent>
+                <CarouselPrevious className="hidden sm:flex -left-12 bg-background/90 hover:bg-background border-border/60" />
+                <CarouselNext className="hidden sm:flex -right-12 bg-background/90 hover:bg-background border-border/60" />
+            </Carousel>
+
+            {/* View All Photos Button */}
+            <div className="text-center mt-8">
+                <Button
+                    variant="outline"
+                    onClick={() => onOpenModal(storiesImages, 0)}
+                    className="border-2 border-primary/50 dark:border-primary/60 hover:bg-primary/10 dark:hover:bg-primary/20 px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-full font-semibold group"
+                >
+                    View All Photos
+                    <Globe className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
+                </Button>
+            </div>
+        </div>
+    );
 }
 
-function ImageModal({ images, initialIndex, isOpen, onClose }: { images: string[], initialIndex: number, isOpen: boolean, onClose: () => void }) {
-  const [currentIndex, setCurrentIndex] = useState(initialIndex)
-  const [touchStart, setTouchStart] = useState<number | null>(null)
-  const [touchEnd, setTouchEnd] = useState<number | null>(null)
+function ImageModal({
+    images,
+    initialIndex,
+    isOpen,
+    onClose,
+}: {
+    images: string[];
+    initialIndex: number;
+    isOpen: boolean;
+    onClose: () => void;
+}) {
+    const [currentIndex, setCurrentIndex] = useState(initialIndex);
+    const [touchStart, setTouchStart] = useState<number | null>(null);
+    const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
-  const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1))
-  }
+    const goToPrevious = () => {
+        setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    };
 
-  const goToNext = () => {
-    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1))
-  }
+    const goToNext = () => {
+        setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'ArrowLeft') goToPrevious()
-    if (e.key === 'ArrowRight') goToNext()
-    if (e.key === 'Escape') onClose()
-  }
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === "ArrowLeft") goToPrevious();
+        if (e.key === "ArrowRight") goToNext();
+        if (e.key === "Escape") onClose();
+    };
 
-  // Minimum swipe distance (in px)
-  const minSwipeDistance = 50
+    // Minimum swipe distance (in px)
+    const minSwipeDistance = 50;
 
-  const onTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null)
-    setTouchStart(e.targetTouches[0].clientX)
-  }
+    const onTouchStart = (e: React.TouchEvent) => {
+        setTouchEnd(null);
+        setTouchStart(e.targetTouches[0].clientX);
+    };
 
-  const onTouchMove = (e: React.TouchEvent) => setTouchEnd(e.targetTouches[0].clientX)
+    const onTouchMove = (e: React.TouchEvent) =>
+        setTouchEnd(e.targetTouches[0].clientX);
 
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return
-    const distance = touchStart - touchEnd
-    const isLeftSwipe = distance > minSwipeDistance
-    const isRightSwipe = distance < -minSwipeDistance
+    const onTouchEnd = () => {
+        if (!touchStart || !touchEnd) return;
+        const distance = touchStart - touchEnd;
+        const isLeftSwipe = distance > minSwipeDistance;
+        const isRightSwipe = distance < -minSwipeDistance;
 
-    if (isLeftSwipe) {
-      goToNext()
-    }
-    if (isRightSwipe) {
-      goToPrevious()
-    }
-  }
+        if (isLeftSwipe) {
+            goToNext();
+        }
+        if (isRightSwipe) {
+            goToPrevious();
+        }
+    };
 
-  // Prevent body scroll when modal is open - must be called before any early returns
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-      document.body.style.paddingRight = '0px' // Prevent layout shift
-    } else {
-      document.body.style.overflow = 'unset'
-      document.body.style.paddingRight = 'unset'
-    }
+    // Prevent body scroll when modal is open - must be called before any early returns
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = "hidden";
+            document.body.style.paddingRight = "0px"; // Prevent layout shift
+        } else {
+            document.body.style.overflow = "unset";
+            document.body.style.paddingRight = "unset";
+        }
 
-    return () => {
-      document.body.style.overflow = 'unset'
-      document.body.style.paddingRight = 'unset'
-    }
-  }, [isOpen])
+        return () => {
+            document.body.style.overflow = "unset";
+            document.body.style.paddingRight = "unset";
+        };
+    }, [isOpen]);
 
-  if (!isOpen) return null
+    if (!isOpen) return null;
 
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
-      onKeyDown={handleKeyDown}
-      tabIndex={-1}
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="modal-title"
-    >
-      <div className="relative w-full max-w-5xl max-h-full flex flex-col">
-        {/* Header with close button */}
-        <div className="flex justify-end mb-4 sm:mb-2">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-white hover:bg-white/20 h-10 w-10 sm:h-12 sm:w-12 rounded-full"
-            onClick={onClose}
-          >
-            <X className="h-5 w-5 sm:h-6 sm:w-6" />
-          </Button>
-        </div>
+    return (
+        <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
+            onKeyDown={handleKeyDown}
+            tabIndex={-1}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
+        >
+            <div className="relative w-full max-w-5xl max-h-full flex flex-col">
+                {/* Header with close button */}
+                <div className="flex justify-end mb-4 sm:mb-2">
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-white hover:bg-white/20 h-10 w-10 sm:h-12 sm:w-12 rounded-full"
+                        onClick={onClose}
+                    >
+                        <X className="h-5 w-5 sm:h-6 sm:w-6" />
+                    </Button>
+                </div>
 
-        {/* Image container */}
-        <div className="relative flex-1 flex items-center justify-center min-h-0">
-          {/* Navigation buttons - positioned better for mobile */}
-          {images.length > 1 && (
-            <>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/70 text-white border border-white/20 h-12 w-12 sm:h-14 sm:w-14 rounded-full shadow-lg backdrop-blur-sm transition-all duration-200 hover:scale-110 touch-manipulation"
-                onClick={goToPrevious}
-                aria-label="Previous image"
-              >
-                <ChevronLeft className="h-6 w-6 sm:h-8 sm:w-8" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/70 text-white border border-white/20 h-12 w-12 sm:h-14 sm:w-14 rounded-full shadow-lg backdrop-blur-sm transition-all duration-200 hover:scale-110 touch-manipulation"
-                onClick={goToNext}
-                aria-label="Next image"
-              >
-                <ChevronRight className="h-6 w-6 sm:h-8 sm:w-8" />
-              </Button>
-            </>
-          )}
+                {/* Image container */}
+                <div className="relative flex-1 flex items-center justify-center min-h-0">
+                    {/* Navigation buttons - positioned better for mobile */}
+                    {images.length > 1 && (
+                        <>
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/70 text-white border border-white/20 h-12 w-12 sm:h-14 sm:w-14 rounded-full shadow-lg backdrop-blur-sm transition-all duration-200 hover:scale-110 touch-manipulation"
+                                onClick={goToPrevious}
+                                aria-label="Previous image"
+                            >
+                                <ChevronLeft className="h-6 w-6 sm:h-8 sm:w-8" />
+                            </Button>
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/70 text-white border border-white/20 h-12 w-12 sm:h-14 sm:w-14 rounded-full shadow-lg backdrop-blur-sm transition-all duration-200 hover:scale-110 touch-manipulation"
+                                onClick={goToNext}
+                                aria-label="Next image"
+                            >
+                                <ChevronRight className="h-6 w-6 sm:h-8 sm:w-8" />
+                            </Button>
+                        </>
+                    )}
 
-          {/* Image */}
-          <img
-            src={images[currentIndex]}
-            alt={`December 2025 Outreach ${currentIndex + 1}`}
-            className="max-w-full max-h-full w-auto h-auto object-contain rounded-lg shadow-2xl select-none"
-            style={{
-              maxHeight: 'calc(100vh - 120px)', // Account for header and counter
-              maxWidth: '100vw'
-            }}
-            onTouchStart={onTouchStart}
-            onTouchMove={onTouchMove}
-            onTouchEnd={onTouchEnd}
-            draggable={false}
-          />
-        </div>
+                    {/* Image */}
+                    <img
+                        src={images[currentIndex]}
+                        alt={`December 2025 Outreach ${currentIndex + 1}`}
+                        className="max-w-full max-h-full w-auto h-auto object-contain rounded-lg shadow-2xl select-none"
+                        style={{
+                            maxHeight: "calc(100vh - 120px)", // Account for header and counter
+                            maxWidth: "100vw",
+                        }}
+                        onTouchStart={onTouchStart}
+                        onTouchMove={onTouchMove}
+                        onTouchEnd={onTouchEnd}
+                        draggable={false}
+                    />
+                </div>
 
-        {/* Footer with image counter */}
-        {images.length > 1 && (
-          <div className="flex justify-center mt-4 sm:mt-2">
-            <div className="bg-black/50 text-white px-4 py-2 rounded-full text-sm sm:text-base font-medium">
-              {currentIndex + 1} / {images.length}
+                {/* Footer with image counter */}
+                {images.length > 1 && (
+                    <div className="flex justify-center mt-4 sm:mt-2">
+                        <div className="bg-black/50 text-white px-4 py-2 rounded-full text-sm sm:text-base font-medium">
+                            {currentIndex + 1} / {images.length}
+                        </div>
+                    </div>
+                )}
             </div>
-          </div>
-        )}
-      </div>
-    </div>
-  )
+        </div>
+    );
 }
 
 export default function Impact() {
-  const [modalOpen, setModalOpen] = useState(false)
-  const [modalImages, setModalImages] = useState<string[]>([])
-  const [modalIndex, setModalIndex] = useState(0)
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalImages, setModalImages] = useState<string[]>([]);
+    const [modalIndex, setModalIndex] = useState(0);
 
-  const openModal = (images: string[], index: number) => {
-    setModalImages(images)
-    setModalIndex(index)
-    setModalOpen(true)
-  }
+    const openModal = (images: string[], index: number) => {
+        setModalImages(images);
+        setModalIndex(index);
+        setModalOpen(true);
+    };
 
-  const closeModal = () => {
-    setModalOpen(false)
-  }
+    const closeModal = () => {
+        setModalOpen(false);
+    };
 
-  return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      <main className="pt-20 sm:pt-24 pb-12 sm:pb-16 md:pb-20">
-        {/* Hero Section */}
-        <section className="relative px-4 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-28 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-primary/5"></div>
-          <div className="absolute top-0 right-0 w-64 h-64 sm:w-96 sm:h-96 bg-primary/10 dark:bg-primary/20 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-64 h-64 sm:w-96 sm:h-96 bg-secondary/10 dark:bg-secondary/20 rounded-full blur-3xl"></div>
-          
-          <div className="max-w-6xl mx-auto relative z-10">
-            <div className="text-center mb-8 sm:mb-12">
-              <Badge variant="default" className="mb-4 sm:mb-6 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">OUR IMPACT</Badge>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
-                Making a <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Global Impact</span>
-              </h1>
-              <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed px-4">
-                See how YLCA is making a difference in communities around the world.
-              </p>
-            </div>
-            
-            <div id="impact-page-stats" className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
-              <Card className="group relative overflow-hidden text-center border-2 border-border/60 dark:border-border/40 bg-gradient-to-br from-card via-card to-card/95 backdrop-blur-sm transition-all duration-300 hover:shadow-2xl hover:shadow-primary/25 dark:hover:shadow-primary/30 hover:-translate-y-2 hover:border-primary/50 dark:hover:border-primary/60 hover:scale-[1.02]">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <CardContent className="relative pt-6">
-                  <div className="mb-3 flex justify-center">
-                    <div className="w-14 h-14 bg-gradient-to-br from-primary/30 via-primary/20 to-primary/10 dark:from-primary/40 dark:via-primary/30 dark:to-primary/20 rounded-2xl flex items-center justify-center shadow-lg shadow-primary/20 dark:shadow-primary/30 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
-                      <Users className="w-8 h-8 text-primary" />
-                    </div>
-                  </div>
-                  <div className="text-4xl md:text-5xl font-bold bg-gradient-to-br from-primary via-primary to-primary/80 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300 tabular-nums min-h-[1.2em]">
-                    <AnimatedNumber value={2500} suffix="+" observeSectionId="impact-page-stats" />
-                  </div>
-                  <CardDescription className="font-semibold text-sm">Students Reached</CardDescription>
-                </CardContent>
-              </Card>
-              <Card className="group relative overflow-hidden text-center border-2 border-border/60 dark:border-border/40 bg-gradient-to-br from-card via-card to-card/95 backdrop-blur-sm transition-all duration-300 hover:shadow-2xl hover:shadow-secondary/25 dark:hover:shadow-secondary/30 hover:-translate-y-2 hover:border-secondary/50 dark:hover:border-secondary/60 hover:scale-[1.02]">
-                <div className="absolute inset-0 bg-gradient-to-br from-secondary/10 via-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <CardContent className="relative pt-6">
-                  <div className="mb-3 flex justify-center">
-                    <div className="w-14 h-14 bg-gradient-to-br from-secondary/30 via-secondary/20 to-secondary/10 dark:from-secondary/40 dark:via-secondary/30 dark:to-secondary/20 rounded-2xl flex items-center justify-center shadow-lg shadow-secondary/20 dark:shadow-secondary/30 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
-                      <GraduationCap className="w-8 h-8 text-secondary" />
-                    </div>
-                  </div>
-                  <div className="text-4xl md:text-5xl font-bold bg-gradient-to-br from-secondary via-secondary to-secondary/80 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300 tabular-nums min-h-[1.2em]">
-                    <AnimatedNumber value={25} suffix="+" observeSectionId="impact-page-stats" />
-                  </div>
-                  <CardDescription className="font-semibold text-sm">Workshops Delivered</CardDescription>
-                </CardContent>
-              </Card>
-              <Card className="group relative overflow-hidden text-center border-2 border-border/60 dark:border-border/40 bg-gradient-to-br from-card via-card to-card/95 backdrop-blur-sm transition-all duration-300 hover:shadow-2xl hover:shadow-primary/25 dark:hover:shadow-primary/30 hover:-translate-y-2 hover:border-primary/50 dark:hover:border-primary/60 hover:scale-[1.02]">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <CardContent className="relative pt-6">
-                  <div className="mb-3 flex justify-center">
-                    <div className="w-14 h-14 bg-gradient-to-br from-primary/30 via-primary/20 to-primary/10 dark:from-primary/40 dark:via-primary/30 dark:to-primary/20 rounded-2xl flex items-center justify-center shadow-lg shadow-primary/20 dark:shadow-primary/30 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
-                      <Globe className="w-8 h-8 text-primary" />
-                    </div>
-                  </div>
-                  <div className="text-4xl md:text-5xl font-bold bg-gradient-to-br from-primary via-primary to-primary/80 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300 tabular-nums min-h-[1.2em]">
-                    <AnimatedNumber value={3} observeSectionId="impact-page-stats" />
-                  </div>
-                  <CardDescription className="font-semibold text-sm">Corporate Partners</CardDescription>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
+    return (
+        <div className="min-h-screen bg-background">
+            <Navigation />
+            <main className="pt-20 sm:pt-24 pb-12 sm:pb-16 md:pb-20">
+                {/* Hero Section */}
+                <section className="relative px-4 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-28 overflow-hidden">
+                    <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-secondary/5 to-primary/5"></div>
+                    <div className="absolute top-0 right-0 w-64 h-64 sm:w-96 sm:h-96 bg-primary/10 dark:bg-primary/20 rounded-full blur-3xl"></div>
+                    <div className="absolute bottom-0 left-0 w-64 h-64 sm:w-96 sm:h-96 bg-secondary/10 dark:bg-secondary/20 rounded-full blur-3xl"></div>
 
-        {/* Event Locations Map */}
-        <ImpactMap />
+                    <div className="max-w-6xl mx-auto relative z-10">
+                        <div className="text-center mb-8 sm:mb-12">
+                            <Badge
+                                variant="default"
+                                className="mb-4 sm:mb-6 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm"
+                            >
+                                OUR IMPACT
+                            </Badge>
+                            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
+                                Making a{" "}
+                                <span className="bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
+                                    Global Impact
+                                </span>
+                            </h1>
+                            <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed px-4">
+                                See how YLCA is making a difference across 25+
+                                schools, 60+ ambassadors, and 4 countries.
+                            </p>
+                        </div>
 
-        {/* Success Stories & Testimonials - shareable: /impact#success-stories */}
-        <section id="success-stories" className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background scroll-mt-24">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-8 sm:mb-12 md:mb-16">
-              <Badge variant="secondary" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">SUCCESS STORIES</Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
-                <span>Voices from Our <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Community</span></span>
-                <a href="#success-stories" onClick={(e) => { e.preventDefault(); const url = typeof window !== "undefined" ? `${window.location.origin}/impact#success-stories` : "/impact#success-stories"; navigator.clipboard?.writeText(url).then(() => { const btn = e.currentTarget; btn.setAttribute("aria-label", "Link copied!"); btn.classList.add("ring-2", "ring-primary"); setTimeout(() => { btn.setAttribute("aria-label", "Copy link"); btn.classList.remove("ring-2", "ring-primary"); }, 1500); }); }} className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0" aria-label="Copy link" title="Copy link to share"><Link2 className="w-5 h-5" /></a>
-              </h2>
-              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
-                Real stories from ambassadors, teachers, and students who are making a difference through YLCA.
-              </p>
-            </div>
-
-            {/* Testimonials Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-16">
-              <Card className="group relative overflow-hidden border-2 border-border/50 dark:border-border/30 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary/40 dark:hover:border-primary/50">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <CardHeader className="relative">
-                  <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/10 dark:from-primary/30 dark:to-primary/20 rounded-xl flex items-center justify-center mb-4 shadow-md group-hover:scale-110 transition-transform duration-300">
-                    <Star className="w-7 h-7 text-primary" />
-                  </div>
-                  <CardTitle className="font-bold">Ambassador Success</CardTitle>
-                </CardHeader>
-                <CardContent className="relative">
-                  <CardDescription className="mb-4 italic leading-relaxed text-sm">
-                    "YLCA gave me the confidence to start a cybersecurity club. I've trained over 50 students and helped them understand digital safety. This experience has been life-changing!"
-                  </CardDescription>
-                  <div className="flex items-center gap-3 pt-4 border-t border-border/30">
-                    <Avatar className="bg-primary/10 text-primary">
-                      <AvatarFallback>A</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="text-sm font-semibold text-foreground">YLCA Ambassador</p>
-                      <p className="text-xs text-muted-foreground">California, USA</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="group relative overflow-hidden border-2 border-border/50 dark:border-border/30 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-secondary/40 dark:hover:border-secondary/50">
-                <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <CardHeader className="relative">
-                  <div className="w-14 h-14 bg-gradient-to-br from-secondary/20 to-secondary/10 dark:from-secondary/30 dark:to-secondary/20 rounded-xl flex items-center justify-center mb-4 shadow-md group-hover:scale-110 transition-transform duration-300">
-                    <GraduationCap className="w-7 h-7 text-secondary" />
-                  </div>
-                  <CardTitle className="font-bold">School Impact</CardTitle>
-                </CardHeader>
-                <CardContent className="relative">
-                  <CardDescription className="mb-4 italic leading-relaxed text-sm">
-                    "The YLCA workshop opened our students' eyes to real-world online threats. They're now more aware and better prepared to protect themselves and their peers."
-                  </CardDescription>
-                  <div className="flex items-center gap-3 pt-4 border-t border-border/30">
-                    <Avatar className="bg-secondary/10 text-secondary">
-                      <AvatarFallback>T</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="text-sm font-semibold text-foreground">High School Teacher</p>
-                      <p className="text-xs text-muted-foreground">India</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="group relative overflow-hidden border-2 border-border/50 dark:border-border/30 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary/40 dark:hover:border-primary/50">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <CardHeader className="relative">
-                  <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-secondary/20 dark:from-primary/30 dark:to-secondary/30 rounded-xl flex items-center justify-center mb-4 shadow-md group-hover:scale-110 transition-transform duration-300">
-                    <Globe className="w-7 h-7 text-primary" />
-                  </div>
-                  <CardTitle className="font-bold">Global Community</CardTitle>
-                </CardHeader>
-                <CardContent className="relative">
-                  <CardDescription className="mb-4 italic leading-relaxed text-sm">
-                    "Being part of YLCA's global community connected me with peers worldwide. We share ideas, collaborate on projects, and support each other's growth."
-                  </CardDescription>
-                  <div className="flex items-center gap-3 pt-4 border-t border-border/30">
-                    <Avatar className="bg-primary/10 text-primary">
-                      <AvatarFallback>S</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="text-sm font-semibold text-foreground">YLCA Student</p>
-                      <p className="text-xs text-muted-foreground">Guatemala</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-
-        {/* Photo Gallery Showcase - shareable: /impact#photo-gallery */}
-        <section id="photo-gallery" className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/20 scroll-mt-24">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-8 sm:mb-12 md:mb-16">
-              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">PHOTO GALLERY</Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
-                <span>Moments That <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Matter</span></span>
-                <a href="#photo-gallery" onClick={(e) => { e.preventDefault(); const url = typeof window !== "undefined" ? `${window.location.origin}/impact#photo-gallery` : "/impact#photo-gallery"; navigator.clipboard?.writeText(url).then(() => { const btn = e.currentTarget; btn.setAttribute("aria-label", "Link copied!"); btn.classList.add("ring-2", "ring-primary"); setTimeout(() => { btn.setAttribute("aria-label", "Copy link"); btn.classList.remove("ring-2", "ring-primary"); }, 1500); }); }} className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0" aria-label="Copy link" title="Copy link to share"><Link2 className="w-5 h-5" /></a>
-              </h2>
-              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
-                Capturing the energy, learning, and impact of YLCA workshops and events around the world.
-              </p>
-            </div>
-
-            {/* Featured Photo Carousel */}
-            <StoriesCarousel onOpenModal={openModal} />
-          </div>
-        </section>
-
-        {/* August 2025 – From Book to Action - shareable: /impact#august-2025 */}
-        <section id="august-2025" className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden scroll-mt-24">
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute top-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-          </div>
-
-          <div className="max-w-6xl mx-auto relative z-10">
-            <div className="text-center mb-8 sm:mb-12">
-              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">AUGUST 2025</Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
-                <span>From Book to Action: <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Cybersecurity for Teens Workshop Empowers Local Students</span></span>
-                <a href="#august-2025" onClick={(e) => { e.preventDefault(); const url = typeof window !== "undefined" ? `${window.location.origin}/impact#august-2025` : "/impact#august-2025"; navigator.clipboard?.writeText(url).then(() => { const btn = e.currentTarget; btn.setAttribute("aria-label", "Link copied!"); btn.classList.add("ring-2", "ring-primary"); setTimeout(() => { btn.setAttribute("aria-label", "Copy link"); btn.classList.remove("ring-2", "ring-primary"); }, 1500); }); }} className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0" aria-label="Copy link" title="Copy link to share"><Link2 className="w-5 h-5" /></a>
-              </h2>
-              <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
-                August 2025 — Live Zoom workshop for middle and high school students in Cupertino and Saratoga
-              </p>
-            </div>
-
-            <Card className="border-2 border-primary/30 dark:border-primary/40 bg-gradient-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
-              <div className="bg-gradient-to-r from-primary/10 to-secondary/10 px-6 py-4 border-b border-border/50">
-                <div className="flex items-center gap-3">
-                  <Badge variant="default" className="text-xs">AUGUST 2025</Badge>
-                  <h3 className="text-lg sm:text-xl font-bold text-foreground">From Book to Action: Cybersecurity for Teens Workshop Empowers Local Students/Teens</h3>
-                </div>
-                <p className="text-sm text-muted-foreground mt-1">Following the launch of Cybersecurity for Teens on Amazon — Founder Arth Bhardwaj hosted a live Zoom workshop for Cupertino & Saratoga students</p>
-              </div>
-
-              <CardContent className="p-6 sm:p-8">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
-                  <div className="lg:col-span-1 space-y-4">
-                    <div className="relative rounded-xl overflow-hidden border-2 border-border/40 shadow-lg group">
-                      <img
-                        src={august2025Images[0]}
-                        alt="Cybersecurity for Teens workshop — August 2025"
-                        className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer"
-                        loading="lazy"
-                        onClick={() => openModal(august2025Images, 0)}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                        <p className="text-xs font-semibold">August 2025 — Book to Action Workshop</p>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-3">
-                      {august2025Images.slice(1, 5).map((image, index) => (
                         <div
-                          key={image}
-                          className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
-                          onClick={() => openModal(august2025Images, index + 1)}
-                          role="button"
-                          tabIndex={0}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                              e.preventDefault()
-                              openModal(august2025Images, index + 1)
-                            }
-                          }}
-                          aria-label={`View August 2025 workshop image ${index + 2}`}
+                            id="impact-page-stats"
+                            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6"
                         >
-                          <img
-                            src={image}
-                            alt={`Cybersecurity for Teens Workshop August 2025 ${index + 2}`}
-                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                            loading="lazy"
-                          />
+                            <Card className="group relative overflow-hidden text-center border-2 border-border/60 dark:border-border/40 bg-linear-to-br from-card via-card to-card/95 backdrop-blur-sm transition-all duration-300 hover:shadow-2xl hover:shadow-primary/25 dark:hover:shadow-primary/30 hover:-translate-y-2 hover:border-primary/50 dark:hover:border-primary/60 hover:scale-[1.02]">
+                                <div className="absolute inset-0 bg-linear-to-br from-primary/10 via-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                <CardContent className="relative pt-6">
+                                    <div className="mb-3 flex justify-center">
+                                        <div className="w-14 h-14 bg-linear-to-br from-primary/30 via-primary/20 to-primary/10 dark:from-primary/40 dark:via-primary/30 dark:to-primary/20 rounded-2xl flex items-center justify-center shadow-lg shadow-primary/20 dark:shadow-primary/30 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                                            <Users className="w-8 h-8 text-primary" />
+                                        </div>
+                                    </div>
+                                    <div className="text-4xl md:text-5xl font-bold bg-linear-to-br from-primary via-primary to-primary/80 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300 tabular-nums min-h-[1.2em]">
+                                        <AnimatedNumber
+                                            value={2500}
+                                            suffix="+"
+                                            observeSectionId="impact-page-stats"
+                                        />
+                                    </div>
+                                    <CardDescription className="font-semibold text-sm">
+                                        Students Reached
+                                    </CardDescription>
+                                </CardContent>
+                            </Card>
+                            <Card className="group relative overflow-hidden text-center border-2 border-border/60 dark:border-border/40 bg-linear-to-br from-card via-card to-card/95 backdrop-blur-sm transition-all duration-300 hover:shadow-2xl hover:shadow-secondary/25 dark:hover:shadow-secondary/30 hover:-translate-y-2 hover:border-secondary/50 dark:hover:border-secondary/60 hover:scale-[1.02]">
+                                <div className="absolute inset-0 bg-linear-to-br from-secondary/10 via-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                <CardContent className="relative pt-6">
+                                    <div className="mb-3 flex justify-center">
+                                        <div className="w-14 h-14 bg-linear-to-br from-secondary/30 via-secondary/20 to-secondary/10 dark:from-secondary/40 dark:via-secondary/30 dark:to-secondary/20 rounded-2xl flex items-center justify-center shadow-lg shadow-secondary/20 dark:shadow-secondary/30 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                                            <GraduationCap className="w-8 h-8 text-secondary" />
+                                        </div>
+                                    </div>
+                                    <div className="text-4xl md:text-5xl font-bold bg-linear-to-br from-secondary via-secondary to-secondary/80 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300 tabular-nums min-h-[1.2em]">
+                                        <AnimatedNumber
+                                            value={25}
+                                            observeSectionId="impact-page-stats"
+                                        />
+                                    </div>
+                                    <CardDescription className="font-semibold text-sm">
+                                        Schools Reached
+                                    </CardDescription>
+                                </CardContent>
+                            </Card>
+                            <Card className="group relative overflow-hidden text-center border-2 border-border/60 dark:border-border/40 bg-linear-to-br from-card via-card to-card/95 backdrop-blur-sm transition-all duration-300 hover:shadow-2xl hover:shadow-primary/25 dark:hover:shadow-primary/30 hover:-translate-y-2 hover:border-primary/50 dark:hover:border-primary/60 hover:scale-[1.02]">
+                                <div className="absolute inset-0 bg-linear-to-br from-primary/10 via-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                <CardContent className="relative pt-6">
+                                    <div className="mb-3 flex justify-center">
+                                        <div className="w-14 h-14 bg-linear-to-br from-primary/30 via-primary/20 to-primary/10 dark:from-primary/40 dark:via-primary/30 dark:to-primary/20 rounded-2xl flex items-center justify-center shadow-lg shadow-primary/20 dark:shadow-primary/30 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                                            <Users className="w-8 h-8 text-primary" />
+                                        </div>
+                                    </div>
+                                    <div className="text-4xl md:text-5xl font-bold bg-linear-to-br from-primary via-primary to-primary/80 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300 tabular-nums min-h-[1.2em]">
+                                        <AnimatedNumber
+                                            value={60}
+                                            suffix="+"
+                                            observeSectionId="impact-page-stats"
+                                        />
+                                    </div>
+                                    <CardDescription className="font-semibold text-sm">
+                                        Trained Ambassadors
+                                    </CardDescription>
+                                </CardContent>
+                            </Card>
                         </div>
-                      ))}
                     </div>
-                  </div>
+                </section>
 
-                  <div className="lg:col-span-2 space-y-4">
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                      Following the launch of{" "}
-                      <a href="https://www.amazon.com/dp/B0FMPF2WN5" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:text-secondary underline underline-offset-2">Cybersecurity for Teens on Amazon</a>, our Founder{" "}
-                      <span className="font-semibold text-foreground">Arth Bhardwaj</span> hosted a live Zoom workshop for middle and high school students in Cupertino and Saratoga to introduce the book's purpose and turn it into an actionable, student-friendly playbook for online safety.
-                    </p>
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                      Building on real threats teens face—from scams and phishing to account takeovers and misinformation—the session walked students through how to use the book as a step-by-step self-learning manual, with practical checklists, mini-challenges, and habits they could apply immediately.
-                    </p>
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                      The workshop also showed students how to convert learning into leadership by using the book as a blueprint to launch a cybersecurity club at their school—planning a first meeting, choosing topics, and running peer-led awareness sessions.
-                    </p>
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed font-medium">
-                      Students left with clear next steps, resources to keep learning independently, and the confidence to become digital-safety leaders in their own school communities.
-                    </p>
-                    <div className="pt-4">
-                      <a
-                        href="https://www.amazon.com/dp/B0FMPF2WN5"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-secondary transition-colors underline underline-offset-2"
-                      >
-                        View Cybersecurity for Teens on Amazon
-                        <span className="sr-only">(opens in new tab)</span>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <div className="text-center mt-8">
-              <Button
-                variant="outline"
-                onClick={() => openModal(august2025Images, 0)}
-                className="border-2 border-primary/50 dark:border-primary/60 hover:bg-primary/10 dark:hover:bg-primary/20 px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-full font-semibold group"
-              >
-                View All August 2025 Workshop Photos
-                <GraduationCap className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
-              </Button>
-            </div>
-          </div>
-        </section>
-
-        {/* Founder Arth Bhardwaj & Ambassador Vedika - shareable: /impact#december-vedika */}
-        <section id="december-vedika" className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden scroll-mt-24">
-          {/* Decorative elements */}
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute top-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-          </div>
-
-          <div className="max-w-6xl mx-auto relative z-10">
-            <div className="text-center mb-8 sm:mb-12">
-              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">DECEMBER IMPACT</Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
-                <span>Founder Arth Bhardwaj & Ambassador Vedika: <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Hosting Workshops in Delhi Government Schools</span></span>
-                <a href="#december-vedika" onClick={(e) => { e.preventDefault(); const url = typeof window !== "undefined" ? `${window.location.origin}/impact#december-vedika` : "/impact#december-vedika"; navigator.clipboard?.writeText(url).then(() => { const btn = e.currentTarget; btn.setAttribute("aria-label", "Link copied!"); btn.classList.add("ring-2", "ring-primary"); setTimeout(() => { btn.setAttribute("aria-label", "Copy link"); btn.classList.remove("ring-2", "ring-primary"); }, 1500); }); }} className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0" aria-label="Copy link" title="Copy link to share"><Link2 className="w-5 h-5" /></a>
-              </h2>
-              <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
-                YLCA Founder and Ambassador leading hands-on cyber safety workshops across Delhi government schools
-              </p>
-            </div>
-
-            {/* Featured Initiative: December 2025 */}
-            <div className="mb-12 sm:mb-16">
-              <Card className="border-2 border-primary/30 dark:border-primary/40 bg-gradient-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
-                <div className="bg-gradient-to-r from-primary/10 to-secondary/10 px-6 py-4 border-b border-border/50">
-                  <div className="flex items-center gap-3">
-                    <Badge variant="default" className="text-xs">DECEMBER 2025</Badge>
-                    <h3 className="text-lg sm:text-xl font-bold text-foreground">In-Person Cyber Safety Outreach</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground mt-1">Students leading cyber safety education across schools and communities</p>
-                </div>
-
-                <CardContent className="p-6 sm:p-8">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-                    <div className="space-y-4">
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                        In December 2025, YLCA students stepped beyond classrooms to deliver hands-on cybersecurity and AI awareness sessions across communities in India. Led by founder Arth Bhardwaj and Ambassador Vedika Jain, the initiative reached 500+ students across multiple Delhi government schools, focusing on everyday digital safety topics such as online scams, privacy protection, and responsible use of technology.
-                      </p>
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                        Arth also conducted workshops for 50+ students at boys' tennis training camps, highlighting social media and gaming account security. In addition, sessions with young factory workers and senior citizens at a community clubhouse addressed financial fraud, mobile security, and common digital risks.
-                      </p>
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed font-medium">
-                        Through these in-person efforts, YLCA demonstrated how student leadership can translate technical knowledge into meaningful, real-world impact.
-                      </p>
-
-                      {/* Key Highlights */}
-                      <div className="grid grid-cols-2 gap-3 pt-4">
-                        <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
-                          <div className="text-xl font-bold text-primary mb-1">500+</div>
-                          <p className="text-xs text-muted-foreground">Students Reached</p>
+                {/* Quarterly Impact Line Chart */}
+                <section className="px-4 sm:px-6 lg:px-8 pb-8 sm:pb-10 md:pb-12">
+                    <div className="max-w-6xl mx-auto">
+                        <div className="text-center mb-6 sm:mb-8">
+                            <Badge
+                                variant="outline"
+                                className="mb-3 px-4 sm:px-5 py-1.5 text-xs sm:text-sm"
+                            >
+                                MAY 2025 – MARCH 2026
+                            </Badge>
+                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2 sm:mb-3 tracking-tight">
+                                Impact Growth Over Time
+                            </h2>
+                            <p className="text-xs sm:text-sm md:text-base text-muted-foreground max-w-2xl mx-auto px-4">
+                                Quarterly view of{" "}
+                                <span className="font-semibold text-foreground">
+                                    schools reached
+                                </span>
+                                ,{" "}
+                                <span className="font-semibold text-foreground">
+                                    ambassadors
+                                </span>
+                                , and{" "}
+                                <span className="font-semibold text-foreground">
+                                    approximate hours of online + offline
+                                    engagement
+                                </span>
+                                .
+                            </p>
                         </div>
-                        <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
-                          <div className="text-xl font-bold text-secondary mb-1">50+</div>
-                          <p className="text-xs text-muted-foreground">Tennis Camp Students</p>
+
+                        <div className="w-full max-w-4xl mx-auto relative group">
+                            <ChartContainer
+                                id="impact-quarterly"
+                                config={quarterlyImpactConfig}
+                                className="mb-6 h-80 rounded-2xl border-2 border-border/40 bg-linear-to-br from-card via-card/95 to-muted/30 cursor-default relative overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:border-primary/30"
+                            >
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart
+                                        data={quarterlyImpactData}
+                                        margin={{
+                                            left: 20,
+                                            right: 50,
+                                            top: 20,
+                                            bottom: 20,
+                                        }}
+                                    >
+                                        <CartesianGrid
+                                            strokeDasharray="4 4"
+                                            stroke="hsl(var(--border))"
+                                            opacity={0.3}
+                                            vertical={false}
+                                        />
+                                        <XAxis
+                                            dataKey="quarter"
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tick={{
+                                                fill: "hsl(var(--muted-foreground))",
+                                                fontSize: 13,
+                                                fontWeight: 500,
+                                            }}
+                                        />
+                                        <YAxis
+                                            yAxisId="left"
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tick={{
+                                                fill: "hsl(var(--muted-foreground))",
+                                                fontSize: 12,
+                                            }}
+                                            label={{
+                                                value: "Schools & Ambassadors",
+                                                angle: -90,
+                                                position: "insideLeft",
+                                                style: {
+                                                    fontSize: 12,
+                                                    fontWeight: 600,
+                                                    fill: "hsl(var(--foreground))",
+                                                },
+                                            }}
+                                        />
+                                        <YAxis
+                                            yAxisId="right"
+                                            orientation="right"
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tick={{
+                                                fill: "hsl(var(--muted-foreground))",
+                                                fontSize: 12,
+                                            }}
+                                            label={{
+                                                value: "Hours",
+                                                angle: 90,
+                                                position: "insideRight",
+                                                style: {
+                                                    fontSize: 12,
+                                                    fontWeight: 600,
+                                                    fill: "hsl(var(--foreground))",
+                                                },
+                                            }}
+                                        />
+                                        <ChartTooltip
+                                            content={
+                                                <ChartTooltipContent
+                                                    indicator="line"
+                                                    className="rounded-xl border-2 border-border/60 bg-card/95 backdrop-blur-sm shadow-xl"
+                                                />
+                                            }
+                                            cursor={{
+                                                fill: "hsl(var(--primary)/0.1)",
+                                            }}
+                                        />
+                                        <Bar
+                                            yAxisId="left"
+                                            dataKey="schools"
+                                            fill="hsl(var(--primary))"
+                                            radius={[12, 12, 4, 4]}
+                                            isAnimationActive={true}
+                                            animationDuration={800}
+                                            shape={<rect />}
+                                            opacity={0.95}
+                                        />
+                                        <Bar
+                                            yAxisId="left"
+                                            dataKey="ambassadors"
+                                            fill="hsl(var(--secondary))"
+                                            radius={[12, 12, 4, 4]}
+                                            isAnimationActive={true}
+                                            animationDuration={800}
+                                            opacity={0.95}
+                                        />
+                                        <Bar
+                                            yAxisId="right"
+                                            dataKey="hours"
+                                            fill="hsl(var(--muted-foreground))"
+                                            radius={[12, 12, 4, 4]}
+                                            isAnimationActive={true}
+                                            animationDuration={800}
+                                            opacity={0.85}
+                                        />
+                                        <ChartLegend
+                                            content={<ChartLegendContent />}
+                                            className="font-medium"
+                                            wrapperStyle={{
+                                                paddingTop: "16px",
+                                            }}
+                                        />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </ChartContainer>
                         </div>
-                      </div>
-                    </div>
-
-                    <div className="space-y-4">
-                      <h4 className="text-lg font-bold text-foreground mb-3">Event Highlights</h4>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        {[
-                          "/december/WhatsApp Image 2025-12-27 at 09.23.45.jpeg",
-                          "/december/WhatsApp Image 2025-12-27 at 09.24.01.jpeg",
-                          "/december/WhatsApp Image 2025-12-27 at 09.23.58.jpeg",
-                          "/december/WhatsApp Image 2025-12-27 at 09.24.05.jpeg",
-                          "/december/WhatsApp Image 2025-12-27 at 09.23.11.jpeg",
-                          "/december/WhatsApp Image 2025-12-27 at 09.23.48.jpeg"
-                        ].map((image, index) => (
-                          <div
-                            key={index}
-                            className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
-                            onClick={() => openModal(decemberImages, decemberImages.indexOf(image))}
-                            role="button"
-                            tabIndex={0}
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter' || e.key === ' ') {
-                                e.preventDefault()
-                                openModal(decemberImages, decemberImages.indexOf(image))
-                              }
-                            }}
-                            aria-label={`View December 2025 image ${index + 1} in gallery`}
-                          >
-                            <img
-                              src={image}
-                              alt="December 2025 Outreach"
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                              loading="lazy"
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* View All December Photos */}
-            <div className="text-center">
-              <Button
-                variant="outline"
-                onClick={() => openModal(decemberImages, 0)}
-                className="border-2 border-primary/50 dark:border-primary/60 hover:bg-primary/10 dark:hover:bg-primary/20 px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-full font-semibold group"
-              >
-                View All December 2025 Photos
-                <GraduationCap className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
-              </Button>
-            </div>
-          </div>
-        </section>
-
-        {/* Featured Initiative: DPS Karnal - shareable: /impact#dps-karnal */}
-        <section id="dps-karnal" className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden scroll-mt-24">
-          {/* Decorative elements */}
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute top-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-          </div>
-
-          <div className="max-w-6xl mx-auto relative z-10">
-            <div className="text-center mb-8 sm:mb-12">
-              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">SCHOOL PARTNERSHIP</Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
-                <span>DPS Karnal Hosts Arth <span className="bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">Bhardwaj</span></span>
-                <a href="#dps-karnal" onClick={(e) => { e.preventDefault(); const url = typeof window !== "undefined" ? `${window.location.origin}/impact#dps-karnal` : "/impact#dps-karnal"; navigator.clipboard?.writeText(url).then(() => { const btn = e.currentTarget; btn.setAttribute("aria-label", "Link copied!"); btn.classList.add("ring-2", "ring-primary"); setTimeout(() => { btn.setAttribute("aria-label", "Copy link"); btn.classList.remove("ring-2", "ring-primary"); }, 1500); }); }} className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0" aria-label="Copy link" title="Copy link to share"><Link2 className="w-5 h-5" /></a>
-              </h2>
-              <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
-                A full-day campus visit where YLCA's founder met Grades 9-12 students and mentored newly nominated ambassadors
-              </p>
-            </div>
-
-            <div className="mb-12 sm:mb-16">
-              <Card className="border-2 border-secondary/30 dark:border-secondary/40 bg-gradient-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
-                <div className="bg-gradient-to-r from-secondary/10 to-primary/10 px-6 py-4 border-b border-border/50">
-                  <div className="flex items-center gap-3">
-                    <Badge variant="default" className="text-xs">DECEMBER 2025</Badge>
-                    <h3 className="text-lg sm:text-xl font-bold text-foreground">DPS Karnal Campus Visit</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground mt-1">Arth Bhardwaj's full-day campus visit and ambassador mentorship</p>
-                </div>
-
-                <CardContent className="p-6 sm:p-8">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-                    <div className="space-y-4">
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                        On December 29, 2025, YLCA Founder Arth Bhardwaj visited Delhi Public School (DPS) Karnal, India in person to deepen YLCA's growing partnership with the school. Arth addressed students from Grades 9-12 on why cybersecurity and responsible AI matter in everyday life—and how student-led passion projects build confidence, leadership, and real community impact.
-                      </p>
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                        A key highlight of the day was a focused planning session with DPS Karnal's six nominated YLCA Ambassadors, who will join the YLCA Global Ambassador Program (Jan 2026 cohort). Together, they mapped out student-led initiatives such as cyber safety awareness drives, responsible AI learning circles, digital citizenship campaigns, and peer-to-peer workshops designed to build digital trust across the school community.
-                      </p>
-
-                      {/* Key Highlights */}
-                      <div className="grid grid-cols-2 gap-3 pt-4">
-                        <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
-                          <div className="text-xl font-bold text-secondary mb-1">6</div>
-                          <p className="text-xs text-muted-foreground">New Ambassadors</p>
-                        </div>
-                        <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
-                          <div className="text-xl font-bold text-primary mb-1">Grades 9-12</div>
-                          <p className="text-xs text-muted-foreground">Students Engaged</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="space-y-4">
-                      <div className="aspect-video overflow-hidden rounded-lg border border-border/30">
-                        <img
-                          src="/dps/hero.png"
-                          alt="Arth Bhardwaj at DPS Karnal Campus Visit"
-                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
-                          onClick={() => openModal(dpsImages, 0)}
-                          loading="lazy"
-                        />
-                      </div>
-
-                      <h4 className="text-lg font-bold text-foreground mb-3">Campus Visit Highlights</h4>
-                      <div className="grid grid-cols-2 gap-3">
-                        {[
-                          "/dps/image.png",
-                          "/dps/WhatsApp Image 2025-12-31 at 13.29.48.jpeg"
-                        ].map((image, index) => (
-                          <div
-                            key={index}
-                            className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
-                            onClick={() => openModal(dpsImages, index)}
-                            role="button"
-                            tabIndex={0}
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter' || e.key === ' ') {
-                                e.preventDefault()
-                                openModal(dpsImages, index)
-                              }
-                            }}
-                            aria-label={`View DPS Karnal image ${index + 1} in gallery`}
-                          >
-                            <img
-                              src={image}
-                              alt="DPS Karnal Campus Visit"
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                              loading="lazy"
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* View All DPS Photos */}
-            <div className="text-center mb-8">
-              <Button
-                variant="outline"
-                onClick={() => openModal(dpsImages, 0)}
-                className="border-2 border-secondary/50 dark:border-secondary/60 hover:bg-secondary/10 dark:hover:bg-secondary/20 px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-full font-semibold group"
-              >
-                View All DPS Karnal Photos
-                <Users className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
-              </Button>
-            </div>
-          </div>
-        </section>
-
-        {/* December Sports + AI Workshop - shareable: /impact#sports-ai-workshop */}
-        <section id="sports-ai-workshop" className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden scroll-mt-24">
-          {/* Decorative elements */}
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute top-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-          </div>
-
-          <div className="max-w-6xl mx-auto relative z-10">
-            <div className="text-center mb-8 sm:mb-12">
-              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">DECEMBER IMPACT</Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
-                <span>Sports + AI <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Digital Safety Workshop</span></span>
-                <a href="#sports-ai-workshop" onClick={(e) => { e.preventDefault(); const url = typeof window !== "undefined" ? `${window.location.origin}/impact#sports-ai-workshop` : "/impact#sports-ai-workshop"; navigator.clipboard?.writeText(url).then(() => { const btn = e.currentTarget; btn.setAttribute("aria-label", "Link copied!"); btn.classList.add("ring-2", "ring-primary"); setTimeout(() => { btn.setAttribute("aria-label", "Copy link"); btn.classList.remove("ring-2", "ring-primary"); }, 1500); }); }} className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0" aria-label="Copy link" title="Copy link to share"><Link2 className="w-5 h-5" /></a>
-              </h2>
-              <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
-                YLCA Founder Arth Bhardwaj hosted an interactive workshop for teen athletes in Ambala, Haryana, focusing on online scams, privacy, and AI-driven misinformation.
-              </p>
-            </div>
-
-            {/* Featured Initiative: Sports + AI Workshop */}
-            <div className="mb-12 sm:mb-16">
-              <Card className="border-2 border-secondary/30 dark:border-secondary/40 bg-gradient-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
-                <div className="bg-gradient-to-r from-secondary/10 to-primary/10 px-6 py-4 border-b border-border/50">
-                  <div className="flex items-center gap-3">
-                    <Badge variant="default" className="text-xs">DECEMBER 2025</Badge>
-                    <h3 className="text-lg sm:text-xl font-bold text-foreground">Tennis Academy Workshop - Ambala, Haryana</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground mt-1">Teaching digital safety through sports scenarios for teen athletes</p>
-                </div>
-
-                <CardContent className="p-6 sm:p-8">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-                    <div className="space-y-4">
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                        YLCA Founder <span className="font-semibold text-foreground">Arth Bhardwaj</span> hosted a teen workshop at a Tennis Academy in Ambala, Haryana, teaching digital safety through a sports + AI lens in a format that was easy, visual, and interactive—built around real teen-athlete scenarios like team group chats, Instagram DMs, public Wi-Fi, highlight videos, and online gear purchases.
-                      </p>
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                        Students learned account protection (strong passwords, MFA, recovery), smart social media habits, and how to spot scams such as phishing links, fake profiles, urgency tactics, and "pay-to-confirm" requests.
-                      </p>
-
-                      {/* Key Highlights */}
-                      <div className="grid grid-cols-2 gap-3 pt-4">
-                        <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
-                          <div className="text-xl font-bold text-secondary mb-1">Sports Focus</div>
-                          <p className="text-xs text-muted-foreground">Athlete-specific scenarios</p>
-                        </div>
-                        <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
-                          <div className="text-xl font-bold text-primary mb-1">AI Safety</div>
-                          <p className="text-xs text-muted-foreground">Deepfakes & misinformation</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="space-y-4">
-                      <h4 className="text-lg font-bold text-foreground mb-3">Workshop Photos</h4>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        {[
-                          "/3rd/WhatsApp Image 2026-01-04 at 09.40.39.jpeg",
-                          "/3rd/WhatsApp Image 2026-01-04 at 09.41.29.jpeg",
-                          "/3rd/WhatsApp Image 2026-01-04 at 09.41.29 (1).jpeg",
-                          "/3rd/WhatsApp Image 2026-01-04 at 09.41.29 (2).jpeg",
-                          "/3rd/WhatsApp Image 2026-01-04 at 09.41.30.jpeg",
-                          "/3rd/WhatsApp Image 2026-01-04 at 09.41.30 (1).jpeg"
-                        ].map((image, index) => (
-                          <div
-                            key={index}
-                            className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
-                            onClick={() => openModal(sportsWorkshopImages, sportsWorkshopImages.indexOf(image))}
-                            role="button"
-                            tabIndex={0}
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter' || e.key === ' ') {
-                                e.preventDefault()
-                                openModal(sportsWorkshopImages, sportsWorkshopImages.indexOf(image))
-                              }
-                            }}
-                            aria-label={`View Sports + AI Workshop image ${index + 1} in gallery`}
-                          >
-                            <img
-                              src={image}
-                              alt={`Sports + AI Digital Safety Workshop ${index + 1}`}
-                              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                              loading="lazy"
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* New Ambassador */}
-            <div className="mb-8 sm:mb-12">
-              <Card className="border-2 border-primary/30 dark:border-primary/40 bg-gradient-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
-                <div className="bg-gradient-to-r from-primary/10 to-secondary/10 px-6 py-4 border-b border-border/50">
-                  <div className="flex items-center gap-3">
-                    <Users className="w-5 h-5 text-primary" />
-                    <h3 className="text-lg sm:text-xl font-bold text-foreground">New Ambassador: Aarush Mangal</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground mt-1">State-level tennis champion joins YLCA's sports community outreach</p>
-                </div>
-
-                <CardContent className="p-6 sm:p-8">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-center">
-                    <div className="space-y-4">
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                        <span className="font-semibold text-foreground">Aarush Mangal</span>, a state-level tennis champion and 9th-grade student from Wehlam who competes across multiple cities, has joined YLCA's global mission as an Ambassador.
-                      </p>
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                        In this role, he will help extend cybersecurity and responsible AI awareness into the sports community—educating student-athletes on digital safety and equipping them to recognize and avoid online scams, including impersonation by fake coaches, fraudulent academies, and deceptive "selection" or "trial" messages.
-                      </p>
-                    </div>
-
-                    <div className="flex justify-center">
-                      <div className="relative rounded-xl overflow-hidden border-2 border-border/40 shadow-lg group w-48 h-48 sm:w-56 sm:h-56">
-                        <img
-                          src="/arush.png"
-                          alt="Aarush Mangal - YLCA Sports Ambassador"
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 ring-1 ring-primary/20 dark:ring-primary/30 rounded-xl pointer-events-none"></div>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-
-        {/* Jan 2026: Ambassador Vedika Leads Independent Workshop - shareable: /impact#vedika-jan-2026 */}
-        <section id="vedika-jan-2026" className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden scroll-mt-24">
-          {/* Decorative elements */}
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute top-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-          </div>
-
-          <div className="max-w-6xl mx-auto relative z-10">
-            <div className="text-center mb-8 sm:mb-12">
-              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm bg-gradient-to-r from-primary to-secondary">JAN 2026 - LATEST</Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
-                <span>YLCA Milestone: <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Ambassador Vedika Leads the Next Wave of Workshops in Delhi</span></span>
-                <a href="#vedika-jan-2026" onClick={(e) => { e.preventDefault(); const url = typeof window !== "undefined" ? `${window.location.origin}/impact#vedika-jan-2026` : "/impact#vedika-jan-2026"; navigator.clipboard?.writeText(url).then(() => { const btn = e.currentTarget; btn.setAttribute("aria-label", "Link copied!"); btn.classList.add("ring-2", "ring-primary"); setTimeout(() => { btn.setAttribute("aria-label", "Copy link"); btn.classList.remove("ring-2", "ring-primary"); }, 1500); }); }} className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0" aria-label="Copy link" title="Copy link to share"><Link2 className="w-5 h-5" /></a>
-              </h2>
-              <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
-                The first fully independent government-school workshop led by Ambassador Vedika marks a new chapter for YLCA
-              </p>
-            </div>
-
-            {/* Featured Initiative: Jan 2026 */}
-            <div className="mb-12 sm:mb-16">
-              <Card className="border-2 border-primary/30 dark:border-primary/40 bg-gradient-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
-                <div className="bg-gradient-to-r from-primary/10 to-secondary/10 px-6 py-4 border-b border-border/50">
-                  <div className="flex items-center gap-3">
-                    <Badge variant="default" className="text-xs">JANUARY 2026</Badge>
-                    <h3 className="text-lg sm:text-xl font-bold text-foreground">Ambassador-Led Workshop at Sarvodaya Bal Vidyalaya, New Delhi</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground mt-1">100+ students empowered with cybersecurity and responsible AI knowledge</p>
-                </div>
-
-                <CardContent className="p-6 sm:p-8">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-                    <div className="space-y-4">
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                        YLCA is entering its next milestone for 2026: ambassadors are now leading the mission on the ground—independently and at scale. During his recent visit to India, YLCA Founder <span className="font-semibold text-foreground">Arth Bhardwaj</span> (California, USA) met with multiple ambassadors and co-hosted sessions across Delhi and Haryana (Delhi, Karnal, and Ambala), aligning on YLCA's 2026 strategy and training student leaders to confidently run workshops on their own.
-                      </p>
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                        The impact of that training is already visible: YLCA's first fully independent government-school session was successfully led by <span className="font-semibold text-foreground">Ambassador Vedika</span> at Sarvodaya Bal Vidyalaya, New Delhi, reaching 100+ students (Grade 8+) with practical lessons on cybersecurity, teen digital safety, scam awareness, responsible AI (including deepfakes), and anti-cyberbullying.
-                      </p>
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed font-medium">
-                        This marks the start of a new chapter for YLCA—where a scalable ambassador network multiplies impact and grows the mission city-by-city, and ultimately, around the world.
-                      </p>
-
-                      {/* Key Highlights */}
-                      <div className="grid grid-cols-2 gap-3 pt-4">
-                        <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
-                          <div className="text-xl font-bold text-primary mb-1">100+</div>
-                          <p className="text-xs text-muted-foreground">Students Reached</p>
-                        </div>
-                        <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
-                          <div className="text-xl font-bold text-secondary mb-1">1st</div>
-                          <p className="text-xs text-muted-foreground">Independent Workshop</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="space-y-4">
-                      <h4 className="text-lg font-bold text-foreground mb-3">Workshop Highlights</h4>
-                      <div className="grid grid-cols-2 gap-3">
-                        {[
-                          "/9th/WhatsApp Image 2026-01-09 at 13.08.36.jpeg",
-                          "/9th/WhatsApp Image 2026-01-09 at 13.08.36 (1).jpeg",
-                          "/9th/WhatsApp Image 2026-01-09 at 13.08.36 (2).jpeg",
-                          "/9th/WhatsApp Image 2026-01-09 at 13.08.36 (3).jpeg"
-                        ].map((image, index) => (
-                          <div
-                            key={index}
-                            className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
-                            onClick={() => openModal(vedikaJan2026Images, vedikaJan2026Images.indexOf(image))}
-                            role="button"
-                            tabIndex={0}
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter' || e.key === ' ') {
-                                e.preventDefault()
-                                openModal(vedikaJan2026Images, vedikaJan2026Images.indexOf(image))
-                              }
-                            }}
-                            aria-label={`View Ambassador Vedika Jan 2026 image ${index + 1} in gallery`}
-                          >
-                            <img
-                              src={image}
-                              alt={`Ambassador Vedika Workshop Jan 2026 ${index + 1}`}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                              loading="lazy"
-                        />
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Ambassador Spotlight */}
-                      <div className="mt-6 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg p-4 border border-border/30">
-                        <div className="flex items-center gap-3 mb-2">
-                          <Users className="w-5 h-5 text-primary" />
-                          <h5 className="font-bold text-foreground">Ambassador Spotlight</h5>
-                        </div>
-                        <p className="text-sm text-muted-foreground">
-                          <span className="font-semibold text-foreground">Vedika</span> demonstrated exceptional leadership, delivering engaging content and empowering students to take charge of their digital safety.
+                        <p className="text-[11px] sm:text-xs text-muted-foreground text-center px-4 mt-4">
+                            Hours are approximate and will be refined as
+                            detailed reporting is finalized.
                         </p>
-                      </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+                </section>
 
-            {/* View All Photos */}
-            <div className="text-center mb-12 sm:mb-16">
-              <Button
-                variant="outline"
-                onClick={() => openModal(vedikaJan2026Images, 0)}
-                className="border-2 border-primary/50 dark:border-primary/60 hover:bg-primary/10 dark:hover:bg-primary/20 px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-full font-semibold group"
-              >
-                View All Workshop Photos
-                <Star className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
-              </Button>
-            </div>
+                {/* Event Locations Map */}
+                <ImpactMap />
 
-            {/* New Ambassador Spotlight - Yuvam Loonker */}
-            <div className="mb-8 sm:mb-12">
-              <div className="text-center mb-6 sm:mb-8">
-                <Badge variant="secondary" className="mb-3 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">NEW AMBASSADOR SPOTLIGHT</Badge>
-                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground tracking-tight px-4">
-                  <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Yuvam Loonker Joins YLCA as Director of Innovation Programs</span>
-                </h3>
-              </div>
-
-              <Card className="border-2 border-secondary/30 dark:border-secondary/40 bg-gradient-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
-                <div className="bg-gradient-to-r from-secondary/10 to-primary/10 px-6 py-4 border-b border-border/50">
-                  <div className="flex items-center gap-3">
-                    <Badge variant="secondary" className="text-xs sm:text-sm">January 2026</Badge>
-                    <h3 className="text-lg sm:text-xl font-bold text-foreground">Yuvam Loonker - Director of Innovation Programs & Regional Lead</h3>
-                  </div>
-                </div>
-
-                <CardContent className="p-6 sm:p-8">
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
-                    {/* Ambassador Profile */}
-                    <div className="lg:col-span-1">
-                      <div className="relative rounded-xl overflow-hidden border-2 border-border/40 shadow-lg group">
-                        <img
-                          src="/yuvam.png"
-                          alt="Yuvam Loonker - YLCA Director of Innovation Programs"
-                          className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 ring-1 ring-secondary/20 dark:ring-secondary/30 rounded-xl pointer-events-none"></div>
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="lg:col-span-2 space-y-4">
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                        YLCA is excited to welcome <span className="font-semibold text-foreground">Yuvam Loonker</span> (JBCN International School, Mumbai) as our newest ambassador and a key leader for 2026. Yuvam will serve a dual role—helping expand YLCA's global mission across Western and Southern India by conducting school workshops, recruiting and mentoring new ambassadors, and strengthening student-led outreach in the region.
-                      </p>
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                        As YLCA's <span className="font-semibold text-foreground">Director of Innovation Programs</span>, Yuvam will lead the launch of YLCA's hands-on innovation track—building hackathons, capstone projects, and portfolio showcases that give students real-world ways to explore cybersecurity and responsible AI.
-                      </p>
-
-                      {/* Key Highlights */}
-                      <div className="grid grid-cols-2 gap-3">
-                        <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
-                          <div className="text-lg font-bold text-secondary mb-1">West & South India</div>
-                          <p className="text-xs text-muted-foreground">Regional Lead</p>
+                {/* Success Stories & Testimonials - shareable: /impact#success-stories */}
+                <section
+                    id="success-stories"
+                    className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-linear-to-b from-muted/20 to-background scroll-mt-24"
+                >
+                    <div className="max-w-6xl mx-auto">
+                        <div className="text-center mb-8 sm:mb-12 md:mb-16">
+                            <Badge
+                                variant="secondary"
+                                className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm"
+                            >
+                                SUCCESS STORIES
+                            </Badge>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
+                                <span>
+                                    Voices from Our{" "}
+                                    <span className="bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
+                                        Community
+                                    </span>
+                                </span>
+                                <a
+                                    href="#success-stories"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        const url =
+                                            typeof window !== "undefined"
+                                                ? `${window.location.origin}/impact#success-stories`
+                                                : "/impact#success-stories";
+                                        navigator.clipboard
+                                            ?.writeText(url)
+                                            .then(() => {
+                                                const btn = e.currentTarget;
+                                                btn.setAttribute(
+                                                    "aria-label",
+                                                    "Link copied!",
+                                                );
+                                                btn.classList.add(
+                                                    "ring-2",
+                                                    "ring-primary",
+                                                );
+                                                setTimeout(() => {
+                                                    btn.setAttribute(
+                                                        "aria-label",
+                                                        "Copy link",
+                                                    );
+                                                    btn.classList.remove(
+                                                        "ring-2",
+                                                        "ring-primary",
+                                                    );
+                                                }, 1500);
+                                            });
+                                    }}
+                                    className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0"
+                                    aria-label="Copy link"
+                                    title="Copy link to share"
+                                >
+                                    <Link2 className="w-5 h-5" />
+                                </a>
+                            </h2>
+                            <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
+                                Real stories from ambassadors, teachers, and
+                                students who are making a difference through
+                                YLCA.
+                            </p>
                         </div>
-                        <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
-                          <div className="text-lg font-bold text-primary mb-1">Hackathons</div>
-                          <p className="text-xs text-muted-foreground">Innovation Programs</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
 
-            {/* DPS Karnal Cybersecurity Club Launch - shareable: /impact#dps-karnal-club */}
-            <div id="dps-karnal-club" className="mt-12 sm:mt-16 scroll-mt-24">
-              <Card className="border-2 border-primary/30 dark:border-primary/40 bg-gradient-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
-                <div className="bg-gradient-to-r from-primary/10 to-secondary/10 px-6 py-4 border-b border-border/50">
-                  <div className="flex flex-col gap-2">
-                    <div className="flex items-center gap-3">
-                      <Badge variant="default" className="text-xs sm:text-sm">January 2026</Badge>
-                      <h3 className="text-lg sm:text-xl font-bold text-foreground">A New Chapter at DPS Karnal: The Cybersecurity Club Goes Live</h3>
-                    </div>
-                    <p className="text-sm text-muted-foreground italic">When screen time goes up, DPS Karnal YLCA ambassadors step up.</p>
-                  </div>
-                </div>
+                        {/* Testimonials Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-16">
+                            <Card className="group relative overflow-hidden border-2 border-border/50 dark:border-border/30 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary/40 dark:hover:border-primary/50">
+                                <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <CardHeader className="relative">
+                                    <div className="w-14 h-14 bg-linear-to-br from-primary/20 to-primary/10 dark:from-primary/30 dark:to-primary/20 rounded-xl flex items-center justify-center mb-4 shadow-md group-hover:scale-110 transition-transform duration-300">
+                                        <Star className="w-7 h-7 text-primary" />
+                                    </div>
+                                    <CardTitle className="font-bold">
+                                        Ambassador Success
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent className="relative">
+                                    <CardDescription className="mb-4 italic leading-relaxed text-sm">
+                                        "YLCA gave me the confidence to start a
+                                        cybersecurity club. I've trained over 50
+                                        students and helped them understand
+                                        digital safety. This experience has been
+                                        life-changing!"
+                                    </CardDescription>
+                                    <div className="flex items-center gap-3 pt-4 border-t border-border/30">
+                                        <Avatar className="bg-primary/10 text-primary">
+                                            <AvatarFallback>A</AvatarFallback>
+                                        </Avatar>
+                                        <div>
+                                            <p className="text-sm font-semibold text-foreground">
+                                                YLCA Ambassador
+                                            </p>
+                                            <p className="text-xs text-muted-foreground">
+                                                California, USA
+                                            </p>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
 
-                <CardContent className="p-6 sm:p-8">
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
-                    {/* Workshop Image */}
-                    <div className="lg:col-span-1">
-                      <div className="relative rounded-xl overflow-hidden border-2 border-border/40 shadow-lg group">
-                        <img
-                          src="/20th Jan/WhatsApp Image 2026-01-20 at 20.36.29.jpeg"
-                          alt="DPS Karnal Cybersecurity Club Launch - YLCA Ambassadors"
-                          className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                          loading="lazy"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                          <p className="text-xs font-semibold">DPS Karnal Online Workshop Session</p>
+                            <Card className="group relative overflow-hidden border-2 border-border/50 dark:border-border/30 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-secondary/40 dark:hover:border-secondary/50">
+                                <div className="absolute inset-0 bg-linear-to-br from-secondary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <CardHeader className="relative">
+                                    <div className="w-14 h-14 bg-linear-to-br from-secondary/20 to-secondary/10 dark:from-secondary/30 dark:to-secondary/20 rounded-xl flex items-center justify-center mb-4 shadow-md group-hover:scale-110 transition-transform duration-300">
+                                        <GraduationCap className="w-7 h-7 text-secondary" />
+                                    </div>
+                                    <CardTitle className="font-bold">
+                                        School Impact
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent className="relative">
+                                    <CardDescription className="mb-4 italic leading-relaxed text-sm">
+                                        "The YLCA workshop opened our students'
+                                        eyes to real-world online threats.
+                                        They're now more aware and better
+                                        prepared to protect themselves and their
+                                        peers."
+                                    </CardDescription>
+                                    <div className="flex items-center gap-3 pt-4 border-t border-border/30">
+                                        <Avatar className="bg-secondary/10 text-secondary">
+                                            <AvatarFallback>T</AvatarFallback>
+                                        </Avatar>
+                                        <div>
+                                            <p className="text-sm font-semibold text-foreground">
+                                                High School Teacher
+                                            </p>
+                                            <p className="text-xs text-muted-foreground">
+                                                India
+                                            </p>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            <Card className="group relative overflow-hidden border-2 border-border/50 dark:border-border/30 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary/40 dark:hover:border-primary/50">
+                                <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <CardHeader className="relative">
+                                    <div className="w-14 h-14 bg-linear-to-br from-primary/20 to-secondary/20 dark:from-primary/30 dark:to-secondary/30 rounded-xl flex items-center justify-center mb-4 shadow-md group-hover:scale-110 transition-transform duration-300">
+                                        <Globe className="w-7 h-7 text-primary" />
+                                    </div>
+                                    <CardTitle className="font-bold">
+                                        Global Community
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent className="relative">
+                                    <CardDescription className="mb-4 italic leading-relaxed text-sm">
+                                        "Being part of YLCA's global community
+                                        connected me with peers worldwide. We
+                                        share ideas, collaborate on projects,
+                                        and support each other's growth."
+                                    </CardDescription>
+                                    <div className="flex items-center gap-3 pt-4 border-t border-border/30">
+                                        <Avatar className="bg-primary/10 text-primary">
+                                            <AvatarFallback>S</AvatarFallback>
+                                        </Avatar>
+                                        <div>
+                                            <p className="text-sm font-semibold text-foreground">
+                                                YLCA Student
+                                            </p>
+                                            <p className="text-xs text-muted-foreground">
+                                                Guatemala
+                                            </p>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
                         </div>
-                      </div>
-                      
-                      {/* Ambassador Team */}
-                      <div className="mt-4 p-4 bg-secondary/5 dark:bg-secondary/10 rounded-lg border border-border/30">
-                        <h4 className="text-sm font-bold text-foreground mb-2 flex items-center gap-2">
-                          <Users className="w-4 h-4 text-secondary" />
-                          Leading Ambassadors
-                        </h4>
-                        <p className="text-xs text-muted-foreground leading-relaxed">
-                          Krishiv Arora, Diti Chaudhary, Aarna Bansal, Garvit Handa, and Kanishka Walia
+                    </div>
+                </section>
+
+                {/* Photo Gallery Showcase - shareable: /impact#photo-gallery */}
+                <section
+                    id="photo-gallery"
+                    className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-linear-to-b from-background to-muted/20 scroll-mt-24"
+                >
+                    <div className="max-w-6xl mx-auto">
+                        <div className="text-center mb-8 sm:mb-12 md:mb-16">
+                            <Badge
+                                variant="default"
+                                className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm"
+                            >
+                                PHOTO GALLERY
+                            </Badge>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
+                                <span>
+                                    Moments That{" "}
+                                    <span className="bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
+                                        Matter
+                                    </span>
+                                </span>
+                                <a
+                                    href="#photo-gallery"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        const url =
+                                            typeof window !== "undefined"
+                                                ? `${window.location.origin}/impact#photo-gallery`
+                                                : "/impact#photo-gallery";
+                                        navigator.clipboard
+                                            ?.writeText(url)
+                                            .then(() => {
+                                                const btn = e.currentTarget;
+                                                btn.setAttribute(
+                                                    "aria-label",
+                                                    "Link copied!",
+                                                );
+                                                btn.classList.add(
+                                                    "ring-2",
+                                                    "ring-primary",
+                                                );
+                                                setTimeout(() => {
+                                                    btn.setAttribute(
+                                                        "aria-label",
+                                                        "Copy link",
+                                                    );
+                                                    btn.classList.remove(
+                                                        "ring-2",
+                                                        "ring-primary",
+                                                    );
+                                                }, 1500);
+                                            });
+                                    }}
+                                    className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0"
+                                    aria-label="Copy link"
+                                    title="Copy link to share"
+                                >
+                                    <Link2 className="w-5 h-5" />
+                                </a>
+                            </h2>
+                            <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
+                                Capturing the energy, learning, and impact of
+                                YLCA workshops and events around the world.
+                            </p>
+                        </div>
+
+                        {/* Featured Photo Carousel */}
+                        <StoriesCarousel onOpenModal={openModal} />
+                    </div>
+                </section>
+
+                {/* August 2025 – From Book to Action - shareable: /impact#august-2025 */}
+                <section
+                    id="august-2025"
+                    className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-linear-to-b from-background to-muted/20 relative overflow-hidden scroll-mt-24"
+                >
+                    <div className="absolute inset-0 -z-10">
+                        <div className="absolute top-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
+                        <div
+                            className="absolute bottom-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse"
+                            style={{ animationDelay: "1s" }}
+                        ></div>
+                    </div>
+
+                    <div className="max-w-6xl mx-auto relative z-10">
+                        <div className="text-center mb-8 sm:mb-12">
+                            <Badge
+                                variant="default"
+                                className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm"
+                            >
+                                AUGUST 2025
+                            </Badge>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
+                                <span>
+                                    From Book to Action:{" "}
+                                    <span className="bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
+                                        Cybersecurity for Teens Workshop
+                                        Empowers Local Students
+                                    </span>
+                                </span>
+                                <a
+                                    href="#august-2025"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        const url =
+                                            typeof window !== "undefined"
+                                                ? `${window.location.origin}/impact#august-2025`
+                                                : "/impact#august-2025";
+                                        navigator.clipboard
+                                            ?.writeText(url)
+                                            .then(() => {
+                                                const btn = e.currentTarget;
+                                                btn.setAttribute(
+                                                    "aria-label",
+                                                    "Link copied!",
+                                                );
+                                                btn.classList.add(
+                                                    "ring-2",
+                                                    "ring-primary",
+                                                );
+                                                setTimeout(() => {
+                                                    btn.setAttribute(
+                                                        "aria-label",
+                                                        "Copy link",
+                                                    );
+                                                    btn.classList.remove(
+                                                        "ring-2",
+                                                        "ring-primary",
+                                                    );
+                                                }, 1500);
+                                            });
+                                    }}
+                                    className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0"
+                                    aria-label="Copy link"
+                                    title="Copy link to share"
+                                >
+                                    <Link2 className="w-5 h-5" />
+                                </a>
+                            </h2>
+                            <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
+                                August 2025 — Live Zoom workshop for middle and
+                                high school students in Cupertino and Saratoga
+                            </p>
+                        </div>
+
+                        <Card className="border-2 border-primary/30 dark:border-primary/40 bg-linear-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+                            <div className="bg-linear-to-r from-primary/10 to-secondary/10 px-6 py-4 border-b border-border/50">
+                                <div className="flex items-center gap-3">
+                                    <Badge
+                                        variant="default"
+                                        className="text-xs"
+                                    >
+                                        AUGUST 2025
+                                    </Badge>
+                                    <h3 className="text-lg sm:text-xl font-bold text-foreground">
+                                        From Book to Action: Cybersecurity for
+                                        Teens Workshop Empowers Local
+                                        Students/Teens
+                                    </h3>
+                                </div>
+                                <p className="text-sm text-muted-foreground mt-1">
+                                    Following the launch of Cybersecurity for
+                                    Teens on Amazon — Founder Arth Bhardwaj
+                                    hosted a live Zoom workshop for Cupertino &
+                                    Saratoga students
+                                </p>
+                            </div>
+
+                            <CardContent className="p-6 sm:p-8">
+                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+                                    <div className="lg:col-span-1 space-y-4">
+                                        <div className="relative rounded-xl overflow-hidden border-2 border-border/40 shadow-lg group">
+                                            <img
+                                                src={august2025Images[0]}
+                                                alt="Cybersecurity for Teens workshop — August 2025"
+                                                className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer"
+                                                loading="lazy"
+                                                onClick={() =>
+                                                    openModal(
+                                                        august2025Images,
+                                                        0,
+                                                    )
+                                                }
+                                            />
+                                            <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                            <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                                                <p className="text-xs font-semibold">
+                                                    August 2025 — Book to Action
+                                                    Workshop
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-3">
+                                            {august2025Images
+                                                .slice(1, 5)
+                                                .map((image, index) => (
+                                                    <div
+                                                        key={image}
+                                                        className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
+                                                        onClick={() =>
+                                                            openModal(
+                                                                august2025Images,
+                                                                index + 1,
+                                                            )
+                                                        }
+                                                        role="button"
+                                                        tabIndex={0}
+                                                        onKeyDown={(e) => {
+                                                            if (
+                                                                e.key ===
+                                                                    "Enter" ||
+                                                                e.key === " "
+                                                            ) {
+                                                                e.preventDefault();
+                                                                openModal(
+                                                                    august2025Images,
+                                                                    index + 1,
+                                                                );
+                                                            }
+                                                        }}
+                                                        aria-label={`View August 2025 workshop image ${index + 2}`}
+                                                    >
+                                                        <img
+                                                            src={image}
+                                                            alt={`Cybersecurity for Teens Workshop August 2025 ${index + 2}`}
+                                                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                                            loading="lazy"
+                                                        />
+                                                    </div>
+                                                ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="lg:col-span-2 space-y-4">
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                            Following the launch of{" "}
+                                            <a
+                                                href="https://www.amazon.com/dp/B0FMPF2WN5"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="font-semibold text-primary hover:text-secondary underline underline-offset-2"
+                                            >
+                                                Cybersecurity for Teens on
+                                                Amazon
+                                            </a>
+                                            , our Founder{" "}
+                                            <span className="font-semibold text-foreground">
+                                                Arth Bhardwaj
+                                            </span>{" "}
+                                            hosted a live Zoom workshop for
+                                            middle and high school students in
+                                            Cupertino and Saratoga to introduce
+                                            the book's purpose and turn it into
+                                            an actionable, student-friendly
+                                            playbook for online safety.
+                                        </p>
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                            Building on real threats teens
+                                            face—from scams and phishing to
+                                            account takeovers and
+                                            misinformation—the session walked
+                                            students through how to use the book
+                                            as a step-by-step self-learning
+                                            manual, with practical checklists,
+                                            mini-challenges, and habits they
+                                            could apply immediately.
+                                        </p>
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                            The workshop also showed students
+                                            how to convert learning into
+                                            leadership by using the book as a
+                                            blueprint to launch a cybersecurity
+                                            club at their school—planning a
+                                            first meeting, choosing topics, and
+                                            running peer-led awareness sessions.
+                                        </p>
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed font-medium">
+                                            Students left with clear next steps,
+                                            resources to keep learning
+                                            independently, and the confidence to
+                                            become digital-safety leaders in
+                                            their own school communities.
+                                        </p>
+                                        <div className="pt-4">
+                                            <a
+                                                href="https://www.amazon.com/dp/B0FMPF2WN5"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-secondary transition-colors underline underline-offset-2"
+                                            >
+                                                View Cybersecurity for Teens on
+                                                Amazon
+                                                <span className="sr-only">
+                                                    (opens in new tab)
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+
+                        <div className="text-center mt-8">
+                            <Button
+                                variant="outline"
+                                onClick={() => openModal(august2025Images, 0)}
+                                className="border-2 border-primary/50 dark:border-primary/60 hover:bg-primary/10 dark:hover:bg-primary/20 px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-full font-semibold group"
+                            >
+                                View All August 2025 Workshop Photos
+                                <GraduationCap className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
+                            </Button>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Founder Arth Bhardwaj & Ambassador Vedika - shareable: /impact#december-vedika */}
+                <section
+                    id="december-vedika"
+                    className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-linear-to-b from-muted/20 to-background relative overflow-hidden scroll-mt-24"
+                >
+                    {/* Decorative elements */}
+                    <div className="absolute inset-0 -z-10">
+                        <div className="absolute top-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
+                        <div
+                            className="absolute bottom-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse"
+                            style={{ animationDelay: "1s" }}
+                        ></div>
+                    </div>
+
+                    <div className="max-w-6xl mx-auto relative z-10">
+                        <div className="text-center mb-8 sm:mb-12">
+                            <Badge
+                                variant="default"
+                                className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm"
+                            >
+                                DECEMBER IMPACT
+                            </Badge>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
+                                <span>
+                                    Founder Arth Bhardwaj & Ambassador Vedika:{" "}
+                                    <span className="bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
+                                        Hosting Workshops in Delhi Government
+                                        Schools
+                                    </span>
+                                </span>
+                                <a
+                                    href="#december-vedika"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        const url =
+                                            typeof window !== "undefined"
+                                                ? `${window.location.origin}/impact#december-vedika`
+                                                : "/impact#december-vedika";
+                                        navigator.clipboard
+                                            ?.writeText(url)
+                                            .then(() => {
+                                                const btn = e.currentTarget;
+                                                btn.setAttribute(
+                                                    "aria-label",
+                                                    "Link copied!",
+                                                );
+                                                btn.classList.add(
+                                                    "ring-2",
+                                                    "ring-primary",
+                                                );
+                                                setTimeout(() => {
+                                                    btn.setAttribute(
+                                                        "aria-label",
+                                                        "Copy link",
+                                                    );
+                                                    btn.classList.remove(
+                                                        "ring-2",
+                                                        "ring-primary",
+                                                    );
+                                                }, 1500);
+                                            });
+                                    }}
+                                    className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0"
+                                    aria-label="Copy link"
+                                    title="Copy link to share"
+                                >
+                                    <Link2 className="w-5 h-5" />
+                                </a>
+                            </h2>
+                            <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
+                                YLCA Founder and Ambassador leading hands-on
+                                cyber safety workshops across Delhi government
+                                schools
+                            </p>
+                        </div>
+
+                        {/* Featured Initiative: December 2025 */}
+                        <div className="mb-12 sm:mb-16">
+                            <Card className="border-2 border-primary/30 dark:border-primary/40 bg-linear-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+                                <div className="bg-linear-to-r from-primary/10 to-secondary/10 px-6 py-4 border-b border-border/50">
+                                    <div className="flex items-center gap-3">
+                                        <Badge
+                                            variant="default"
+                                            className="text-xs"
+                                        >
+                                            DECEMBER 2025
+                                        </Badge>
+                                        <h3 className="text-lg sm:text-xl font-bold text-foreground">
+                                            In-Person Cyber Safety Outreach
+                                        </h3>
+                                    </div>
+                                    <p className="text-sm text-muted-foreground mt-1">
+                                        Students leading cyber safety education
+                                        across schools and communities
+                                    </p>
+                                </div>
+
+                                <CardContent className="p-6 sm:p-8">
+                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+                                        <div className="space-y-4">
+                                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                                In December 2025, YLCA students
+                                                stepped beyond classrooms to
+                                                deliver hands-on cybersecurity
+                                                and AI awareness sessions across
+                                                communities in India. Led by
+                                                founder Arth Bhardwaj and
+                                                Ambassador Vedika Jain, the
+                                                initiative reached 500+ students
+                                                across multiple Delhi government
+                                                schools, focusing on everyday
+                                                digital safety topics such as
+                                                online scams, privacy
+                                                protection, and responsible use
+                                                of technology.
+                                            </p>
+                                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                                Arth also conducted workshops
+                                                for 50+ students at boys' tennis
+                                                training camps, highlighting
+                                                social media and gaming account
+                                                security. In addition, sessions
+                                                with young factory workers and
+                                                senior citizens at a community
+                                                clubhouse addressed financial
+                                                fraud, mobile security, and
+                                                common digital risks.
+                                            </p>
+                                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed font-medium">
+                                                Through these in-person efforts,
+                                                YLCA demonstrated how student
+                                                leadership can translate
+                                                technical knowledge into
+                                                meaningful, real-world impact.
+                                            </p>
+
+                                            {/* Key Highlights */}
+                                            <div className="grid grid-cols-2 gap-3 pt-4">
+                                                <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
+                                                    <div className="text-xl font-bold text-primary mb-1">
+                                                        500+
+                                                    </div>
+                                                    <p className="text-xs text-muted-foreground">
+                                                        Students Reached
+                                                    </p>
+                                                </div>
+                                                <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
+                                                    <div className="text-xl font-bold text-secondary mb-1">
+                                                        50+
+                                                    </div>
+                                                    <p className="text-xs text-muted-foreground">
+                                                        Tennis Camp Students
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-4">
+                                            <h4 className="text-lg font-bold text-foreground mb-3">
+                                                Event Highlights
+                                            </h4>
+                                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                                {[
+                                                    "/december/WhatsApp Image 2025-12-27 at 09.23.45.jpeg",
+                                                    "/december/WhatsApp Image 2025-12-27 at 09.24.01.jpeg",
+                                                    "/december/WhatsApp Image 2025-12-27 at 09.23.58.jpeg",
+                                                    "/december/WhatsApp Image 2025-12-27 at 09.24.05.jpeg",
+                                                    "/december/WhatsApp Image 2025-12-27 at 09.23.11.jpeg",
+                                                    "/december/WhatsApp Image 2025-12-27 at 09.23.48.jpeg",
+                                                ].map((image, index) => (
+                                                    <div
+                                                        key={index}
+                                                        className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
+                                                        onClick={() =>
+                                                            openModal(
+                                                                decemberImages,
+                                                                decemberImages.indexOf(
+                                                                    image,
+                                                                ),
+                                                            )
+                                                        }
+                                                        role="button"
+                                                        tabIndex={0}
+                                                        onKeyDown={(e) => {
+                                                            if (
+                                                                e.key ===
+                                                                    "Enter" ||
+                                                                e.key === " "
+                                                            ) {
+                                                                e.preventDefault();
+                                                                openModal(
+                                                                    decemberImages,
+                                                                    decemberImages.indexOf(
+                                                                        image,
+                                                                    ),
+                                                                );
+                                                            }
+                                                        }}
+                                                        aria-label={`View December 2025 image ${index + 1} in gallery`}
+                                                    >
+                                                        <img
+                                                            src={image}
+                                                            alt="December 2025 Outreach"
+                                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                                            loading="lazy"
+                                                        />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </div>
+
+                        {/* View All December Photos */}
+                        <div className="text-center">
+                            <Button
+                                variant="outline"
+                                onClick={() => openModal(decemberImages, 0)}
+                                className="border-2 border-primary/50 dark:border-primary/60 hover:bg-primary/10 dark:hover:bg-primary/20 px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-full font-semibold group"
+                            >
+                                View All December 2025 Photos
+                                <GraduationCap className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
+                            </Button>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Featured Initiative: DPS Karnal - shareable: /impact#dps-karnal */}
+                <section
+                    id="dps-karnal"
+                    className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-linear-to-b from-muted/20 to-background relative overflow-hidden scroll-mt-24"
+                >
+                    {/* Decorative elements */}
+                    <div className="absolute inset-0 -z-10">
+                        <div className="absolute top-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse"></div>
+                        <div
+                            className="absolute bottom-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"
+                            style={{ animationDelay: "1s" }}
+                        ></div>
+                    </div>
+
+                    <div className="max-w-6xl mx-auto relative z-10">
+                        <div className="text-center mb-8 sm:mb-12">
+                            <Badge
+                                variant="default"
+                                className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm"
+                            >
+                                SCHOOL PARTNERSHIP
+                            </Badge>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
+                                <span>
+                                    DPS Karnal Hosts Arth{" "}
+                                    <span className="bg-linear-to-r from-secondary to-primary bg-clip-text text-transparent">
+                                        Bhardwaj
+                                    </span>
+                                </span>
+                                <a
+                                    href="#dps-karnal"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        const url =
+                                            typeof window !== "undefined"
+                                                ? `${window.location.origin}/impact#dps-karnal`
+                                                : "/impact#dps-karnal";
+                                        navigator.clipboard
+                                            ?.writeText(url)
+                                            .then(() => {
+                                                const btn = e.currentTarget;
+                                                btn.setAttribute(
+                                                    "aria-label",
+                                                    "Link copied!",
+                                                );
+                                                btn.classList.add(
+                                                    "ring-2",
+                                                    "ring-primary",
+                                                );
+                                                setTimeout(() => {
+                                                    btn.setAttribute(
+                                                        "aria-label",
+                                                        "Copy link",
+                                                    );
+                                                    btn.classList.remove(
+                                                        "ring-2",
+                                                        "ring-primary",
+                                                    );
+                                                }, 1500);
+                                            });
+                                    }}
+                                    className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0"
+                                    aria-label="Copy link"
+                                    title="Copy link to share"
+                                >
+                                    <Link2 className="w-5 h-5" />
+                                </a>
+                            </h2>
+                            <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
+                                A full-day campus visit where YLCA's founder met
+                                Grades 9-12 students and mentored newly
+                                nominated ambassadors
+                            </p>
+                        </div>
+
+                        <div className="mb-12 sm:mb-16">
+                            <Card className="border-2 border-secondary/30 dark:border-secondary/40 bg-linear-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+                                <div className="bg-linear-to-r from-secondary/10 to-primary/10 px-6 py-4 border-b border-border/50">
+                                    <div className="flex items-center gap-3">
+                                        <Badge
+                                            variant="default"
+                                            className="text-xs"
+                                        >
+                                            DECEMBER 2025
+                                        </Badge>
+                                        <h3 className="text-lg sm:text-xl font-bold text-foreground">
+                                            DPS Karnal Campus Visit
+                                        </h3>
+                                    </div>
+                                    <p className="text-sm text-muted-foreground mt-1">
+                                        Arth Bhardwaj's full-day campus visit
+                                        and ambassador mentorship
+                                    </p>
+                                </div>
+
+                                <CardContent className="p-6 sm:p-8">
+                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+                                        <div className="space-y-4">
+                                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                                On December 29, 2025, YLCA
+                                                Founder Arth Bhardwaj visited
+                                                Delhi Public School (DPS)
+                                                Karnal, India in person to
+                                                deepen YLCA's growing
+                                                partnership with the school.
+                                                Arth addressed students from
+                                                Grades 9-12 on why cybersecurity
+                                                and responsible AI matter in
+                                                everyday life—and how
+                                                student-led passion projects
+                                                build confidence, leadership,
+                                                and real community impact.
+                                            </p>
+                                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                                A key highlight of the day was a
+                                                focused planning session with
+                                                DPS Karnal's six nominated YLCA
+                                                Ambassadors, who will join the
+                                                YLCA Global Ambassador Program
+                                                (Jan 2026 cohort). Together,
+                                                they mapped out student-led
+                                                initiatives such as cyber safety
+                                                awareness drives, responsible AI
+                                                learning circles, digital
+                                                citizenship campaigns, and
+                                                peer-to-peer workshops designed
+                                                to build digital trust across
+                                                the school community.
+                                            </p>
+
+                                            {/* Key Highlights */}
+                                            <div className="grid grid-cols-2 gap-3 pt-4">
+                                                <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
+                                                    <div className="text-xl font-bold text-secondary mb-1">
+                                                        6
+                                                    </div>
+                                                    <p className="text-xs text-muted-foreground">
+                                                        New Ambassadors
+                                                    </p>
+                                                </div>
+                                                <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
+                                                    <div className="text-xl font-bold text-primary mb-1">
+                                                        Grades 9-12
+                                                    </div>
+                                                    <p className="text-xs text-muted-foreground">
+                                                        Students Engaged
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-4">
+                                            <div className="aspect-video overflow-hidden rounded-lg border border-border/30">
+                                                <img
+                                                    src="/dps/hero.png"
+                                                    alt="Arth Bhardwaj at DPS Karnal Campus Visit"
+                                                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
+                                                    onClick={() =>
+                                                        openModal(dpsImages, 0)
+                                                    }
+                                                    loading="lazy"
+                                                />
+                                            </div>
+
+                                            <h4 className="text-lg font-bold text-foreground mb-3">
+                                                Campus Visit Highlights
+                                            </h4>
+                                            <div className="grid grid-cols-2 gap-3">
+                                                {[
+                                                    "/dps/image.png",
+                                                    "/dps/WhatsApp Image 2025-12-31 at 13.29.48.jpeg",
+                                                ].map((image, index) => (
+                                                    <div
+                                                        key={index}
+                                                        className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
+                                                        onClick={() =>
+                                                            openModal(
+                                                                dpsImages,
+                                                                index,
+                                                            )
+                                                        }
+                                                        role="button"
+                                                        tabIndex={0}
+                                                        onKeyDown={(e) => {
+                                                            if (
+                                                                e.key ===
+                                                                    "Enter" ||
+                                                                e.key === " "
+                                                            ) {
+                                                                e.preventDefault();
+                                                                openModal(
+                                                                    dpsImages,
+                                                                    index,
+                                                                );
+                                                            }
+                                                        }}
+                                                        aria-label={`View DPS Karnal image ${index + 1} in gallery`}
+                                                    >
+                                                        <img
+                                                            src={image}
+                                                            alt="DPS Karnal Campus Visit"
+                                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                                            loading="lazy"
+                                                        />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </div>
+
+                        {/* View All DPS Photos */}
+                        <div className="text-center mb-8">
+                            <Button
+                                variant="outline"
+                                onClick={() => openModal(dpsImages, 0)}
+                                className="border-2 border-secondary/50 dark:border-secondary/60 hover:bg-secondary/10 dark:hover:bg-secondary/20 px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-full font-semibold group"
+                            >
+                                View All DPS Karnal Photos
+                                <Users className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
+                            </Button>
+                        </div>
+                    </div>
+                </section>
+
+                {/* December Sports + AI Workshop - shareable: /impact#sports-ai-workshop */}
+                <section
+                    id="sports-ai-workshop"
+                    className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-linear-to-b from-muted/20 to-background relative overflow-hidden scroll-mt-24"
+                >
+                    {/* Decorative elements */}
+                    <div className="absolute inset-0 -z-10">
+                        <div className="absolute top-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
+                        <div
+                            className="absolute bottom-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse"
+                            style={{ animationDelay: "1s" }}
+                        ></div>
+                    </div>
+
+                    <div className="max-w-6xl mx-auto relative z-10">
+                        <div className="text-center mb-8 sm:mb-12">
+                            <Badge
+                                variant="default"
+                                className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm"
+                            >
+                                DECEMBER IMPACT
+                            </Badge>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
+                                <span>
+                                    Sports + AI{" "}
+                                    <span className="bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
+                                        Digital Safety Workshop
+                                    </span>
+                                </span>
+                                <a
+                                    href="#sports-ai-workshop"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        const url =
+                                            typeof window !== "undefined"
+                                                ? `${window.location.origin}/impact#sports-ai-workshop`
+                                                : "/impact#sports-ai-workshop";
+                                        navigator.clipboard
+                                            ?.writeText(url)
+                                            .then(() => {
+                                                const btn = e.currentTarget;
+                                                btn.setAttribute(
+                                                    "aria-label",
+                                                    "Link copied!",
+                                                );
+                                                btn.classList.add(
+                                                    "ring-2",
+                                                    "ring-primary",
+                                                );
+                                                setTimeout(() => {
+                                                    btn.setAttribute(
+                                                        "aria-label",
+                                                        "Copy link",
+                                                    );
+                                                    btn.classList.remove(
+                                                        "ring-2",
+                                                        "ring-primary",
+                                                    );
+                                                }, 1500);
+                                            });
+                                    }}
+                                    className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0"
+                                    aria-label="Copy link"
+                                    title="Copy link to share"
+                                >
+                                    <Link2 className="w-5 h-5" />
+                                </a>
+                            </h2>
+                            <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
+                                YLCA Founder Arth Bhardwaj hosted an interactive
+                                workshop for teen athletes in Ambala, Haryana,
+                                focusing on online scams, privacy, and AI-driven
+                                misinformation.
+                            </p>
+                        </div>
+
+                        {/* Featured Initiative: Sports + AI Workshop */}
+                        <div className="mb-12 sm:mb-16">
+                            <Card className="border-2 border-secondary/30 dark:border-secondary/40 bg-linear-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+                                <div className="bg-linear-to-r from-secondary/10 to-primary/10 px-6 py-4 border-b border-border/50">
+                                    <div className="flex items-center gap-3">
+                                        <Badge
+                                            variant="default"
+                                            className="text-xs"
+                                        >
+                                            DECEMBER 2025
+                                        </Badge>
+                                        <h3 className="text-lg sm:text-xl font-bold text-foreground">
+                                            Tennis Academy Workshop - Ambala,
+                                            Haryana
+                                        </h3>
+                                    </div>
+                                    <p className="text-sm text-muted-foreground mt-1">
+                                        Teaching digital safety through sports
+                                        scenarios for teen athletes
+                                    </p>
+                                </div>
+
+                                <CardContent className="p-6 sm:p-8">
+                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+                                        <div className="space-y-4">
+                                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                                YLCA Founder{" "}
+                                                <span className="font-semibold text-foreground">
+                                                    Arth Bhardwaj
+                                                </span>{" "}
+                                                hosted a teen workshop at a
+                                                Tennis Academy in Ambala,
+                                                Haryana, teaching digital safety
+                                                through a sports + AI lens in a
+                                                format that was easy, visual,
+                                                and interactive—built around
+                                                real teen-athlete scenarios like
+                                                team group chats, Instagram DMs,
+                                                public Wi-Fi, highlight videos,
+                                                and online gear purchases.
+                                            </p>
+                                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                                Students learned account
+                                                protection (strong passwords,
+                                                MFA, recovery), smart social
+                                                media habits, and how to spot
+                                                scams such as phishing links,
+                                                fake profiles, urgency tactics,
+                                                and "pay-to-confirm" requests.
+                                            </p>
+
+                                            {/* Key Highlights */}
+                                            <div className="grid grid-cols-2 gap-3 pt-4">
+                                                <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
+                                                    <div className="text-xl font-bold text-secondary mb-1">
+                                                        Sports Focus
+                                                    </div>
+                                                    <p className="text-xs text-muted-foreground">
+                                                        Athlete-specific
+                                                        scenarios
+                                                    </p>
+                                                </div>
+                                                <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
+                                                    <div className="text-xl font-bold text-primary mb-1">
+                                                        AI Safety
+                                                    </div>
+                                                    <p className="text-xs text-muted-foreground">
+                                                        Deepfakes &
+                                                        misinformation
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-4">
+                                            <h4 className="text-lg font-bold text-foreground mb-3">
+                                                Workshop Photos
+                                            </h4>
+                                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                                {[
+                                                    "/3rd/WhatsApp Image 2026-01-04 at 09.40.39.jpeg",
+                                                    "/3rd/WhatsApp Image 2026-01-04 at 09.41.29.jpeg",
+                                                    "/3rd/WhatsApp Image 2026-01-04 at 09.41.29 (1).jpeg",
+                                                    "/3rd/WhatsApp Image 2026-01-04 at 09.41.29 (2).jpeg",
+                                                    "/3rd/WhatsApp Image 2026-01-04 at 09.41.30.jpeg",
+                                                    "/3rd/WhatsApp Image 2026-01-04 at 09.41.30 (1).jpeg",
+                                                ].map((image, index) => (
+                                                    <div
+                                                        key={index}
+                                                        className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
+                                                        onClick={() =>
+                                                            openModal(
+                                                                sportsWorkshopImages,
+                                                                sportsWorkshopImages.indexOf(
+                                                                    image,
+                                                                ),
+                                                            )
+                                                        }
+                                                        role="button"
+                                                        tabIndex={0}
+                                                        onKeyDown={(e) => {
+                                                            if (
+                                                                e.key ===
+                                                                    "Enter" ||
+                                                                e.key === " "
+                                                            ) {
+                                                                e.preventDefault();
+                                                                openModal(
+                                                                    sportsWorkshopImages,
+                                                                    sportsWorkshopImages.indexOf(
+                                                                        image,
+                                                                    ),
+                                                                );
+                                                            }
+                                                        }}
+                                                        aria-label={`View Sports + AI Workshop image ${index + 1} in gallery`}
+                                                    >
+                                                        <img
+                                                            src={image}
+                                                            alt={`Sports + AI Digital Safety Workshop ${index + 1}`}
+                                                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                                                            loading="lazy"
+                                                        />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </div>
+
+                        {/* New Ambassador */}
+                        <div className="mb-8 sm:mb-12">
+                            <Card className="border-2 border-primary/30 dark:border-primary/40 bg-linear-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+                                <div className="bg-linear-to-r from-primary/10 to-secondary/10 px-6 py-4 border-b border-border/50">
+                                    <div className="flex items-center gap-3">
+                                        <Users className="w-5 h-5 text-primary" />
+                                        <h3 className="text-lg sm:text-xl font-bold text-foreground">
+                                            New Ambassador: Aarush Mangal
+                                        </h3>
+                                    </div>
+                                    <p className="text-sm text-muted-foreground mt-1">
+                                        State-level tennis champion joins YLCA's
+                                        sports community outreach
+                                    </p>
+                                </div>
+
+                                <CardContent className="p-6 sm:p-8">
+                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-center">
+                                        <div className="space-y-4">
+                                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                                <span className="font-semibold text-foreground">
+                                                    Aarush Mangal
+                                                </span>
+                                                , a state-level tennis champion
+                                                and 9th-grade student from
+                                                Wehlam who competes across
+                                                multiple cities, has joined
+                                                YLCA's global mission as an
+                                                Ambassador.
+                                            </p>
+                                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                                In this role, he will help
+                                                extend cybersecurity and
+                                                responsible AI awareness into
+                                                the sports community—educating
+                                                student-athletes on digital
+                                                safety and equipping them to
+                                                recognize and avoid online
+                                                scams, including impersonation
+                                                by fake coaches, fraudulent
+                                                academies, and deceptive
+                                                "selection" or "trial" messages.
+                                            </p>
+                                        </div>
+
+                                        <div className="flex justify-center">
+                                            <div className="relative rounded-xl overflow-hidden border-2 border-border/40 shadow-lg group w-48 h-48 sm:w-56 sm:h-56">
+                                                <img
+                                                    src="/arush.png"
+                                                    alt="Aarush Mangal - YLCA Sports Ambassador"
+                                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                                />
+                                                <div className="absolute inset-0 ring-1 ring-primary/20 dark:ring-primary/30 rounded-xl pointer-events-none"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Jan 2026: Ambassador Vedika Leads Independent Workshop - shareable: /impact#vedika-jan-2026 */}
+                <section
+                    id="vedika-jan-2026"
+                    className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-linear-to-b from-background to-muted/20 relative overflow-hidden scroll-mt-24"
+                >
+                    {/* Decorative elements */}
+                    <div className="absolute inset-0 -z-10">
+                        <div className="absolute top-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
+                        <div
+                            className="absolute bottom-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse"
+                            style={{ animationDelay: "1s" }}
+                        ></div>
+                    </div>
+
+                    <div className="max-w-6xl mx-auto relative z-10">
+                        <div className="text-center mb-8 sm:mb-12">
+                            <Badge
+                                variant="default"
+                                className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm bg-linear-to-r from-primary to-secondary"
+                            >
+                                JAN 2026 - LATEST
+                            </Badge>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
+                                <span>
+                                    YLCA Milestone:{" "}
+                                    <span className="bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
+                                        Ambassador Vedika Leads the Next Wave of
+                                        Workshops in Delhi
+                                    </span>
+                                </span>
+                                <a
+                                    href="#vedika-jan-2026"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        const url =
+                                            typeof window !== "undefined"
+                                                ? `${window.location.origin}/impact#vedika-jan-2026`
+                                                : "/impact#vedika-jan-2026";
+                                        navigator.clipboard
+                                            ?.writeText(url)
+                                            .then(() => {
+                                                const btn = e.currentTarget;
+                                                btn.setAttribute(
+                                                    "aria-label",
+                                                    "Link copied!",
+                                                );
+                                                btn.classList.add(
+                                                    "ring-2",
+                                                    "ring-primary",
+                                                );
+                                                setTimeout(() => {
+                                                    btn.setAttribute(
+                                                        "aria-label",
+                                                        "Copy link",
+                                                    );
+                                                    btn.classList.remove(
+                                                        "ring-2",
+                                                        "ring-primary",
+                                                    );
+                                                }, 1500);
+                                            });
+                                    }}
+                                    className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0"
+                                    aria-label="Copy link"
+                                    title="Copy link to share"
+                                >
+                                    <Link2 className="w-5 h-5" />
+                                </a>
+                            </h2>
+                            <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
+                                The first fully independent government-school
+                                workshop led by Ambassador Vedika marks a new
+                                chapter for YLCA
+                            </p>
+                        </div>
+
+                        {/* Featured Initiative: Jan 2026 */}
+                        <div className="mb-12 sm:mb-16">
+                            <Card className="border-2 border-primary/30 dark:border-primary/40 bg-linear-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+                                <div className="bg-linear-to-r from-primary/10 to-secondary/10 px-6 py-4 border-b border-border/50">
+                                    <div className="flex items-center gap-3">
+                                        <Badge
+                                            variant="default"
+                                            className="text-xs"
+                                        >
+                                            JANUARY 2026
+                                        </Badge>
+                                        <h3 className="text-lg sm:text-xl font-bold text-foreground">
+                                            Ambassador-Led Workshop at Sarvodaya
+                                            Bal Vidyalaya, New Delhi
+                                        </h3>
+                                    </div>
+                                    <p className="text-sm text-muted-foreground mt-1">
+                                        100+ students empowered with
+                                        cybersecurity and responsible AI
+                                        knowledge
+                                    </p>
+                                </div>
+
+                                <CardContent className="p-6 sm:p-8">
+                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+                                        <div className="space-y-4">
+                                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                                YLCA is entering its next
+                                                milestone for 2026: ambassadors
+                                                are now leading the mission on
+                                                the ground—independently and at
+                                                scale. During his recent visit
+                                                to India, YLCA Founder{" "}
+                                                <span className="font-semibold text-foreground">
+                                                    Arth Bhardwaj
+                                                </span>{" "}
+                                                (California, USA) met with
+                                                multiple ambassadors and
+                                                co-hosted sessions across Delhi
+                                                and Haryana (Delhi, Karnal, and
+                                                Ambala), aligning on YLCA's 2026
+                                                strategy and training student
+                                                leaders to confidently run
+                                                workshops on their own.
+                                            </p>
+                                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                                The impact of that training is
+                                                already visible: YLCA's first
+                                                fully independent
+                                                government-school session was
+                                                successfully led by{" "}
+                                                <span className="font-semibold text-foreground">
+                                                    Ambassador Vedika
+                                                </span>{" "}
+                                                at Sarvodaya Bal Vidyalaya, New
+                                                Delhi, reaching 100+ students
+                                                (Grade 8+) with practical
+                                                lessons on cybersecurity, teen
+                                                digital safety, scam awareness,
+                                                responsible AI (including
+                                                deepfakes), and
+                                                anti-cyberbullying.
+                                            </p>
+                                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed font-medium">
+                                                This marks the start of a new
+                                                chapter for YLCA—where a
+                                                scalable ambassador network
+                                                multiplies impact and grows the
+                                                mission city-by-city, and
+                                                ultimately, around the world.
+                                            </p>
+
+                                            {/* Key Highlights */}
+                                            <div className="grid grid-cols-2 gap-3 pt-4">
+                                                <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
+                                                    <div className="text-xl font-bold text-primary mb-1">
+                                                        100+
+                                                    </div>
+                                                    <p className="text-xs text-muted-foreground">
+                                                        Students Reached
+                                                    </p>
+                                                </div>
+                                                <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
+                                                    <div className="text-xl font-bold text-secondary mb-1">
+                                                        1st
+                                                    </div>
+                                                    <p className="text-xs text-muted-foreground">
+                                                        Independent Workshop
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-4">
+                                            <h4 className="text-lg font-bold text-foreground mb-3">
+                                                Workshop Highlights
+                                            </h4>
+                                            <div className="grid grid-cols-2 gap-3">
+                                                {[
+                                                    "/9th/WhatsApp Image 2026-01-09 at 13.08.36.jpeg",
+                                                    "/9th/WhatsApp Image 2026-01-09 at 13.08.36 (1).jpeg",
+                                                    "/9th/WhatsApp Image 2026-01-09 at 13.08.36 (2).jpeg",
+                                                    "/9th/WhatsApp Image 2026-01-09 at 13.08.36 (3).jpeg",
+                                                ].map((image, index) => (
+                                                    <div
+                                                        key={index}
+                                                        className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
+                                                        onClick={() =>
+                                                            openModal(
+                                                                vedikaJan2026Images,
+                                                                vedikaJan2026Images.indexOf(
+                                                                    image,
+                                                                ),
+                                                            )
+                                                        }
+                                                        role="button"
+                                                        tabIndex={0}
+                                                        onKeyDown={(e) => {
+                                                            if (
+                                                                e.key ===
+                                                                    "Enter" ||
+                                                                e.key === " "
+                                                            ) {
+                                                                e.preventDefault();
+                                                                openModal(
+                                                                    vedikaJan2026Images,
+                                                                    vedikaJan2026Images.indexOf(
+                                                                        image,
+                                                                    ),
+                                                                );
+                                                            }
+                                                        }}
+                                                        aria-label={`View Ambassador Vedika Jan 2026 image ${index + 1} in gallery`}
+                                                    >
+                                                        <img
+                                                            src={image}
+                                                            alt={`Ambassador Vedika Workshop Jan 2026 ${index + 1}`}
+                                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                                            loading="lazy"
+                                                        />
+                                                    </div>
+                                                ))}
+                                            </div>
+
+                                            {/* Ambassador Spotlight */}
+                                            <div className="mt-6 bg-linear-to-br from-primary/5 to-secondary/5 rounded-lg p-4 border border-border/30">
+                                                <div className="flex items-center gap-3 mb-2">
+                                                    <Users className="w-5 h-5 text-primary" />
+                                                    <h5 className="font-bold text-foreground">
+                                                        Ambassador Spotlight
+                                                    </h5>
+                                                </div>
+                                                <p className="text-sm text-muted-foreground">
+                                                    <span className="font-semibold text-foreground">
+                                                        Vedika
+                                                    </span>{" "}
+                                                    demonstrated exceptional
+                                                    leadership, delivering
+                                                    engaging content and
+                                                    empowering students to take
+                                                    charge of their digital
+                                                    safety.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </div>
+
+                        {/* View All Photos */}
+                        <div className="text-center mb-12 sm:mb-16">
+                            <Button
+                                variant="outline"
+                                onClick={() =>
+                                    openModal(vedikaJan2026Images, 0)
+                                }
+                                className="border-2 border-primary/50 dark:border-primary/60 hover:bg-primary/10 dark:hover:bg-primary/20 px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-full font-semibold group"
+                            >
+                                View All Workshop Photos
+                                <Star className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
+                            </Button>
+                        </div>
+
+                        {/* New Ambassador Spotlight - Yuvam Loonker */}
+                        <div className="mb-8 sm:mb-12">
+                            <div className="text-center mb-6 sm:mb-8">
+                                <Badge
+                                    variant="secondary"
+                                    className="mb-3 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm"
+                                >
+                                    NEW AMBASSADOR SPOTLIGHT
+                                </Badge>
+                                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground tracking-tight px-4">
+                                    <span className="bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
+                                        Yuvam Loonker Joins YLCA as Director of
+                                        Innovation Programs
+                                    </span>
+                                </h3>
+                            </div>
+
+                            <Card className="border-2 border-secondary/30 dark:border-secondary/40 bg-linear-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+                                <div className="bg-linear-to-r from-secondary/10 to-primary/10 px-6 py-4 border-b border-border/50">
+                                    <div className="flex items-center gap-3">
+                                        <Badge
+                                            variant="secondary"
+                                            className="text-xs sm:text-sm"
+                                        >
+                                            January 2026
+                                        </Badge>
+                                        <h3 className="text-lg sm:text-xl font-bold text-foreground">
+                                            Yuvam Loonker - Director of
+                                            Innovation Programs & Regional Lead
+                                        </h3>
+                                    </div>
+                                </div>
+
+                                <CardContent className="p-6 sm:p-8">
+                                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+                                        {/* Ambassador Profile */}
+                                        <div className="lg:col-span-1">
+                                            <div className="relative rounded-xl overflow-hidden border-2 border-border/40 shadow-lg group">
+                                                <img
+                                                    src="/yuvam.png"
+                                                    alt="Yuvam Loonker - YLCA Director of Innovation Programs"
+                                                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                                                />
+                                                <div className="absolute inset-0 ring-1 ring-secondary/20 dark:ring-secondary/30 rounded-xl pointer-events-none"></div>
+                                            </div>
+                                        </div>
+
+                                        {/* Content */}
+                                        <div className="lg:col-span-2 space-y-4">
+                                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                                YLCA is excited to welcome{" "}
+                                                <span className="font-semibold text-foreground">
+                                                    Yuvam Loonker
+                                                </span>{" "}
+                                                (JBCN International School,
+                                                Mumbai) as our newest ambassador
+                                                and a key leader for 2026. Yuvam
+                                                will serve a dual role—helping
+                                                expand YLCA's global mission
+                                                across Western and Southern
+                                                India by conducting school
+                                                workshops, recruiting and
+                                                mentoring new ambassadors, and
+                                                strengthening student-led
+                                                outreach in the region.
+                                            </p>
+                                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                                As YLCA's{" "}
+                                                <span className="font-semibold text-foreground">
+                                                    Director of Innovation
+                                                    Programs
+                                                </span>
+                                                , Yuvam will lead the launch of
+                                                YLCA's hands-on innovation
+                                                track—building hackathons,
+                                                capstone projects, and portfolio
+                                                showcases that give students
+                                                real-world ways to explore
+                                                cybersecurity and responsible
+                                                AI.
+                                            </p>
+
+                                            {/* Key Highlights */}
+                                            <div className="grid grid-cols-2 gap-3">
+                                                <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
+                                                    <div className="text-lg font-bold text-secondary mb-1">
+                                                        West & South India
+                                                    </div>
+                                                    <p className="text-xs text-muted-foreground">
+                                                        Regional Lead
+                                                    </p>
+                                                </div>
+                                                <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
+                                                    <div className="text-lg font-bold text-primary mb-1">
+                                                        Hackathons
+                                                    </div>
+                                                    <p className="text-xs text-muted-foreground">
+                                                        Innovation Programs
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </div>
+
+                        {/* DPS Karnal Cybersecurity Club Launch - shareable: /impact#dps-karnal-club */}
+                        <div
+                            id="dps-karnal-club"
+                            className="mt-12 sm:mt-16 scroll-mt-24"
+                        >
+                            <Card className="border-2 border-primary/30 dark:border-primary/40 bg-linear-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+                                <div className="bg-linear-to-r from-primary/10 to-secondary/10 px-6 py-4 border-b border-border/50">
+                                    <div className="flex flex-col gap-2">
+                                        <div className="flex items-center gap-3">
+                                            <Badge
+                                                variant="default"
+                                                className="text-xs sm:text-sm"
+                                            >
+                                                January 2026
+                                            </Badge>
+                                            <h3 className="text-lg sm:text-xl font-bold text-foreground">
+                                                A New Chapter at DPS Karnal: The
+                                                Cybersecurity Club Goes Live
+                                            </h3>
+                                        </div>
+                                        <p className="text-sm text-muted-foreground italic">
+                                            When screen time goes up, DPS Karnal
+                                            YLCA ambassadors step up.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <CardContent className="p-6 sm:p-8">
+                                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+                                        {/* Workshop Image */}
+                                        <div className="lg:col-span-1">
+                                            <div className="relative rounded-xl overflow-hidden border-2 border-border/40 shadow-lg group">
+                                                <img
+                                                    src="/20th Jan/WhatsApp Image 2026-01-20 at 20.36.29.jpeg"
+                                                    alt="DPS Karnal Cybersecurity Club Launch - YLCA Ambassadors"
+                                                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                                                    loading="lazy"
+                                                />
+                                                <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                                <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                                                    <p className="text-xs font-semibold">
+                                                        DPS Karnal Online
+                                                        Workshop Session
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            {/* Ambassador Team */}
+                                            <div className="mt-4 p-4 bg-secondary/5 dark:bg-secondary/10 rounded-lg border border-border/30">
+                                                <h4 className="text-sm font-bold text-foreground mb-2 flex items-center gap-2">
+                                                    <Users className="w-4 h-4 text-secondary" />
+                                                    Leading Ambassadors
+                                                </h4>
+                                                <p className="text-xs text-muted-foreground leading-relaxed">
+                                                    Krishiv Arora, Diti
+                                                    Chaudhary, Aarna Bansal,
+                                                    Garvit Handa, and Kanishka
+                                                    Walia
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        {/* Content */}
+                                        <div className="lg:col-span-2 space-y-4">
+                                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                                During the winter break, when
+                                                students were at home spending
+                                                extra time on phones, laptops
+                                                and other devices, YLCA
+                                                ambassadors at{" "}
+                                                <span className="font-semibold text-foreground">
+                                                    DPS Karnal
+                                                </span>{" "}
+                                                came into action and turned that
+                                                screen time into a powerful
+                                                learning opportunity by
+                                                launching their first{" "}
+                                                <span className="font-semibold text-foreground">
+                                                    Cyber Safety Workshop
+                                                </span>
+                                                .
+                                            </p>
+                                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                                In just a time period of three
+                                                days, the team conducted{" "}
+                                                <span className="font-semibold text-foreground">
+                                                    6 online workshops
+                                                </span>{" "}
+                                                for grade 7–8 students. With
+                                                25–30 students per session, they
+                                                reached a total of{" "}
+                                                <span className="font-semibold text-foreground">
+                                                    150 students
+                                                </span>
+                                                , a strong start, especially for
+                                                a student-led initiative. Each
+                                                workshop was energetic and
+                                                interactive: students asked
+                                                thoughtful questions, cleared
+                                                doubts confidently, and stayed
+                                                engaged throughout the session.
+                                            </p>
+                                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                                The workshops created real
+                                                moments of reflection on
+                                                everyday digital
+                                                habits—signifying stronger
+                                                passwords, scam awareness, safer
+                                                browsing and responsible social
+                                                media behavior.
+                                            </p>
+                                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                                This milestone also marked the
+                                                formal kick-off of the{" "}
+                                                <span className="font-semibold text-foreground">
+                                                    DPS Karnal Cybersecurity
+                                                    Club
+                                                </span>
+                                                , opening a new chapter powered
+                                                by student leadership. The
+                                                ambassadors are excited to build
+                                                this foundation with more
+                                                hands-on sessions, activities
+                                                and awareness events in the
+                                                coming years, expanding impact
+                                                both within the school and the
+                                                local community.
+                                            </p>
+                                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed italic">
+                                                It's a meaningful first step
+                                                towards YLCA's global mission: a
+                                                student-led ambassador network
+                                                driving multifold outreach and
+                                                building a culture of digital
+                                                safety.
+                                            </p>
+
+                                            {/* Key Impact Stats */}
+                                            <div className="grid grid-cols-3 gap-3 pt-4">
+                                                <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
+                                                    <div className="text-xl sm:text-2xl font-bold text-primary mb-1">
+                                                        150
+                                                    </div>
+                                                    <p className="text-xs text-muted-foreground">
+                                                        Students Reached
+                                                    </p>
+                                                </div>
+                                                <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
+                                                    <div className="text-xl sm:text-2xl font-bold text-secondary mb-1">
+                                                        6
+                                                    </div>
+                                                    <p className="text-xs text-muted-foreground">
+                                                        Workshops
+                                                    </p>
+                                                </div>
+                                                <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
+                                                    <div className="text-xl sm:text-2xl font-bold text-primary mb-1">
+                                                        3 Days
+                                                    </div>
+                                                    <p className="text-xs text-muted-foreground">
+                                                        Winter Break
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Republic Day Cyber Safety Workshop - shareable: /impact#republic-day */}
+                <section
+                    id="republic-day"
+                    className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-linear-to-b from-background to-muted/20 relative overflow-hidden scroll-mt-24"
+                >
+                    <div className="absolute inset-0 -z-10">
+                        <div className="absolute top-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse"></div>
+                        <div
+                            className="absolute bottom-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"
+                            style={{ animationDelay: "1s" }}
+                        ></div>
+                    </div>
+
+                    <div className="max-w-6xl mx-auto relative z-10">
+                        <div className="text-center mb-8 sm:mb-12">
+                            <Badge
+                                variant="default"
+                                className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm bg-linear-to-r from-secondary to-primary"
+                            >
+                                JAN 2026
+                            </Badge>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
+                                <span>
+                                    Republic Day{" "}
+                                    <span className="bg-linear-to-r from-secondary to-primary bg-clip-text text-transparent">
+                                        Cyber Safety Workshop
+                                    </span>
+                                </span>
+                                <a
+                                    href="#republic-day"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        const url =
+                                            typeof window !== "undefined"
+                                                ? `${window.location.origin}/impact#republic-day`
+                                                : "/impact#republic-day";
+                                        navigator.clipboard
+                                            ?.writeText(url)
+                                            .then(() => {
+                                                const btn = e.currentTarget;
+                                                btn.setAttribute(
+                                                    "aria-label",
+                                                    "Link copied!",
+                                                );
+                                                btn.classList.add(
+                                                    "ring-2",
+                                                    "ring-primary",
+                                                );
+                                                setTimeout(() => {
+                                                    btn.setAttribute(
+                                                        "aria-label",
+                                                        "Copy link",
+                                                    );
+                                                    btn.classList.remove(
+                                                        "ring-2",
+                                                        "ring-primary",
+                                                    );
+                                                }, 1500);
+                                            });
+                                    }}
+                                    className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0"
+                                    aria-label="Copy link"
+                                    title="Copy link to share"
+                                >
+                                    <Link2 className="w-5 h-5" />
+                                </a>
+                            </h2>
+                            <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
+                                Community cyber awareness session led by
+                                Ambassador Krishiv Arora (DPS Karnal)
+                            </p>
+                        </div>
+
+                        <Card className="border-2 border-secondary/30 dark:border-secondary/40 bg-linear-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+                            <div className="bg-linear-to-r from-secondary/10 to-primary/10 px-6 py-4 border-b border-border/50">
+                                <div className="flex flex-col gap-2">
+                                    <div className="flex items-center gap-3">
+                                        <Badge
+                                            variant="default"
+                                            className="text-xs sm:text-sm"
+                                        >
+                                            January 26, 2026
+                                        </Badge>
+                                        <h3 className="text-lg sm:text-xl font-bold text-foreground">
+                                            Republic Day Cyber Safety Workshop
+                                            Led by YLCA Ambassador
+                                        </h3>
+                                    </div>
+                                    <p className="text-sm text-muted-foreground italic">
+                                        50+ participants · Adults + children
+                                    </p>
+                                </div>
+                            </div>
+
+                            <CardContent className="p-6 sm:p-8">
+                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+                                    {/* Workshop Image Grid */}
+                                    <div className="lg:col-span-1 space-y-4">
+                                        <div className="relative rounded-xl overflow-hidden border-2 border-border/40 shadow-lg group">
+                                            <img
+                                                src={republicDayImages[0]}
+                                                alt="Republic Day Cyber Safety Workshop - YLCA Ambassador Krishiv Arora"
+                                                className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer"
+                                                loading="lazy"
+                                                onClick={() =>
+                                                    openModal(
+                                                        republicDayImages,
+                                                        0,
+                                                    )
+                                                }
+                                            />
+                                            <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                            <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                                                <p className="text-xs font-semibold">
+                                                    Republic Day Cyber Safety
+                                                    Workshop
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div className="grid grid-cols-2 gap-3">
+                                            {republicDayImages
+                                                .slice(1)
+                                                .map((image, index) => (
+                                                    <div
+                                                        key={image}
+                                                        className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
+                                                        onClick={() =>
+                                                            openModal(
+                                                                republicDayImages,
+                                                                index + 1,
+                                                            )
+                                                        }
+                                                        role="button"
+                                                        tabIndex={0}
+                                                        onKeyDown={(e) => {
+                                                            if (
+                                                                e.key ===
+                                                                    "Enter" ||
+                                                                e.key === " "
+                                                            ) {
+                                                                e.preventDefault();
+                                                                openModal(
+                                                                    republicDayImages,
+                                                                    index + 1,
+                                                                );
+                                                            }
+                                                        }}
+                                                        aria-label={`View Republic Day workshop image ${index + 2} in gallery`}
+                                                    >
+                                                        <img
+                                                            src={image}
+                                                            alt={`Republic Day Cyber Safety Workshop ${index + 2}`}
+                                                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                                            loading="lazy"
+                                                        />
+                                                    </div>
+                                                ))}
+                                        </div>
+                                    </div>
+
+                                    {/* Content */}
+                                    <div className="lg:col-span-2 space-y-4">
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                            On{" "}
+                                            <span className="font-semibold text-foreground">
+                                                26 January 2026 (Republic Day)
+                                            </span>
+                                            , YLCA ambassadors turned a national
+                                            celebration into a meaningful
+                                            opportunity to strengthen community
+                                            cyber awareness. Our Cybersecurity
+                                            Ambassador{" "}
+                                            <span className="font-semibold text-foreground">
+                                                Krishiv Arora (DPS Karnal)
+                                            </span>{" "}
+                                            led an engaging workshop for both
+                                            adults and children, with{" "}
+                                            <span className="font-semibold text-foreground">
+                                                50+ participants
+                                            </span>{" "}
+                                            in attendance.
+                                        </p>
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                            The session focused on practical,
+                                            everyday online safety and
+                                            responsible digital
+                                            behavior—delivered in a simple,
+                                            relatable format that encouraged
+                                            active participation throughout.
+                                        </p>
+
+                                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4">
+                                            <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
+                                                <div className="text-lg sm:text-xl font-bold text-secondary mb-1">
+                                                    Community-First
+                                                </div>
+                                                <p className="text-xs text-muted-foreground">
+                                                    Open to families, not just
+                                                    students
+                                                </p>
+                                            </div>
+                                            <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
+                                                <div className="text-lg sm:text-xl font-bold text-primary mb-1">
+                                                    Practical Learning
+                                                </div>
+                                                <p className="text-xs text-muted-foreground">
+                                                    Everyday cyber safety habits
+                                                </p>
+                                            </div>
+                                            <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
+                                                <div className="text-lg sm:text-xl font-bold text-secondary mb-1">
+                                                    High Engagement
+                                                </div>
+                                                <p className="text-xs text-muted-foreground">
+                                                    Interactive Q&A and
+                                                    discussion
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed italic">
+                                            Participants gained confidence to
+                                            identify common cyber risks, avoid
+                                            online traps, and adopt safer
+                                            digital habits—turning awareness
+                                            into action. YLCA is proud of{" "}
+                                            <span className="font-semibold text-foreground">
+                                                Krishiv Arora
+                                            </span>{" "}
+                                            and our DPS Karnal ambassadors for
+                                            consistently stepping up to make
+                                            communities more cyber-aware.
+                                        </p>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </section>
+
+                {/* YLCA West India Chapter Kickoff – JBCN Mumbai - shareable: /impact#west-india */}
+                <section
+                    id="west-india"
+                    className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-linear-to-b from-muted/20 to-background relative overflow-hidden scroll-mt-24"
+                >
+                    <div className="absolute inset-0 -z-10">
+                        <div className="absolute top-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
+                        <div
+                            className="absolute bottom-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse"
+                            style={{ animationDelay: "1s" }}
+                        ></div>
+                    </div>
+
+                    <div className="max-w-6xl mx-auto relative z-10">
+                        <div className="text-center mb-8 sm:mb-12">
+                            <Badge
+                                variant="default"
+                                className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm"
+                            >
+                                JAN 2026
+                            </Badge>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
+                                <span>
+                                    YLCA West India Chapter{" "}
+                                    <span className="bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
+                                        Kicks Off
+                                    </span>
+                                </span>
+                                <a
+                                    href="#west-india"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        const url =
+                                            typeof window !== "undefined"
+                                                ? `${window.location.origin}/impact#west-india`
+                                                : "/impact#west-india";
+                                        navigator.clipboard
+                                            ?.writeText(url)
+                                            .then(() => {
+                                                const btn = e.currentTarget;
+                                                btn.setAttribute(
+                                                    "aria-label",
+                                                    "Link copied!",
+                                                );
+                                                btn.classList.add(
+                                                    "ring-2",
+                                                    "ring-primary",
+                                                );
+                                                setTimeout(() => {
+                                                    btn.setAttribute(
+                                                        "aria-label",
+                                                        "Copy link",
+                                                    );
+                                                    btn.classList.remove(
+                                                        "ring-2",
+                                                        "ring-primary",
+                                                    );
+                                                }, 1500);
+                                            });
+                                    }}
+                                    className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0"
+                                    aria-label="Copy link"
+                                    title="Copy link to share"
+                                >
+                                    <Link2 className="w-5 h-5" />
+                                </a>
+                            </h2>
+                            <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
+                                Regional Lead Yuvam Loonker and ambassadors kick
+                                off the first workshop at JBCN Mumbai
+                            </p>
+                        </div>
+
+                        <Card className="border-2 border-primary/30 dark:border-primary/40 bg-linear-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+                            <div className="bg-linear-to-r from-primary/10 to-secondary/10 px-6 py-4 border-b border-border/50">
+                                <div className="flex flex-col gap-2">
+                                    <div className="flex items-center gap-3">
+                                        <Badge
+                                            variant="default"
+                                            className="text-xs sm:text-sm"
+                                        >
+                                            January 30, 2026
+                                        </Badge>
+                                        <h3 className="text-lg sm:text-xl font-bold text-foreground">
+                                            YLCA West India Chapter Kicks Off:
+                                            First Workshop at JBCN Mumbai
+                                        </h3>
+                                    </div>
+                                    <p className="text-sm text-muted-foreground italic">
+                                        50+ 8th grade students · Yuvam Loonker,
+                                        Panache Kataria, Rudra Ramaswamy,
+                                        Himadri Das
+                                    </p>
+                                </div>
+                            </div>
+
+                            <CardContent className="p-6 sm:p-8">
+                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+                                    {/* Workshop images + video */}
+                                    <div className="lg:col-span-1 space-y-4">
+                                        <div className="relative rounded-xl overflow-hidden border-2 border-border/40 shadow-lg group">
+                                            <img
+                                                src={westIndiaJan30Images[0]}
+                                                alt="YLCA West India Chapter workshop at JBCN Mumbai"
+                                                className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer"
+                                                loading="lazy"
+                                                onClick={() =>
+                                                    openModal(
+                                                        westIndiaJan30Images,
+                                                        0,
+                                                    )
+                                                }
+                                            />
+                                            <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                            <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                                                <p className="text-xs font-semibold">
+                                                    West India Chapter – JBCN
+                                                    Mumbai
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div className="grid grid-cols-2 gap-3">
+                                            {westIndiaJan30Images
+                                                .slice(1, 5)
+                                                .map((image, index) => (
+                                                    <div
+                                                        key={image}
+                                                        className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
+                                                        onClick={() =>
+                                                            openModal(
+                                                                westIndiaJan30Images,
+                                                                index + 1,
+                                                            )
+                                                        }
+                                                        role="button"
+                                                        tabIndex={0}
+                                                        onKeyDown={(e) => {
+                                                            if (
+                                                                e.key ===
+                                                                    "Enter" ||
+                                                                e.key === " "
+                                                            ) {
+                                                                e.preventDefault();
+                                                                openModal(
+                                                                    westIndiaJan30Images,
+                                                                    index + 1,
+                                                                );
+                                                            }
+                                                        }}
+                                                        aria-label={`View West India JBCN workshop image ${index + 2}`}
+                                                    >
+                                                        <img
+                                                            src={image}
+                                                            alt={`West India Chapter JBCN Mumbai ${index + 2}`}
+                                                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                                            loading="lazy"
+                                                        />
+                                                    </div>
+                                                ))}
+                                        </div>
+
+                                        <div className="rounded-xl overflow-hidden border border-border/30 bg-muted/20">
+                                            <p className="text-xs font-semibold text-foreground px-3 py-2 border-b border-border/50">
+                                                Workshop clip
+                                            </p>
+                                            <video
+                                                src="/30th Jan/WhatsApp Video 2026-01-27 at 15.22.47.mp4"
+                                                controls
+                                                className="w-full aspect-video object-contain"
+                                                playsInline
+                                                preload="metadata"
+                                            >
+                                                Your browser does not support
+                                                the video tag.
+                                            </video>
+                                        </div>
+                                    </div>
+
+                                    {/* Article content */}
+                                    <div className="lg:col-span-2 space-y-4">
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                            YLCA's West India Chapter officially
+                                            kicked off with an energetic,
+                                            student-led cybersecurity workshop
+                                            at JBCN School, Mumbai—led by
+                                            Regional Lead{" "}
+                                            <span className="font-semibold text-foreground">
+                                                Yuvam Loonker
+                                            </span>{" "}
+                                            along with YLCA ambassadors{" "}
+                                            <span className="font-semibold text-foreground">
+                                                Panache Kataria
+                                            </span>
+                                            ,{" "}
+                                            <span className="font-semibold text-foreground">
+                                                Rudra Ramaswamy
+                                            </span>
+                                            , and{" "}
+                                            <span className="font-semibold text-foreground">
+                                                Himadri Das
+                                            </span>
+                                            . With 50+ 8th grade students in
+                                            attendance, the session was designed
+                                            to be hands-on, fast-paced, and
+                                            practical—so students didn't just
+                                            "hear about cybersecurity," they
+                                            actually practiced it.
+                                        </p>
+
+                                        <h4 className="text-base font-bold text-foreground mt-6">
+                                            What students learned (and why it
+                                            mattered)
+                                        </h4>
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                            The workshop focused on the kinds of
+                                            threats teens face most
+                                            often—suspicious links, fake
+                                            messages, social media scams, and
+                                            account takeovers. The ambassadors
+                                            walked students through how
+                                            cyberattacks work in real life, and
+                                            how small habits (like recognizing
+                                            red flags early) can prevent bigger
+                                            issues.
+                                        </p>
+
+                                        <h4 className="text-base font-bold text-foreground mt-4">
+                                            Hands-on activities that made it
+                                            stick
+                                        </h4>
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                            This wasn't a lecture-style session.
+                                            Students were actively involved
+                                            throughout:
+                                        </p>
+                                        <ul className="list-disc list-inside text-sm sm:text-base text-muted-foreground space-y-1">
+                                            <li>
+                                                <strong className="text-foreground">
+                                                    Phishing Detection
+                                                    Challenge:
+                                                </strong>{" "}
+                                                students identified phishing
+                                                emails by spotting common red
+                                                flags (urgent language,
+                                                suspicious links, fake sender
+                                                details).
+                                            </li>
+                                            <li>
+                                                <strong className="text-foreground">
+                                                    "Create-a-Phishing Email"
+                                                    Activity (Awareness-Only):
+                                                </strong>{" "}
+                                                students learned how scams are
+                                                written so they can recognize
+                                                and avoid them—not to misuse
+                                                them.
+                                            </li>
+                                            <li>
+                                                <strong className="text-foreground">
+                                                    Mock "Virus File" Demo (Safe
+                                                    Simulation):
+                                                </strong>{" "}
+                                                a controlled activity that
+                                                helped students understand what
+                                                malware is and how it can
+                                                spread.
+                                            </li>
+                                            <li>
+                                                <strong className="text-foreground">
+                                                    Interactive Quizzes
+                                                    (Kahoot/Wayground):
+                                                </strong>{" "}
+                                                rapid-fire questions kept
+                                                everyone engaged and reinforced
+                                                key ideas in a fun way.
+                                            </li>
+                                        </ul>
+                                        <p className="text-sm text-muted-foreground">
+                                            Quiz link used in the session:{" "}
+                                            <a
+                                                href="https://wayground.com/admin/quiz/6975c16612bcf9d454f39b21"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-primary hover:underline font-medium"
+                                            >
+                                                wayground.com/admin/quiz/6975c16612bcf9d454f39b21
+                                            </a>
+                                        </p>
+
+                                        <h4 className="text-base font-bold text-foreground mt-4">
+                                            Real stories, real learning
+                                        </h4>
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                            One of the most powerful parts of
+                                            the workshop was the discussion:
+                                            students shared real experiences of
+                                            suspicious messages, hacked
+                                            accounts, and online scams they've
+                                            seen—then learned what they could do
+                                            differently next time. That mix of
+                                            real stories + guided practice is
+                                            what made the session memorable.
+                                        </p>
+
+                                        <div className="bg-muted/30 dark:bg-muted/20 rounded-xl p-4 sm:p-5 border border-border/50 mt-6">
+                                            <h4 className="text-sm font-bold text-foreground mb-3 uppercase tracking-wide">
+                                                Impact Snapshot
+                                            </h4>
+                                            <ul className="text-sm text-muted-foreground space-y-1">
+                                                <li>
+                                                    <strong className="text-foreground">
+                                                        Location:
+                                                    </strong>{" "}
+                                                    JBCN School, Mumbai
+                                                </li>
+                                                <li>
+                                                    <strong className="text-foreground">
+                                                        Chapter:
+                                                    </strong>{" "}
+                                                    YLCA West India
+                                                </li>
+                                                <li>
+                                                    <strong className="text-foreground">
+                                                        Audience:
+                                                    </strong>{" "}
+                                                    50+ students (8th grade)
+                                                </li>
+                                                <li>
+                                                    <strong className="text-foreground">
+                                                        Format:
+                                                    </strong>{" "}
+                                                    highly interactive workshop
+                                                    + quizzes + activities
+                                                </li>
+                                                <li>
+                                                    <strong className="text-foreground">
+                                                        Outcomes:
+                                                    </strong>{" "}
+                                                    students learned to spot
+                                                    phishing attempts,
+                                                    understand malware basics,
+                                                    and build stronger online
+                                                    safety habits
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed italic mt-4">
+                                            YLCA's mission is "teens teaching
+                                            teens"—and this kickoff at JBCN is a
+                                            strong start for West India. We're
+                                            excited to run more workshops across
+                                            schools and communities, and empower
+                                            more students to protect their
+                                            digital lives with confidence.
+                                        </p>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+
+                        <div className="text-center mt-8">
+                            <Button
+                                variant="outline"
+                                onClick={() =>
+                                    openModal(westIndiaJan30Images, 0)
+                                }
+                                className="border-2 border-primary/50 dark:border-primary/60 hover:bg-primary/10 dark:hover:bg-primary/20 px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-full font-semibold group"
+                            >
+                                View All West India Chapter Photos
+                                <GraduationCap className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
+                            </Button>
+                        </div>
+                    </div>
+                </section>
+
+                {/* From Curiosity to IEEE Publication – Feb 2026 */}
+                <section
+                    id="ieee-feb-2026"
+                    className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-linear-to-b from-background to-muted/20 relative overflow-hidden scroll-mt-24"
+                >
+                    <div className="absolute inset-0 -z-10">
+                        <div className="absolute top-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse"></div>
+                        <div
+                            className="absolute bottom-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"
+                            style={{ animationDelay: "1s" }}
+                        ></div>
+                    </div>
+
+                    <div className="max-w-6xl mx-auto relative z-10">
+                        <div className="text-center mb-8 sm:mb-12">
+                            <Badge
+                                variant="default"
+                                className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm"
+                            >
+                                FEB 2026
+                            </Badge>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
+                                From Curiosity to{" "}
+                                <span className="bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
+                                    IEEE Publication
+                                </span>
+                            </h2>
+                            <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
+                                How YLCA mentorship and a global ambassador
+                                collaboration led to a research paper and talk
+                                at an IEEE-affiliated AI + Security workshop.
+                            </p>
+                        </div>
+
+                        <Card className="border-2 border-primary/30 dark:border-primary/40 bg-linear-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+                            <div className="bg-linear-to-r from-primary/10 to-secondary/10 px-6 py-4 border-b border-border/50">
+                                <div className="flex flex-col gap-2">
+                                    <div className="flex items-center gap-3">
+                                        <Badge
+                                            variant="default"
+                                            className="text-xs sm:text-sm"
+                                        >
+                                            February 2026
+                                        </Badge>
+                                        <h3 className="text-lg sm:text-xl font-bold text-foreground">
+                                            From Curiosity to IEEE Publication:
+                                            YLCA Mentorship & Global Ambassador
+                                            Partnership
+                                        </h3>
+                                    </div>
+                                    <p className="text-sm text-muted-foreground italic">
+                                        Mentorship with industry, collaboration
+                                        with ambassadors, and a multi-agent AI
+                                        framework for cyber defense (MALCDF).
+                                    </p>
+                                </div>
+                            </div>
+
+                            <CardContent className="p-6 sm:p-8">
+                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+                                    <div className="lg:col-span-1 space-y-4">
+                                        <div className="relative rounded-xl overflow-hidden border-2 border-border/40 shadow-lg group">
+                                            <img
+                                                src={ieeeFeb2026Images[0]}
+                                                alt="YLCA mentorship and research presentation preparation"
+                                                className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer"
+                                                loading="lazy"
+                                                onClick={() =>
+                                                    openModal(
+                                                        ieeeFeb2026Images,
+                                                        0,
+                                                    )
+                                                }
+                                            />
+                                            <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                            <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                                                <p className="text-xs font-semibold">
+                                                    YLCA mentorship & research
+                                                    collaboration
+                                                </p>
+                                            </div>
+                                        </div>
+                                        {ieeeFeb2026Images.length > 1 && (
+                                            <div
+                                                className="aspect-video overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
+                                                onClick={() =>
+                                                    openModal(
+                                                        ieeeFeb2026Images,
+                                                        1,
+                                                    )
+                                                }
+                                                role="button"
+                                                tabIndex={0}
+                                                onKeyDown={(e) => {
+                                                    if (
+                                                        e.key === "Enter" ||
+                                                        e.key === " "
+                                                    ) {
+                                                        e.preventDefault();
+                                                        openModal(
+                                                            ieeeFeb2026Images,
+                                                            1,
+                                                        );
+                                                    }
+                                                }}
+                                                aria-label="View IEEE publication story image 2"
+                                            >
+                                                <img
+                                                    src={ieeeFeb2026Images[1]}
+                                                    alt="YLCA team collaborating on MALCDF research"
+                                                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                                    loading="lazy"
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <div className="lg:col-span-2 space-y-4">
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                            In March, YLCA’s mentorship program
+                                            reached a major milestone—turning a
+                                            student’s curiosity into a research
+                                            outcome recognized by the{" "}
+                                            <span className="font-semibold text-foreground">
+                                                IEEE community
+                                            </span>
+                                            . YLCA Founder{" "}
+                                            <span className="font-semibold text-foreground">
+                                                Arth Bhardwaj
+                                            </span>{" "}
+                                            worked closely with{" "}
+                                            <span className="font-semibold text-foreground">
+                                                Lalit Jain (Microsoft)
+                                            </span>{" "}
+                                            to understand real cybersecurity
+                                            threats faced by large organizations
+                                            and Security Operations Centers
+                                            (SOCs), and how AI and LLM-based
+                                            agents could help defenders detect
+                                            and respond faster.
+                                        </p>
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                            Arth then expanded the learning into
+                                            a global collaboration by inviting{" "}
+                                            <span className="font-semibold text-foreground">
+                                                Sia Godika (MIT)
+                                            </span>
+                                            , a YLCA Ambassador, and{" "}
+                                            <span className="font-semibold text-foreground">
+                                                Innovation Director Yuvam
+                                                Loonker
+                                            </span>{" "}
+                                            to join him in studying industry
+                                            trends, researching, and building{" "}
+                                            <span className="font-semibold text-foreground">
+                                                MALCDF
+                                            </span>
+                                            —a multi-agent AI framework designed
+                                            to improve real-time cyber defense.
+                                            The framework assigns specialized AI
+                                            “agents” to tasks like detection,
+                                            threat intelligence, response
+                                            recommendations, and clear
+                                            analyst-ready explanations.
+                                        </p>
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                            After four months of focused work,
+                                            the team’s paper was accepted to the{" "}
+                                            <span className="font-semibold text-foreground">
+                                                IEEE-affiliated SVCC AI +
+                                                Security Workshop
+                                            </span>{" "}
+                                            in San Jose, California, with a live
+                                            presentation scheduled for{" "}
+                                            <span className="font-semibold text-foreground">
+                                                June 2026
+                                            </span>
+                                            . The paper is already published on{" "}
+                                            <a
+                                                href="https://arxiv.org/abs/2512.14846"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-primary hover:text-secondary underline underline-offset-2 font-medium"
+                                            >
+                                                arXiv
+                                            </a>
+                                            , and will be followed by
+                                            publication in the{" "}
+                                            <span className="font-semibold text-foreground">
+                                                IEEE Xplore
+                                            </span>{" "}
+                                            catalog.
+                                        </p>
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed font-medium">
+                                            This journey—from curiosity to
+                                            publication—captures what makes YLCA
+                                            special: mentorship that connects
+                                            students with real-world problems,
+                                            global ambassadors who collaborate
+                                            across borders, and youth-led
+                                            innovation that contributes back to
+                                            the cybersecurity and AI community.
+                                        </p>
+
+                                        <div className="flex flex-wrap gap-3 pt-3">
+                                            <a
+                                                href="https://arxiv.org/abs/2512.14846"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-secondary transition-colors underline underline-offset-4"
+                                            >
+                                                Read the Paper on arXiv
+                                            </a>
+                                            <a
+                                                href="https://www.svcc-svcsi.org/ai-security-workshop"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-secondary transition-colors underline underline-offset-4"
+                                            >
+                                                SVCC AI + Security Workshop
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </section>
+
+                {/* Feb 11, 2026 – Cupertino City Council Presentation */}
+                <section
+                    id="cupertino-feb-11-2026"
+                    className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-linear-to-b from-muted/20 to-background relative overflow-hidden scroll-mt-24"
+                >
+                    <div className="absolute inset-0 -z-10">
+                        <div className="absolute top-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
+                        <div
+                            className="absolute bottom-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse"
+                            style={{ animationDelay: "1s" }}
+                        ></div>
+                    </div>
+
+                    <div className="max-w-6xl mx-auto relative z-10">
+                        <div className="text-center mb-8 sm:mb-12">
+                            <Badge
+                                variant="default"
+                                className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm"
+                            >
+                                FEB 2026
+                            </Badge>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4">
+                                YLCA Presents Its Mission to the{" "}
+                                <span className="bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
+                                    Cupertino City Council
+                                </span>
+                            </h2>
+                            <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
+                                February 11, 2026 — YLCA Founder Arth Bhardwaj
+                                and Bay Area Chapter Lead Henry Whitehead share
+                                YLCA&apos;s youth-led mission with Cupertino
+                                commissioners and civic leaders.
+                            </p>
+                        </div>
+
+                        <Card className="border-2 border-secondary/30 dark:border-secondary/40 bg-linear-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+                            <div className="bg-linear-to-r from-secondary/10 to-primary/10 px-6 py-4 border-b border-border/50">
+                                <div className="flex flex-col gap-2">
+                                    <div className="flex items-center gap-3">
+                                        <Badge
+                                            variant="default"
+                                            className="text-xs sm:text-sm"
+                                        >
+                                            February 11, 2026
+                                        </Badge>
+                                        <h3 className="text-lg sm:text-xl font-bold text-foreground">
+                                            YLCA Shares Its Mission with
+                                            Cupertino City Council and
+                                            Commissioners
+                                        </h3>
+                                    </div>
+                                    <p className="text-sm text-muted-foreground italic">
+                                        Presenting YLCA&apos;s mission, vision,
+                                        and impact to city leaders—and bringing
+                                        youth voices into civic conversations on
+                                        digital safety.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <CardContent className="p-6 sm:p-8">
+                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+                                    <div className="lg:col-span-1 space-y-3">
+                                        <div className="relative rounded-xl overflow-hidden border-2 border-border/40 shadow-lg group">
+                                            <img
+                                                src={feb11CouncilImages[0]}
+                                                alt="YLCA presentation to Cupertino City Council and commissioners"
+                                                className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer"
+                                                loading="lazy"
+                                                onClick={() =>
+                                                    openModal(
+                                                        feb11CouncilImages,
+                                                        0,
+                                                    )
+                                                }
+                                            />
+                                            <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                            <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                                                <p className="text-xs font-semibold">
+                                                    YLCA at Cupertino City
+                                                    Council
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div className="grid grid-cols-2 gap-3">
+                                            {feb11CouncilImages
+                                                .slice(1)
+                                                .map((image, index) => (
+                                                    <div
+                                                        key={image}
+                                                        className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
+                                                        onClick={() =>
+                                                            openModal(
+                                                                feb11CouncilImages,
+                                                                index + 1,
+                                                            )
+                                                        }
+                                                        role="button"
+                                                        tabIndex={0}
+                                                        onKeyDown={(e) => {
+                                                            if (
+                                                                e.key ===
+                                                                    "Enter" ||
+                                                                e.key === " "
+                                                            ) {
+                                                                e.preventDefault();
+                                                                openModal(
+                                                                    feb11CouncilImages,
+                                                                    index + 1,
+                                                                );
+                                                            }
+                                                        }}
+                                                        aria-label={`View Cupertino presentation image ${index + 2}`}
+                                                    >
+                                                        <img
+                                                            src={image}
+                                                            alt={`YLCA Cupertino City Council presentation ${index + 2}`}
+                                                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                                            loading="lazy"
+                                                        />
+                                                    </div>
+                                                ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="lg:col-span-2 space-y-4">
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                            On{" "}
+                                            <span className="font-semibold text-foreground">
+                                                February 11, 2026
+                                            </span>
+                                            , YLCA Founder{" "}
+                                            <span className="font-semibold text-foreground">
+                                                Arth Bhardwaj
+                                            </span>{" "}
+                                            and Bay Area Chapter Lead{" "}
+                                            <span className="font-semibold text-foreground">
+                                                Henry Whitehead
+                                            </span>{" "}
+                                            were invited to present YLCA&apos;s
+                                            mission, vision, and growing impact
+                                            to Cupertino city commissioners and
+                                            civic leaders. Their presentation
+                                            highlighted how YLCA is working
+                                            locally and globally to make digital
+                                            safety, cybersecurity awareness, and
+                                            youth leadership more accessible to
+                                            students and families.
+                                        </p>
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                            Arth and Henry shared YLCA&apos;s
+                                            work in Cupertino and beyond,
+                                            including student-focused cyber and
+                                            AI safety sessions, the development
+                                            of a youth leadership pipeline, and
+                                            ambassador-led efforts across
+                                            multiple regions. They also spoke
+                                            about YLCA&apos;s larger goal:
+                                            building a generation of young
+                                            leaders who are not only aware of
+                                            online risks such as scams,
+                                            cyberbullying, and digital
+                                            manipulation, but are also equipped
+                                            to educate and support others in
+                                            their own communities.
+                                        </p>
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                            The session sparked meaningful
+                                            discussion and constructive feedback
+                                            from commissioners, which Arth and
+                                            Henry have now incorporated into
+                                            YLCA&apos;s semester planning for{" "}
+                                            <span className="font-semibold text-foreground">
+                                                April through October 2026
+                                            </span>
+                                            . It marked an important milestone
+                                            for the organization and signaled
+                                            that YLCA&apos;s youth-led mission
+                                            is resonating with civic leaders and
+                                            the wider community.
+                                        </p>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </section>
+
+                {/* Building a Global Movement – YLCA Ambassadors Cohort Kickoff (Feb 1, 2026) */}
+                <section
+                    id="global-cohort-kickoff"
+                    className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-linear-to-b from-background to-muted/20 relative overflow-hidden scroll-mt-24"
+                >
+                    <div className="absolute inset-0 -z-10">
+                        <div className="absolute top-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
+                        <div
+                            className="absolute bottom-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse"
+                            style={{ animationDelay: "1s" }}
+                        ></div>
+                    </div>
+
+                    <div className="max-w-6xl mx-auto relative z-10">
+                        <div className="text-center mb-8 sm:mb-12">
+                            <Badge
+                                variant="default"
+                                className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm"
+                            >
+                                FEB 2026
+                            </Badge>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
+                                <span>
+                                    Building a Global Movement:{" "}
+                                    <span className="bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
+                                        YLCA Ambassadors Cohort Kickoff
+                                    </span>
+                                </span>
+                                <a
+                                    href="#global-cohort-kickoff"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        const url =
+                                            typeof window !== "undefined"
+                                                ? `${window.location.origin}/impact#global-cohort-kickoff`
+                                                : "/impact#global-cohort-kickoff";
+                                        navigator.clipboard
+                                            ?.writeText(url)
+                                            .then(() => {
+                                                const btn = e.currentTarget;
+                                                btn.setAttribute(
+                                                    "aria-label",
+                                                    "Link copied!",
+                                                );
+                                                btn.classList.add(
+                                                    "ring-2",
+                                                    "ring-primary",
+                                                );
+                                                setTimeout(() => {
+                                                    btn.setAttribute(
+                                                        "aria-label",
+                                                        "Copy link",
+                                                    );
+                                                    btn.classList.remove(
+                                                        "ring-2",
+                                                        "ring-primary",
+                                                    );
+                                                }, 1500);
+                                            });
+                                    }}
+                                    className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0"
+                                    aria-label="Copy link"
+                                    title="Copy link to share"
+                                >
+                                    <Link2 className="w-5 h-5" />
+                                </a>
+                            </h2>
+                            <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
+                                February 1, 2026 — Global ambassador cohort
+                                launch connecting youth from Delhi, Haryana,
+                                Punjab, Mumbai, California, and New Jersey
+                            </p>
+                        </div>
+
+                        <Card className="border-2 border-primary/30 dark:border-primary/40 bg-linear-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+                            <div className="bg-linear-to-r from-primary/10 to-secondary/10 px-6 py-4 border-b border-border/50">
+                                <div className="flex flex-col gap-2">
+                                    <div className="flex items-center gap-3">
+                                        <Badge
+                                            variant="default"
+                                            className="text-xs sm:text-sm"
+                                        >
+                                            February 1, 2026
+                                        </Badge>
+                                        <h3 className="text-lg sm:text-xl font-bold text-foreground">
+                                            YLCA Global Ambassador Cohort
+                                            Kickoff
+                                        </h3>
+                                    </div>
+                                    <p className="text-sm text-muted-foreground italic">
+                                        Youth ambassadors from multiple schools
+                                        and regions — monthly cohort rhythm for
+                                        2026
+                                    </p>
+                                </div>
+                            </div>
+
+                            <CardContent className="p-6 sm:p-8">
+                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+                                    <div className="lg:col-span-1 space-y-4">
+                                        <div className="relative rounded-xl overflow-hidden border-2 border-border/40 shadow-lg group">
+                                            <img
+                                                src={feb2026CohortImages[0]}
+                                                alt="YLCA Global Ambassador Cohort Kickoff — February 1, 2026"
+                                                className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer"
+                                                loading="lazy"
+                                                onClick={() =>
+                                                    openModal(
+                                                        feb2026CohortImages,
+                                                        0,
+                                                    )
+                                                }
+                                            />
+                                            <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                            <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                                                <p className="text-xs font-semibold">
+                                                    Global Cohort Kickoff — Feb
+                                                    1, 2026
+                                                </p>
+                                            </div>
+                                        </div>
+                                        {feb2026CohortImages.length > 1 && (
+                                            <div
+                                                className="aspect-video sm:aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
+                                                onClick={() =>
+                                                    openModal(
+                                                        feb2026CohortImages,
+                                                        1,
+                                                    )
+                                                }
+                                                role="button"
+                                                tabIndex={0}
+                                                onKeyDown={(e) => {
+                                                    if (
+                                                        e.key === "Enter" ||
+                                                        e.key === " "
+                                                    ) {
+                                                        e.preventDefault();
+                                                        openModal(
+                                                            feb2026CohortImages,
+                                                            1,
+                                                        );
+                                                    }
+                                                }}
+                                                aria-label="View Global Cohort Kickoff image 2"
+                                            >
+                                                <img
+                                                    src={feb2026CohortImages[1]}
+                                                    alt="YLCA Global Ambassador Cohort Kickoff 2"
+                                                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                                    loading="lazy"
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <div className="lg:col-span-2 space-y-4">
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                            On{" "}
+                                            <span className="font-semibold text-foreground">
+                                                February 1, 2026
+                                            </span>
+                                            , YLCA.tech hosted its{" "}
+                                            <span className="font-semibold text-foreground">
+                                                Global Ambassador Cohort Kickoff
+                                            </span>
+                                            , bringing together youth
+                                            ambassadors from multiple schools
+                                            across Delhi, Haryana, Punjab,
+                                            Mumbai, California, and New Jersey.
+                                            The session marked the official
+                                            start of our monthly cohort rhythm
+                                            for 2026 and created a shared space
+                                            for ambassadors to connect across
+                                            regions and time zones.
+                                        </p>
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                            Founder{" "}
+                                            <span className="font-semibold text-foreground">
+                                                Arth Bhardwaj
+                                            </span>{" "}
+                                            welcomed the cohort and emphasized a
+                                            simple goal: empower teens to lead
+                                            practical digital safety education
+                                            in their own communities, using
+                                            peer-to-peer learning that feels
+                                            relatable and actionable.
+                                        </p>
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                            During the kickoff, ambassadors
+                                            heard program updates, celebrated
+                                            recent outreach happening in
+                                            different chapters, and aligned on
+                                            expectations for the month ahead. We
+                                            also introduced the support
+                                            structure behind the cohort—regional
+                                            leadership, communication channels,
+                                            and a consistent format for
+                                            reporting impact—so ambassadors can
+                                            stay organized and build momentum
+                                            over time.
+                                        </p>
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                            The meeting closed with a look ahead
+                                            to upcoming initiatives, including
+                                            new workshop drives and a planned
+                                            hackathon designed to encourage
+                                            innovation in cybersecurity and AI
+                                            for social good.
+                                        </p>
+                                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed font-medium">
+                                            Most importantly, the kickoff
+                                            reinforced what makes YLCA special:
+                                            a growing network of students who
+                                            are not just learning about
+                                            cybersecurity, but actively
+                                            teaching, leading, and creating
+                                            safer digital habits in the
+                                            communities they call home.
+                                        </p>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+
+                        <div className="text-center mt-8">
+                            <Button
+                                variant="outline"
+                                onClick={() =>
+                                    openModal(feb2026CohortImages, 0)
+                                }
+                                className="border-2 border-primary/50 dark:border-primary/60 hover:bg-primary/10 dark:hover:bg-primary/20 px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-full font-semibold group"
+                            >
+                                View Cohort Kickoff Photos
+                                <GraduationCap className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
+                            </Button>
+                        </div>
+                    </div>
+                </section>
+
+                {/* March 2026 Global Outreach Update - shareable: /impact#march-global-outreach */}
+                <section
+                    id="march-global-outreach"
+                    className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-linear-to-b from-muted/20 to-background relative overflow-hidden scroll-mt-24"
+                >
+                    <div className="absolute inset-0 -z-10">
+                        <div className="absolute top-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
+                        <div
+                            className="absolute bottom-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse"
+                            style={{ animationDelay: "1s" }}
+                        ></div>
+                    </div>
+
+                    <div className="max-w-6xl mx-auto relative z-10">
+                        <div className="text-center mb-8 sm:mb-12">
+                            <Badge
+                                variant="default"
+                                className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm"
+                            >
+                                MAR 2026
+                            </Badge>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
+                                <span>
+                                    YLCA Expands Global Outreach Through New
+                                    Partnerships in{" "}
+                                    <span className="bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
+                                        Nepal and Bangladesh
+                                    </span>
+                                </span>
+                                <a
+                                    href="#march-global-outreach"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        const url =
+                                            typeof window !== "undefined"
+                                                ? `${window.location.origin}/impact#march-global-outreach`
+                                                : "/impact#march-global-outreach";
+                                        navigator.clipboard
+                                            ?.writeText(url)
+                                            .then(() => {
+                                                const btn = e.currentTarget;
+                                                btn.setAttribute(
+                                                    "aria-label",
+                                                    "Link copied!",
+                                                );
+                                                btn.classList.add(
+                                                    "ring-2",
+                                                    "ring-primary",
+                                                );
+                                                setTimeout(() => {
+                                                    btn.setAttribute(
+                                                        "aria-label",
+                                                        "Copy link",
+                                                    );
+                                                    btn.classList.remove(
+                                                        "ring-2",
+                                                        "ring-primary",
+                                                    );
+                                                }, 1500);
+                                            });
+                                    }}
+                                    className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0"
+                                    aria-label="Copy link"
+                                    title="Copy link to share"
+                                >
+                                    <Link2 className="w-5 h-5" />
+                                </a>
+                            </h2>
+                            <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
+                                March 2026 update on YLCA&apos;s latest regional
+                                NGO partnerships and next-phase outreach plans.
+                            </p>
+                        </div>
+
+                        <Card className="border-2 border-primary/30 dark:border-primary/40 bg-linear-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
+                            <div className="bg-linear-to-r from-primary/10 to-secondary/10 px-6 py-4 border-b border-border/50">
+                                <div className="flex flex-col gap-2">
+                                    <div className="flex items-center gap-3">
+                                        <Badge
+                                            variant="default"
+                                            className="text-xs sm:text-sm"
+                                        >
+                                            March 2026
+                                        </Badge>
+                                        <h3 className="text-lg sm:text-xl font-bold text-foreground">
+                                            New Partnerships in Nepal and
+                                            Bangladesh
+                                        </h3>
+                                    </div>
+                                    <p className="text-sm text-muted-foreground italic">
+                                        Expanding access to digital safety
+                                        education, youth mentorship, and early
+                                        cybersecurity pathways
+                                    </p>
+                                </div>
+                            </div>
+
+                            <CardContent className="p-6 sm:p-8 space-y-4">
+                                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                    In March 2026, YLCA took an important step
+                                    forward in its global mission by formalizing
+                                    new partnerships with NGOs in Nepal and
+                                    Bangladesh. These collaborations mark a
+                                    meaningful expansion of YLCA&apos;s work and
+                                    will help bring digital safety education and
+                                    youth mentorship to more students in new
+                                    communities.
+                                </p>
+                                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                    Under these partnerships, YLCA will support
+                                    sessions for children and teens focused on
+                                    online safety, digital wellbeing,
+                                    cyberbullying prevention, and responsible
+                                    technology use. The effort is designed to
+                                    strengthen awareness of everyday online
+                                    risks while also creating early pathways for
+                                    students who want to explore cybersecurity
+                                    and grow as future technology leaders.
+                                </p>
+                                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                    As part of YLCA&apos;s growing Global
+                                    Ambassador Track, these partnerships will
+                                    also open opportunities for mentorship,
+                                    leadership development, and technical
+                                    exposure for students interested in the
+                                    field.
+                                </p>
+                                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed font-medium">
+                                    The first sessions under these partnerships
+                                    are expected to begin in April 2026, and we
+                                    are excited to share more updates as this
+                                    work begins to take shape.
+                                </p>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </section>
+
+                {/* Call to Action */}
+                <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-linear-to-br from-primary/10 via-secondary/10 to-primary/10">
+                    <div className="max-w-4xl mx-auto text-center">
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-foreground px-4">
+                            Join the{" "}
+                            <span className="bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
+                                Impact
+                            </span>
+                        </h2>
+                        <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 px-4 max-w-2xl mx-auto">
+                            Be part of a global movement empowering teens with
+                            cybersecurity and AI knowledge. Your participation
+                            can create real change.
                         </p>
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="lg:col-span-2 space-y-4">
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                        During the winter break, when students were at home spending extra time on phones, laptops and other devices, YLCA ambassadors at <span className="font-semibold text-foreground">DPS Karnal</span> came into action and turned that screen time into a powerful learning opportunity by launching their first <span className="font-semibold text-foreground">Cyber Safety Workshop</span>.
-                      </p>
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                        In just a time period of three days, the team conducted <span className="font-semibold text-foreground">6 online workshops</span> for grade 7–8 students. With 25–30 students per session, they reached a total of <span className="font-semibold text-foreground">150 students</span>, a strong start, especially for a student-led initiative. Each workshop was energetic and interactive: students asked thoughtful questions, cleared doubts confidently, and stayed engaged throughout the session.
-                      </p>
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                        The workshops created real moments of reflection on everyday digital habits—signifying stronger passwords, scam awareness, safer browsing and responsible social media behavior.
-                      </p>
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                        This milestone also marked the formal kick-off of the <span className="font-semibold text-foreground">DPS Karnal Cybersecurity Club</span>, opening a new chapter powered by student leadership. The ambassadors are excited to build this foundation with more hands-on sessions, activities and awareness events in the coming years, expanding impact both within the school and the local community.
-                      </p>
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed italic">
-                        It's a meaningful first step towards YLCA's global mission: a student-led ambassador network driving multifold outreach and building a culture of digital safety.
-                      </p>
-
-                      {/* Key Impact Stats */}
-                      <div className="grid grid-cols-3 gap-3 pt-4">
-                        <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
-                          <div className="text-xl sm:text-2xl font-bold text-primary mb-1">150</div>
-                          <p className="text-xs text-muted-foreground">Students Reached</p>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
+                            <Link href="/get-involved">
+                                <Button className="w-full sm:w-auto bg-linear-to-r from-primary via-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white px-8 sm:px-10 py-6 sm:py-7 text-base sm:text-lg rounded-full shadow-lg shadow-primary/30 dark:shadow-primary/40 hover:shadow-xl hover:shadow-primary/40 dark:hover:shadow-primary/50 transition-all duration-300 hover:scale-105 active:scale-100 font-semibold group overflow-hidden">
+                                    <span className="relative z-10 flex items-center justify-center">
+                                        Get Involved
+                                        <Globe className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:rotate-12 transition-transform duration-300" />
+                                    </span>
+                                    <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
+                                </Button>
+                            </Link>
+                            <Link href="/about">
+                                <Button
+                                    variant="outline"
+                                    className="w-full sm:w-auto border-2 border-primary/50 dark:border-primary/60 hover:bg-primary/10 dark:hover:bg-primary/20 px-8 sm:px-10 py-6 sm:py-7 text-base sm:text-lg rounded-full font-semibold group"
+                                >
+                                    Learn More About YLCA
+                                    <Star className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:rotate-12 transition-transform duration-300" />
+                                </Button>
+                            </Link>
                         </div>
-                        <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
-                          <div className="text-xl sm:text-2xl font-bold text-secondary mb-1">6</div>
-                          <p className="text-xs text-muted-foreground">Workshops</p>
-                        </div>
-                        <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
-                          <div className="text-xl sm:text-2xl font-bold text-primary mb-1">3 Days</div>
-                          <p className="text-xs text-muted-foreground">Winter Break</p>
-                        </div>
-                      </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
+                </section>
+            </main>
 
-        {/* Republic Day Cyber Safety Workshop - shareable: /impact#republic-day */}
-        <section id="republic-day" className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden scroll-mt-24">
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute top-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-          </div>
+            {/* Image Modal */}
+            <ImageModal
+                images={modalImages}
+                initialIndex={modalIndex}
+                isOpen={modalOpen}
+                onClose={closeModal}
+            />
 
-          <div className="max-w-6xl mx-auto relative z-10">
-            <div className="text-center mb-8 sm:mb-12">
-              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm bg-gradient-to-r from-secondary to-primary">JAN 2026</Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
-                <span>Republic Day <span className="bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">Cyber Safety Workshop</span></span>
-                <a href="#republic-day" onClick={(e) => { e.preventDefault(); const url = typeof window !== "undefined" ? `${window.location.origin}/impact#republic-day` : "/impact#republic-day"; navigator.clipboard?.writeText(url).then(() => { const btn = e.currentTarget; btn.setAttribute("aria-label", "Link copied!"); btn.classList.add("ring-2", "ring-primary"); setTimeout(() => { btn.setAttribute("aria-label", "Copy link"); btn.classList.remove("ring-2", "ring-primary"); }, 1500); }); }} className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0" aria-label="Copy link" title="Copy link to share"><Link2 className="w-5 h-5" /></a>
-              </h2>
-              <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
-                Community cyber awareness session led by Ambassador Krishiv Arora (DPS Karnal)
-              </p>
-            </div>
-
-            <Card className="border-2 border-secondary/30 dark:border-secondary/40 bg-gradient-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
-              <div className="bg-gradient-to-r from-secondary/10 to-primary/10 px-6 py-4 border-b border-border/50">
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center gap-3">
-                    <Badge variant="default" className="text-xs sm:text-sm">January 26, 2026</Badge>
-                    <h3 className="text-lg sm:text-xl font-bold text-foreground">Republic Day Cyber Safety Workshop Led by YLCA Ambassador</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground italic">50+ participants · Adults + children</p>
-                </div>
-              </div>
-
-              <CardContent className="p-6 sm:p-8">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
-                  {/* Workshop Image Grid */}
-                  <div className="lg:col-span-1 space-y-4">
-                    <div className="relative rounded-xl overflow-hidden border-2 border-border/40 shadow-lg group">
-                      <img
-                        src={republicDayImages[0]}
-                        alt="Republic Day Cyber Safety Workshop - YLCA Ambassador Krishiv Arora"
-                        className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer"
-                        loading="lazy"
-                        onClick={() => openModal(republicDayImages, 0)}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                        <p className="text-xs font-semibold">Republic Day Cyber Safety Workshop</p>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      {republicDayImages.slice(1).map((image, index) => (
-                        <div
-                          key={image}
-                          className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
-                          onClick={() => openModal(republicDayImages, index + 1)}
-                          role="button"
-                          tabIndex={0}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                              e.preventDefault()
-                              openModal(republicDayImages, index + 1)
-                            }
-                          }}
-                          aria-label={`View Republic Day workshop image ${index + 2} in gallery`}
-                        >
-                          <img
-                            src={image}
-                            alt={`Republic Day Cyber Safety Workshop ${index + 2}`}
-                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                            loading="lazy"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="lg:col-span-2 space-y-4">
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                      On <span className="font-semibold text-foreground">26 January 2026 (Republic Day)</span>, YLCA ambassadors turned a national celebration into a meaningful opportunity to strengthen community cyber awareness. Our Cybersecurity Ambassador{" "}
-                      <span className="font-semibold text-foreground">Krishiv Arora (DPS Karnal)</span> led an engaging workshop for both adults and children, with{" "}
-                      <span className="font-semibold text-foreground">50+ participants</span> in attendance.
-                    </p>
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                      The session focused on practical, everyday online safety and responsible digital behavior—delivered in a simple, relatable format that encouraged active participation throughout.
-                    </p>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4">
-                      <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
-                        <div className="text-lg sm:text-xl font-bold text-secondary mb-1">Community-First</div>
-                        <p className="text-xs text-muted-foreground">Open to families, not just students</p>
-                      </div>
-                      <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-3 text-center">
-                        <div className="text-lg sm:text-xl font-bold text-primary mb-1">Practical Learning</div>
-                        <p className="text-xs text-muted-foreground">Everyday cyber safety habits</p>
-                      </div>
-                      <div className="bg-secondary/10 dark:bg-secondary/20 rounded-lg p-3 text-center">
-                        <div className="text-lg sm:text-xl font-bold text-secondary mb-1">High Engagement</div>
-                        <p className="text-xs text-muted-foreground">Interactive Q&A and discussion</p>
-                      </div>
-                    </div>
-
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed italic">
-                      Participants gained confidence to identify common cyber risks, avoid online traps, and adopt safer digital habits—turning awareness into action. YLCA is proud of{" "}
-                      <span className="font-semibold text-foreground">Krishiv Arora</span> and our DPS Karnal ambassadors for consistently stepping up to make communities more cyber-aware.
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-
-        {/* YLCA West India Chapter Kickoff – JBCN Mumbai - shareable: /impact#west-india */}
-        <section id="west-india" className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden scroll-mt-24">
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute top-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-          </div>
-
-          <div className="max-w-6xl mx-auto relative z-10">
-            <div className="text-center mb-8 sm:mb-12">
-              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">JAN 2026</Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
-                <span>YLCA West India Chapter <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Kicks Off</span></span>
-                <a href="#west-india" onClick={(e) => { e.preventDefault(); const url = typeof window !== "undefined" ? `${window.location.origin}/impact#west-india` : "/impact#west-india"; navigator.clipboard?.writeText(url).then(() => { const btn = e.currentTarget; btn.setAttribute("aria-label", "Link copied!"); btn.classList.add("ring-2", "ring-primary"); setTimeout(() => { btn.setAttribute("aria-label", "Copy link"); btn.classList.remove("ring-2", "ring-primary"); }, 1500); }); }} className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0" aria-label="Copy link" title="Copy link to share"><Link2 className="w-5 h-5" /></a>
-              </h2>
-              <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
-                Regional Lead Yuvam Loonker and ambassadors kick off the first workshop at JBCN Mumbai
-              </p>
-            </div>
-
-            <Card className="border-2 border-primary/30 dark:border-primary/40 bg-gradient-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
-              <div className="bg-gradient-to-r from-primary/10 to-secondary/10 px-6 py-4 border-b border-border/50">
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center gap-3">
-                    <Badge variant="default" className="text-xs sm:text-sm">January 30, 2026</Badge>
-                    <h3 className="text-lg sm:text-xl font-bold text-foreground">YLCA West India Chapter Kicks Off: First Workshop at JBCN Mumbai</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground italic">50+ 8th grade students · Yuvam Loonker, Panache Kataria, Rudra Ramaswamy, Himadri Das</p>
-                </div>
-              </div>
-
-              <CardContent className="p-6 sm:p-8">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
-                  {/* Workshop images + video */}
-                  <div className="lg:col-span-1 space-y-4">
-                    <div className="relative rounded-xl overflow-hidden border-2 border-border/40 shadow-lg group">
-                      <img
-                        src={westIndiaJan30Images[0]}
-                        alt="YLCA West India Chapter workshop at JBCN Mumbai"
-                        className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer"
-                        loading="lazy"
-                        onClick={() => openModal(westIndiaJan30Images, 0)}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                        <p className="text-xs font-semibold">West India Chapter – JBCN Mumbai</p>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      {westIndiaJan30Images.slice(1, 5).map((image, index) => (
-                        <div
-                          key={image}
-                          className="aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
-                          onClick={() => openModal(westIndiaJan30Images, index + 1)}
-                          role="button"
-                          tabIndex={0}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                              e.preventDefault()
-                              openModal(westIndiaJan30Images, index + 1)
-                            }
-                          }}
-                          aria-label={`View West India JBCN workshop image ${index + 2}`}
-                        >
-                          <img
-                            src={image}
-                            alt={`West India Chapter JBCN Mumbai ${index + 2}`}
-                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                            loading="lazy"
-                          />
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="rounded-xl overflow-hidden border border-border/30 bg-muted/20">
-                      <p className="text-xs font-semibold text-foreground px-3 py-2 border-b border-border/50">Workshop clip</p>
-                      <video
-                        src="/30th Jan/WhatsApp Video 2026-01-27 at 15.22.47.mp4"
-                        controls
-                        className="w-full aspect-video object-contain"
-                        playsInline
-                        preload="metadata"
-                      >
-                        Your browser does not support the video tag.
-                      </video>
-                    </div>
-                  </div>
-
-                  {/* Article content */}
-                  <div className="lg:col-span-2 space-y-4">
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                      YLCA's West India Chapter officially kicked off with an energetic, student-led cybersecurity workshop at JBCN School, Mumbai—led by Regional Lead{" "}
-                      <span className="font-semibold text-foreground">Yuvam Loonker</span> along with YLCA ambassadors{" "}
-                      <span className="font-semibold text-foreground">Panache Kataria</span>,{" "}
-                      <span className="font-semibold text-foreground">Rudra Ramaswamy</span>, and{" "}
-                      <span className="font-semibold text-foreground">Himadri Das</span>. With 50+ 8th grade students in attendance, the session was designed to be hands-on, fast-paced, and practical—so students didn't just "hear about cybersecurity," they actually practiced it.
-                    </p>
-
-                    <h4 className="text-base font-bold text-foreground mt-6">What students learned (and why it mattered)</h4>
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                      The workshop focused on the kinds of threats teens face most often—suspicious links, fake messages, social media scams, and account takeovers. The ambassadors walked students through how cyberattacks work in real life, and how small habits (like recognizing red flags early) can prevent bigger issues.
-                    </p>
-
-                    <h4 className="text-base font-bold text-foreground mt-4">Hands-on activities that made it stick</h4>
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                      This wasn't a lecture-style session. Students were actively involved throughout:
-                    </p>
-                    <ul className="list-disc list-inside text-sm sm:text-base text-muted-foreground space-y-1">
-                      <li><strong className="text-foreground">Phishing Detection Challenge:</strong> students identified phishing emails by spotting common red flags (urgent language, suspicious links, fake sender details).</li>
-                      <li><strong className="text-foreground">"Create-a-Phishing Email" Activity (Awareness-Only):</strong> students learned how scams are written so they can recognize and avoid them—not to misuse them.</li>
-                      <li><strong className="text-foreground">Mock "Virus File" Demo (Safe Simulation):</strong> a controlled activity that helped students understand what malware is and how it can spread.</li>
-                      <li><strong className="text-foreground">Interactive Quizzes (Kahoot/Wayground):</strong> rapid-fire questions kept everyone engaged and reinforced key ideas in a fun way.</li>
-                    </ul>
-                    <p className="text-sm text-muted-foreground">
-                      Quiz link used in the session:{" "}
-                      <a href="https://wayground.com/admin/quiz/6975c16612bcf9d454f39b21" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">wayground.com/admin/quiz/6975c16612bcf9d454f39b21</a>
-                    </p>
-
-                    <h4 className="text-base font-bold text-foreground mt-4">Real stories, real learning</h4>
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                      One of the most powerful parts of the workshop was the discussion: students shared real experiences of suspicious messages, hacked accounts, and online scams they've seen—then learned what they could do differently next time. That mix of real stories + guided practice is what made the session memorable.
-                    </p>
-
-                    <div className="bg-muted/30 dark:bg-muted/20 rounded-xl p-4 sm:p-5 border border-border/50 mt-6">
-                      <h4 className="text-sm font-bold text-foreground mb-3 uppercase tracking-wide">Impact Snapshot</h4>
-                      <ul className="text-sm text-muted-foreground space-y-1">
-                        <li><strong className="text-foreground">Location:</strong> JBCN School, Mumbai</li>
-                        <li><strong className="text-foreground">Chapter:</strong> YLCA West India</li>
-                        <li><strong className="text-foreground">Audience:</strong> 50+ students (8th grade)</li>
-                        <li><strong className="text-foreground">Format:</strong> highly interactive workshop + quizzes + activities</li>
-                        <li><strong className="text-foreground">Outcomes:</strong> students learned to spot phishing attempts, understand malware basics, and build stronger online safety habits</li>
-                      </ul>
-                    </div>
-
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed italic mt-4">
-                      YLCA's mission is "teens teaching teens"—and this kickoff at JBCN is a strong start for West India. We're excited to run more workshops across schools and communities, and empower more students to protect their digital lives with confidence.
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <div className="text-center mt-8">
-              <Button
-                variant="outline"
-                onClick={() => openModal(westIndiaJan30Images, 0)}
-                className="border-2 border-primary/50 dark:border-primary/60 hover:bg-primary/10 dark:hover:bg-primary/20 px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-full font-semibold group"
-              >
-                View All West India Chapter Photos
-                <GraduationCap className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
-              </Button>
-            </div>
-          </div>
-        </section>
-
-        {/* Building a Global Movement – YLCA Ambassadors Cohort Kickoff (Feb 1, 2026) */}
-        <section id="global-cohort-kickoff" className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden scroll-mt-24">
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute top-1/4 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-1/4 right-0 w-48 h-48 sm:w-72 sm:h-72 bg-secondary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-          </div>
-
-          <div className="max-w-6xl mx-auto relative z-10">
-            <div className="text-center mb-8 sm:mb-12">
-              <Badge variant="default" className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm">FEB 2026</Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight px-4 flex flex-wrap items-center justify-center gap-2">
-                <span>Building a Global Movement: <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">YLCA Ambassadors Cohort Kickoff</span></span>
-                <a href="#global-cohort-kickoff" onClick={(e) => { e.preventDefault(); const url = typeof window !== "undefined" ? `${window.location.origin}/impact#global-cohort-kickoff` : "/impact#global-cohort-kickoff"; navigator.clipboard?.writeText(url).then(() => { const btn = e.currentTarget; btn.setAttribute("aria-label", "Link copied!"); btn.classList.add("ring-2", "ring-primary"); setTimeout(() => { btn.setAttribute("aria-label", "Copy link"); btn.classList.remove("ring-2", "ring-primary"); }, 1500); }); }} className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors shrink-0" aria-label="Copy link" title="Copy link to share"><Link2 className="w-5 h-5" /></a>
-              </h2>
-              <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
-                February 1, 2026 — Global ambassador cohort launch connecting youth from Delhi, Haryana, Punjab, Mumbai, California, and New Jersey
-              </p>
-            </div>
-
-            <Card className="border-2 border-primary/30 dark:border-primary/40 bg-gradient-to-br from-card to-card/95 backdrop-blur-sm overflow-hidden">
-              <div className="bg-gradient-to-r from-primary/10 to-secondary/10 px-6 py-4 border-b border-border/50">
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center gap-3">
-                    <Badge variant="default" className="text-xs sm:text-sm">February 1, 2026</Badge>
-                    <h3 className="text-lg sm:text-xl font-bold text-foreground">YLCA Global Ambassador Cohort Kickoff</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground italic">Youth ambassadors from multiple schools and regions — monthly cohort rhythm for 2026</p>
-                </div>
-              </div>
-
-              <CardContent className="p-6 sm:p-8">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
-                  <div className="lg:col-span-1 space-y-4">
-                    <div className="relative rounded-xl overflow-hidden border-2 border-border/40 shadow-lg group">
-                      <img
-                        src={feb2026CohortImages[0]}
-                        alt="YLCA Global Ambassador Cohort Kickoff — February 1, 2026"
-                        className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer"
-                        loading="lazy"
-                        onClick={() => openModal(feb2026CohortImages, 0)}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                        <p className="text-xs font-semibold">Global Cohort Kickoff — Feb 1, 2026</p>
-                      </div>
-                    </div>
-                    {feb2026CohortImages.length > 1 && (
-                      <div
-                        className="aspect-video sm:aspect-square overflow-hidden rounded-lg border border-border/30 cursor-pointer group touch-manipulation"
-                        onClick={() => openModal(feb2026CohortImages, 1)}
-                        role="button"
-                        tabIndex={0}
-                        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(feb2026CohortImages, 1); } }}
-                        aria-label="View Global Cohort Kickoff image 2"
-                      >
-                        <img
-                          src={feb2026CohortImages[1]}
-                          alt="YLCA Global Ambassador Cohort Kickoff 2"
-                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                          loading="lazy"
-                        />
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="lg:col-span-2 space-y-4">
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                      On <span className="font-semibold text-foreground">February 1, 2026</span>, YLCA.tech hosted its <span className="font-semibold text-foreground">Global Ambassador Cohort Kickoff</span>, bringing together youth ambassadors from multiple schools across Delhi, Haryana, Punjab, Mumbai, California, and New Jersey. The session marked the official start of our monthly cohort rhythm for 2026 and created a shared space for ambassadors to connect across regions and time zones.
-                    </p>
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                      Founder <span className="font-semibold text-foreground">Arth Bhardwaj</span> welcomed the cohort and emphasized a simple goal: empower teens to lead practical digital safety education in their own communities, using peer-to-peer learning that feels relatable and actionable.
-                    </p>
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                      During the kickoff, ambassadors heard program updates, celebrated recent outreach happening in different chapters, and aligned on expectations for the month ahead. We also introduced the support structure behind the cohort—regional leadership, communication channels, and a consistent format for reporting impact—so ambassadors can stay organized and build momentum over time.
-                    </p>
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                      The meeting closed with a look ahead to upcoming initiatives, including new workshop drives and a planned hackathon designed to encourage innovation in cybersecurity and AI for social good.
-                    </p>
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed font-medium">
-                      Most importantly, the kickoff reinforced what makes YLCA special: a growing network of students who are not just learning about cybersecurity, but actively teaching, leading, and creating safer digital habits in the communities they call home.
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <div className="text-center mt-8">
-              <Button
-                variant="outline"
-                onClick={() => openModal(feb2026CohortImages, 0)}
-                className="border-2 border-primary/50 dark:border-primary/60 hover:bg-primary/10 dark:hover:bg-primary/20 px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-full font-semibold group"
-              >
-                View Cohort Kickoff Photos
-                <GraduationCap className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
-              </Button>
-            </div>
-          </div>
-        </section>
-
-        {/* Call to Action */}
-        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-br from-primary/10 via-secondary/10 to-primary/10">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-foreground px-4">
-              Join the <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Impact</span>
-            </h2>
-            <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 px-4 max-w-2xl mx-auto">
-              Be part of a global movement empowering teens with cybersecurity and AI knowledge. Your participation can create real change.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
-              <Link href="/get-involved">
-                <Button className="w-full sm:w-auto bg-gradient-to-r from-primary via-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white px-8 sm:px-10 py-6 sm:py-7 text-base sm:text-lg rounded-full shadow-lg shadow-primary/30 dark:shadow-primary/40 hover:shadow-xl hover:shadow-primary/40 dark:hover:shadow-primary/50 transition-all duration-300 hover:scale-105 active:scale-100 font-semibold group overflow-hidden">
-                  <span className="relative z-10 flex items-center justify-center">
-                    Get Involved
-                    <Globe className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:rotate-12 transition-transform duration-300" />
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
-                </Button>
-              </Link>
-              <Link href="/about">
-                <Button variant="outline" className="w-full sm:w-auto border-2 border-primary/50 dark:border-primary/60 hover:bg-primary/10 dark:hover:bg-primary/20 px-8 sm:px-10 py-6 sm:py-7 text-base sm:text-lg rounded-full font-semibold group">
-                  Learn More About YLCA
-                  <Star className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:rotate-12 transition-transform duration-300" />
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      {/* Image Modal */}
-      <ImageModal
-        images={modalImages}
-        initialIndex={modalIndex}
-        isOpen={modalOpen}
-        onClose={closeModal}
-      />
-
-      <Footer />
-    </div>
-  )
+            <Footer />
+        </div>
+    );
 }
-

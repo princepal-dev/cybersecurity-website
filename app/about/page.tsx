@@ -976,6 +976,63 @@ export default function About() {
           </div>
         </section>
 
+        {/* Ambassador Stories */}
+        <section className="px-4 sm:px-6 lg:px-8 py-8 sm:py-10 md:py-12 bg-gradient-to-b from-muted/20 via-background to-background">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-6 sm:mb-8">
+              <Badge variant="outline" className="mb-3 px-4 sm:px-5 py-1.5 text-xs sm:text-sm">AMBASSADOR STORIES</Badge>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2 sm:mb-3 tracking-tight">
+                In Their Own Words
+              </h2>
+              <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto px-4">
+                Hear from YLCA Ambassadors on why they joined, what they&apos;re building, and how they plan to drive impact in their communities.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+              <Card className="border border-border/50 dark:border-border/40 bg-card/80 backdrop-blur-sm h-full">
+                <CardHeader>
+                  <CardTitle className="text-lg sm:text-xl font-bold">Sanvi Jain</CardTitle>
+                  <CardDescription className="text-xs sm:text-sm">
+                    Grade 11 · Sacred Heart Convent International School, Ludhiana, Punjab, India
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-3 text-sm sm:text-base text-muted-foreground leading-relaxed">
+                  <p>
+                    Hi, my name is Sanvi, and I am an 11th-grade student at Sacred Heart Convent School, Ludhiana. I am enthusiastic about AI, cybersecurity, and digital marketing. As a YLCA Ambassador, I aim to spread awareness about safe and responsible internet use, educate students about cyber risks, and contribute toward making the internet a safer and more conscious space for everyone.
+                  </p>
+                  <p>
+                    I want to become a YLCA Ambassador because I&apos;ve seen how powerful and dangerous the digital world can be—from troll comments affecting mental health to deepfakes and fake chats damaging reputations. Being aware of digital footprints, scams, and online ethics has made me feel a responsibility to educate others, not just about safety, but about conscious and respectful use of technology.
+                  </p>
+                  <p>
+                    In the next 60–90 days, I aim to conduct cybersecurity and AI awareness workshops in government schools and create online content that reaches students beyond the classroom. Through these efforts, I hope to build a community that learns, grows, and promotes conscious and responsible use of technology together.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="border border-border/50 dark:border-border/40 bg-card/80 backdrop-blur-sm h-full">
+                <CardHeader>
+                  <CardTitle className="text-lg sm:text-xl font-bold">Aarna Malhotra</CardTitle>
+                  <CardDescription className="text-xs sm:text-sm">
+                    Grade 9 · Sacred Heart Convent International School, Ludhiana, Punjab, India
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-3 text-sm sm:text-base text-muted-foreground leading-relaxed">
+                  <p>
+                    I am Aarna Malhotra, a Grade 9 student with a strong interest in AI, digital awareness, and communication. As a YLCA Ambassador, I aim to promote safer, more responsible, and empathetic online spaces for young users.
+                  </p>
+                  <p>
+                    I chose to apply as a YLCA Ambassador because the internet has become an inseparable part of teenage life, yet many users are unaware of its risks. From misinformation to online harassment and cyber fraud, small mistakes online can have lasting consequences. Exposure to real-life cases of digital misuse made me realise the need for early awareness and education.
+                  </p>
+                  <p>
+                    Over the next 60–90 days, I plan to organise an interactive session focused on AI basics, cybersecurity awareness, and safe online practices, and to create short, easy-to-understand digital content on AI tools, online risks, and digital footprints—helping young users make smarter and safer decisions online.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
         {/* Leadership Roles */}
         <section className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8 md:py-10">
           <div className="max-w-4xl mx-auto">
