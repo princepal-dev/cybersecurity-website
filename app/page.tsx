@@ -49,7 +49,7 @@ const missionPillars = [
 ]
 
 const impactStats = [
-  { value: "2,500+", label: "Students Reached" },
+  { value: "4,000+", label: "Students Reached" },
   { value: "25", label: "Schools Reached" },
   { value: "60+", label: "Student Ambassadors" },
   { value: "3", label: "Corporate Partnerships" },
@@ -206,52 +206,55 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
+        <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-muted/20">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-10">
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Recognized for Youth Cybersecurity &amp; AI Leadership</h2>
-              <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
-                YLCA.tech&apos;s founder was honored by the City of Modesto for expanding student-led cybersecurity and AI education beyond Silicon Valley.
-              </p>
-            </div>
-
             <Card>
               <CardContent className="pt-8">
-                <div className="grid lg:grid-cols-2 gap-8 items-start">
-                  <div>
+                <div className="grid lg:grid-cols-2 gap-8 items-center">
+                  <div className="grid sm:grid-cols-2 gap-3">
                     <div className="rounded-2xl overflow-hidden border border-border/60 bg-background shadow-sm">
                       <img
                         src="/mayor.jpeg"
-                        alt="Arth Bhardwaj with Modesto Mayor Sue Zwahlen holding the recognition certificate"
-                        className="w-full h-full object-cover aspect-[4/5]"
+                        alt="Arth Bhardwaj with Mayor Sue Zwahlen during civic recognition"
+                        className="w-full h-full object-contain bg-muted/20 aspect-[4/5]"
                       />
                     </div>
-                    <p className="mt-4 text-sm text-muted-foreground leading-relaxed">
-                      City of Modesto Recognition • Central Valley Outreach • Youth-Led Cybersecurity &amp; AI Education
-                    </p>
+                    <div className="rounded-2xl overflow-hidden border border-border/60 bg-background shadow-sm">
+                      <img
+                        src="/3 may/WhatsApp Image 2026-05-02 at 14.27.48.jpeg"
+                        alt="YLCA April-May 2026 recognition moment"
+                        className="w-full h-full object-contain bg-muted/20 aspect-[4/5]"
+                      />
+                    </div>
                   </div>
 
-                  <div>
-                    <h3 className="text-2xl font-semibold tracking-tight">City Recognition</h3>
-                    <p className="mt-2 text-base font-medium text-foreground">
-                      Certificate of Recognition from the City of Modesto
-                    </p>
-                    <p className="mt-1 text-sm text-muted-foreground">Presented April 6, 2026</p>
-                    <p className="mt-5 text-muted-foreground leading-relaxed">
-                      YLCA.tech Founder Arth Bhardwaj received a Certificate of Recognition from the City of Modesto for
-                      his work in youth cybersecurity and AI education. The recognition highlights Arth&apos;s leadership as
-                      Founder of YLCA.tech and Leader of the Cybersecurity &amp; AI Club at Saint Francis High School.
+                  <div className="text-center">
+                    <h3 className="text-2xl sm:text-3xl font-bold tracking-tight">
+                      Civic Recognition and Technology Media Feature
+                    </h3>
+                    <p className="mt-4 text-muted-foreground leading-relaxed">
+                      In April 2026, YLCA reached an important recognition milestone as Founder Arth Bhardwaj received recognition from Mayor Sue Zwahlen of Modesto, California for his leadership in expanding cybersecurity and responsible AI awareness. This civic recognition validated YLCA&apos;s mission of making digital safety education more accessible to students and communities.
                     </p>
                     <p className="mt-4 text-muted-foreground leading-relaxed">
-                      This milestone reflects YLCA&apos;s growing effort to bring practical cyber safety, scam awareness, and
-                      responsible AI education to students across Central Valley communities, including Modesto, Tracy,
-                      Lathrop, Mountain House, and nearby cities.
+                      YLCA was also featured in TechBullion, a leading technology and innovation news outlet, in the article &ldquo;Shaping Dreams: A California High School Student&apos;s Vision for Global Cybersecurity.&rdquo; The feature highlighted Arth&apos;s role as YLCA founder, the organization&apos;s global growth, and its ambassador-driven model for helping students learn about phishing, online scams, password security, and ethical AI use.
                     </p>
-                    <div className="mt-6">
-                      <a href="/Mayor-reconition-YLCA-Arth.pdf" target="_blank" rel="noopener noreferrer" className="block w-full sm:w-auto">
+
+                    <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+                      <a
+                        href="https://techbullion.com/shaping-dreams-a-california-high-school-students-vision-for-global-cybersecurity/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full sm:w-auto"
+                      >
                         <Button className="w-full sm:w-auto">
-                          View Certificate
+                          Read TechBullion Article
                           <ArrowRight className="w-4 h-4 ml-2" />
+                        </Button>
+                      </a>
+                      <a href="/Mayor-reconition-YLCA-Arth.pdf" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
+                        <Button variant="outline" className="w-full sm:w-auto">
+                          View City Certificate
+                          <Newspaper className="w-4 h-4 ml-2" />
                         </Button>
                       </a>
                     </div>

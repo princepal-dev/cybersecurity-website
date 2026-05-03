@@ -30,6 +30,7 @@ import {
     X,
     Rocket,
     Link2,
+    ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
@@ -53,6 +54,18 @@ import {
 } from "recharts";
 
 const storiesImages = [
+    // May 2026 – Civic recognition and outreach updates
+    "/mayor.jpeg",
+    "/3 may/WhatsApp Image 2026-05-02 at 14.27.48.jpeg",
+    "/3 may/WhatsApp Image 2026-05-02 at 14.29.47.jpeg",
+    "/3 may/WhatsApp Image 2026-05-02 at 14.29.48.jpeg",
+    "/3 may/WhatsApp Image 2026-05-02 at 14.29.48 (1).jpeg",
+    "/3 may/WhatsApp Image 2026-05-02 at 14.29.49.jpeg",
+    "/3 may/WhatsApp Image 2026-05-02 at 14.29.49 (1).jpeg",
+    "/3 may/WhatsApp Image 2026-05-02 at 14.29.49 (2).jpeg",
+    "/3 may/WhatsApp Image 2026-05-02 at 14.29.49 (3).jpeg",
+    "/3 may/WhatsApp Image 2026-05-02 at 14.30.31.jpeg",
+    "/3 may/WhatsApp Image 2026-05-02 at 14.30.32.jpeg",
     // Feb 2026 – Cupertino presentation
     "/Feb 11/WhatsApp Image 2026-03-18 at 10.33.15.jpeg",
     "/Feb 11/WhatsApp Image 2026-03-18 at 10.33.15 (1).jpeg",
@@ -550,7 +563,7 @@ export default function Impact() {
                                     </div>
                                     <div className="text-4xl md:text-5xl font-bold bg-linear-to-br from-primary via-primary to-primary/80 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300 tabular-nums min-h-[1.2em]">
                                         <AnimatedNumber
-                                            value={2500}
+                                            value={4000}
                                             suffix="+"
                                             observeSectionId="impact-page-stats"
                                         />
@@ -936,6 +949,108 @@ export default function Impact() {
                                 </CardContent>
                             </Card>
                         </div>
+                    </div>
+                </section>
+
+                <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-background">
+                    <div className="max-w-4xl mx-auto">
+                        <Card className="border-2 border-border/50 dark:border-border/30 bg-card/80 backdrop-blur-sm">
+                            <CardContent className="pt-8 sm:pt-10 px-5 sm:px-8">
+                                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-6">
+                                    Ambassador Journeys: From Learners to Leaders
+                                </h2>
+
+                                <div className="space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                    <p>
+                                        At the heart of YLCA is a simple belief: students are not just the audience for cybersecurity and AI education — they can become the leaders who carry it forward.
+                                    </p>
+                                    <p>
+                                        This ambassador journey video captures that belief in action. Through their own voices, YLCA ambassadors share how the program helped them grow from learners into peer educators, organizers, and community leaders. Their stories show the real impact behind the numbers: confidence built, workshops led, schools reached, and young people learning how to protect themselves and others in an increasingly digital world.
+                                    </p>
+                                    <p>
+                                        For YLCA, these testimonials are more than reflections. They are proof that the ambassador model is working. When one student learns and then teaches others, the impact multiplies. Each ambassador becomes a local voice for digital safety, responsible AI, and youth leadership — helping YLCA grow from one founder&apos;s vision into a student-powered global movement.
+                                    </p>
+                                </div>
+
+                                <div className="mt-8">
+                                    <p className="text-sm sm:text-base font-semibold text-foreground mb-3">
+                                        Watch the Ambassador Journey Video:
+                                    </p>
+                                    <a
+                                        href="https://www.youtube.com/watch?v=WVm3lM2eWxY"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-block w-full sm:w-auto"
+                                    >
+                                        <Button className="w-full sm:w-auto">
+                                            Watch on YouTube
+                                            <ArrowRight className="w-4 h-4 ml-2" />
+                                        </Button>
+                                    </a>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </section>
+
+                <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-linear-to-b from-background to-muted/20">
+                    <div className="max-w-5xl mx-auto">
+                        <div className="text-center mb-8 sm:mb-10">
+                            <Badge
+                                variant="default"
+                                className="mb-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm bg-linear-to-r from-primary to-secondary"
+                            >
+                                APRIL 2026
+                            </Badge>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground tracking-tight px-4">
+                                Recognition That Turned a Student-Led Mission Into a Community Movement
+                            </h2>
+                        </div>
+
+                        <Card className="border-2 border-border/50 dark:border-border/30 bg-card/80 backdrop-blur-sm">
+                            <CardContent className="pt-8 sm:pt-10 px-5 sm:px-8">
+                                <div className="space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
+                                    <p>
+                                        April 2026 became a defining moment for YLCA — a month when our work was recognized not only by students and schools, but also by civic leadership and the broader technology community.
+                                    </p>
+                                    <p>
+                                        YLCA Founder Arth Bhardwaj received special recognition from Mayor Sue Zwahlen of Modesto, California, honoring his leadership in expanding cybersecurity and responsible AI awareness among young people and communities. For YLCA, this recognition was more than a certificate. It was a powerful reminder that student-led work can earn the trust of public leaders when it solves real community problems. It validated the belief behind YLCA: that teenagers are not just learners of technology — they can become leaders, educators, and protectors in the digital world.
+                                    </p>
+                                    <p>
+                                        This month also brought national visibility through TechBullion, a leading technology and innovation news outlet, which featured Arth&apos;s journey in the article &ldquo;Shaping Dreams: A California High School Student&apos;s Vision for Global Cybersecurity.&rdquo; The feature highlighted how YLCA began with one student&apos;s vision and grew into a global youth-led effort reaching schools, ambassadors, and communities across countries. It recognized Arth&apos;s commitment to making cybersecurity and AI education more accessible, practical, and inspiring for the next generation.
+                                    </p>
+                                    <p>
+                                        Together, these recognitions marked a major step forward for YLCA. The support from Mayor Zwahlen showed that local communities see value in YLCA&apos;s mission, while the TechBullion feature showed that the broader innovation world is beginning to notice the power of youth-led cybersecurity education. For Arth and the YLCA team, April was not just about being recognized — it was about proving that young people can build movements, create trust, and lead meaningful change in one of the most important issues of our time.
+                                    </p>
+                                    <p>
+                                        As YLCA continues to grow, this month stands as a reminder of what the organization represents: students helping students, leaders creating leaders, and technology education becoming a force for safety, confidence, and opportunity.
+                                    </p>
+                                </div>
+
+                                <div className="mt-8">
+                                    <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+                                        Impact Highlights
+                                    </h3>
+                                    <ul className="space-y-2 text-sm sm:text-base text-muted-foreground">
+                                        <li>
+                                            Civic recognition from Mayor Sue Zwahlen of Modesto, California
+                                        </li>
+                                        <li>
+                                            Founder Arth Bhardwaj featured in TechBullion, a technology and innovation news outlet
+                                        </li>
+                                        <li>
+                                            Recognition of YLCA&apos;s mission to expand cybersecurity and responsible AI awareness
+                                        </li>
+                                        <li>
+                                            External validation from both public leadership and the technology media ecosystem
+                                        </li>
+                                        <li>
+                                            A major milestone in YLCA&apos;s journey from student-led initiative to growing global movement
+                                        </li>
+                                    </ul>
+                                </div>
+                            </CardContent>
+                        </Card>
                     </div>
                 </section>
 

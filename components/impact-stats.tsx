@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 
 const stats = [
   {
-    value: 2500,
+    value: 4000,
     suffix: "+",
     label: "Students Reached",
     gradient: "from-primary via-primary to-primary/80",
